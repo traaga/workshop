@@ -23,7 +23,7 @@ function App() {
         <GlobalStateProvider>
             <StyledEngineProvider injectFirst>
                 <ThemeProvider theme={theme}>
-                    <BrowserRouter>
+                    <BrowserRouter basename="/workshop">
                         <Routes>
                             <Route path="/">
                                 <Route index element={<Home />} />
