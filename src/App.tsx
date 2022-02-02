@@ -23,7 +23,7 @@ function App() {
         <GlobalStateProvider>
             <StyledEngineProvider injectFirst>
                 <ThemeProvider theme={theme}>
-                    <BrowserRouter basename={window.location.pathname || ''}>
+                    <BrowserRouter basename={process.env.PUBLIC_URL}>
                         <Routes>
                             <Route path="/">
                                 <Route index element={<Home />} />
