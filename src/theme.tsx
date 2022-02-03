@@ -1,5 +1,4 @@
 import { createTheme } from "@mui/material/styles";
-//import { green, purple } from "@mui/material/colors";
 
 // Colors from logo (icon.png)
 
@@ -17,5 +16,8 @@ export const theme = createTheme({
         secondary: {
             main: "#a97d51"
         }
+    },
+    typography: {
+        "fontFamily": `"Montserrat", "Helvetica", "Arial", sans-serif`
     }
 });

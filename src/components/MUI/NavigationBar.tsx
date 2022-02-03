@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     button: {
         color: theme.palette.primary.contrastText,
         height: "64px",
+        fontFamily: `"Granaina", "Montserrat", "Helvetica", "Arial", sans-serif`,
+        fontSize: "1.25rem",
+        letterSpacing: "0.15rem",
+        padding: "6px 10px"
     },
 }));
 
