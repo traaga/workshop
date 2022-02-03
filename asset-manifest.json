@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/workshop/static/css/main.756b7e15.css",
-    "main.js": "/workshop/static/js/main.7e7fa57d.js",
+    "main.css": "/workshop/static/css/main.aba75bbd.css",
+    "main.js": "/workshop/static/js/main.cbf5d8c9.js",
+    "static/media/granaina-limpia.ttf": "/workshop/static/media/granaina-limpia.8c675c16a2b69eaa83d2.ttf",
     "index.html": "/workshop/index.html",
-    "main.756b7e15.css.map": "/workshop/static/css/main.756b7e15.css.map",
-    "main.7e7fa57d.js.map": "/workshop/static/js/main.7e7fa57d.js.map"
+    "main.aba75bbd.css.map": "/workshop/static/css/main.aba75bbd.css.map",
+    "main.cbf5d8c9.js.map": "/workshop/static/js/main.cbf5d8c9.js.map"
   },
   "entrypoints": [
-    "static/css/main.756b7e15.css",
-    "static/js/main.7e7fa57d.js"
+    "static/css/main.aba75bbd.css",
+    "static/js/main.cbf5d8c9.js"
   ]
 }
