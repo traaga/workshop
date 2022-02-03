@@ -1,18 +1,19 @@
-import { Box } from "@mui/material";
+import { Box, Theme, SxProps } from "@mui/material";
 
-const ContentContainer: React.FC = ({ children }) => {
-    return (
-        <>
-            <Box
-                id="content"
-                sx={{
-                    minHeight: "calc(100vh - 64px - 270px)",
-                }}
-            >
-                {children}
-            </Box>
-        </>
-    );
-};
+interface ContentContainerProps {
+    sx?: SxProps<Theme> | undefined;
+}
+
+//  const Square: React.FC<SquareProps> = props => (
+//    <div style={{ backgroundColor: props.color }}>{props.children}</div>
+//  );
+
+const ContentContainer: React.FC<ContentContainerProps> = (props) => (
+    <>
+        <Box id="content" sx={props.sx}>
+            {props.children}
+        </Box>
+    </>
+);
 
 export default ContentContainer;

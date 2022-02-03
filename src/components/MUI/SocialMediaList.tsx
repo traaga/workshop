@@ -18,19 +18,19 @@ const SocialMediaList = () => {
     return (
         <>
             <Box sx={{ width: "240px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-                <Box onClick={() => console.log(1)}>
+                <Box>
                     <Button className={classes.button}>
                         <FacebookIcon fontSize="large" sx={{ color: "#b38d66" }}/>
                         <Typography>kirvejapuudega</Typography>
                     </Button>
                 </Box>
-                <Box onClick={() => console.log(1)}>
+                <Box>
                     <Button className={classes.button}>
                         <InstagramIcon fontSize="large" sx={{ color: "#b38d66" }}/>
                         <Typography>kirvejapuudega</Typography>
                     </Button>
                 </Box>
-                <Box onClick={() => console.log(1)}>
+                <Box>
                     <Button className={classes.button}>
                         <TwitterIcon fontSize="large" sx={{ color: "#b38d66" }}/>
                         <Typography>kirvejapuudega</Typography>
