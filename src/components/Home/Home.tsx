@@ -1,19 +1,23 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import NavigationBar from "../MUI/NavigationBar";
 import Footer from "../MUI/Footer";
 import { Box, Typography } from "@mui/material";
 import { GlobalStateContext } from "../State/GlobalStateContext";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
     const { titleShort } = useContext(GlobalStateContext);
+
     document.title = titleShort + " | Avaleht";
-
-    const body = document.getElementsByTagName("body");
-
-    if (body) {
-        document.getElementsByTagName("body")[0].style.backgroundColor =
-            "#d9ccbf"; // good color
-    }
+    
+    // TODO: Fix this bs with react-router
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (document.location.pathname === "/workshop") {
+            navigate("/");
+            window.location.reload();
+        }
+    });
 
     const temps = [1, 2, 3];
     const render = true;
@@ -22,7 +26,7 @@ const Home = () => {
         <>
             <NavigationBar />
             <Box
-                width={"100vw"}
+                width={"100%"}
                 sx={{
                     backgroundColor: "#272727",
                     display: "flex",
@@ -49,6 +53,7 @@ const Home = () => {
                             sx={{
                                 height: 320,
                                 width: 320,
+                                marginBottom: "10px"
                             }}
                             src="images/icon320-square.png"
                         ></Box>
