@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: theme.palette.primary.contrastText,
         height: "64px",
         fontFamily: `"Granaina", "Montserrat", "Helvetica", "Arial", sans-serif`,
-        fontSize: "1.25rem",
+        fontSize: "1.5rem",
         letterSpacing: "0.15rem",
         padding: "6px 10px"
     },
@@ -140,7 +140,7 @@ const NavigationBar = () => {
                             >
                                 <Avatar
                                     src="images/profile.jpg"
-                                    sx={{ width: 32, height: 32 }}
+                                    sx={{ width: 40, height: 40 }}
                                 />
                             </IconButton>
                         ) : (

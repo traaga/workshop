@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import NavigationBar from "../MUI/NavigationBar";
+import ContentContainer from "../MUI/ContentContainer";
+import Footer from "../MUI/Footer";
 import { Typography } from "@mui/material";
 import { GlobalStateContext } from "../State/GlobalStateContext";
 
@@ -9,7 +11,10 @@ const Settings = () => {
     return (
         <>
             <NavigationBar />
-            <Typography>Seaded</Typography>
+            <ContentContainer>
+                <Typography>Seaded</Typography>
+            </ContentContainer>
+            <Footer />
         </>
     );
 };
