@@ -17,7 +17,7 @@ interface TeamMemberCardProps {
 const TeamMemberCard = ({ member }: TeamMemberCardProps) => {
     return (
         <>
-            <Card sx={{ maxWidth: 300 }}>
+            <Card sx={{ maxWidth: 300, backgroundColor: "#efefef" }}>
                 <CardContent
                     sx={{
                         display: "flex",
