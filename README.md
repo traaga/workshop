@@ -1,9 +1,11 @@
-<div align="center" style="background-color: #272727">
-  <img src="./public/images/icon320-square.png" alt="Logo" width="320px" height="320px">
+<div align="center">
+    <a href="https://github.com/traaga/workshop">
+        <img src="./public/images/icon320-square.png" alt="Logo" width="320px" height="320px">
+    </a>
+    <br></br>
+    <h3>The is the frontend code for the Kirve & Puudega website.</h3>
 </div>
-<br>
-
-The is the frontend code for the Kirve & Puudega website.
+<br></br>
 
 In the project directory, you can run:
 
