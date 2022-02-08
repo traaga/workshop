@@ -4,7 +4,7 @@
         <img src="./public/images/icon320-square.png" alt="Logo" width="320px" height="320px">
     </a>
     <br></br>
-    <h3>The is the frontend code for the Kirve & Puudega website.</h3>
+    <h3>This is the frontend code for the Kirve & Puudega website.</h3>
 </div>
 <br></br>
 
