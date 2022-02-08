@@ -1,4 +1,5 @@
 <div align="center">
+    <br></br>
     <a href="https://github.com/traaga/workshop">
         <img src="./public/images/icon320-square.png" alt="Logo" width="320px" height="320px">
     </a>
