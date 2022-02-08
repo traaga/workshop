@@ -3,10 +3,6 @@ import {
     Button,
     AppBar,
     Box,
-    IconButton,
-    Menu,
-    MenuItem,
-    Avatar,
     Theme,
 } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -15,6 +11,7 @@ import LoginDialog from "./LoginDialog";
 import RegisterDialog from "./RegisterDialog";
 import ForgotPasswordDialog from "./ForgotPasswordDialog";
 import { makeStyles } from "@mui/styles";
+import MenuPopupState from "./MenuPopupState";
 
 const useStyles = makeStyles((theme: Theme) => ({
     button: {
@@ -23,13 +20,64 @@ const useStyles = makeStyles((theme: Theme) => ({
         fontFamily: `"Granaina", "Montserrat", "Helvetica", "Arial", sans-serif`,
         fontSize: "1.5rem",
         letterSpacing: "0.15rem",
-        padding: "6px 10px"
+        padding: "6px 10px",
     },
 }));
 
 const NavigationBar = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = anchorEl;
+
+    const handleLogOut = () => {
+        setAnchorEl(null);
+        setAuthenticated(false);
+    };
+
+    const workshopLinks = [
+        {
+            label: "Hinnakiri",
+            location: "/prices",
+        },
+        {
+            label: "Kodukord",
+            location: "/rules",
+        },
+        {
+            label: "Võimalused",
+            location: "/opportunities",
+        },
+    ];
+
+    const infocenterLinks = [
+        {
+            label: "Tunniplaan",
+            location: "/timetable",
+        },
+        {
+            label: "Koolitused",
+            location: "/courses",
+        },
+        {
+            label: "Nõustamised",
+            location: "/consulting",
+        },
+    ];
+
+    const accountLinks = [
+        {
+            label: "Minu konto",
+            location: "/account",
+        },
+        {
+            label: "Seaded",
+            location: "/settings",
+        },
+        {
+            label: "Logi välja",
+            location: "/",
+            props: { onClick: handleLogOut },
+        },
+    ];
 
     const [isLoginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
     const [isRegisterDialogOpen, setRegisterDialogOpen] =
@@ -42,14 +90,8 @@ const NavigationBar = () => {
 
     const classes = useStyles();
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
+    // Move below code to LoginDialog.tsx
+    
     const handleLoginDialogOpen = () => {
         setAnchorEl(null);
         setLoginDialogOpen(true);
@@ -76,11 +118,6 @@ const NavigationBar = () => {
         setForgotPasswordDialogOpen(false);
     };
 
-    const handleLogOut = () => {
-        setAnchorEl(null);
-        setAuthenticated(false);
-    };
-
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ height: "64px" }} />
@@ -105,177 +142,38 @@ const NavigationBar = () => {
                         </Button>
                     </Box>
                     <Box>
-                        <Button
-                            id="workshop"
-                            color="secondary"
-                            className={classes.button}
-                            onClick={handleClick}
-                        >
-                            Avatud töökoda
-                        </Button>
+                        <MenuPopupState
+                            buttonText={"Avatud Töökoda"}
+                            menuItems={workshopLinks}
+                        />
 
-                        <Button
-                            id="infocenter"
-                            color="secondary"
-                            className={classes.button}
-                            onClick={handleClick}
-                        >
-                            Infokeskus
-                        </Button>
+                        <MenuPopupState
+                            buttonText={"Infokeskus"}
+                            menuItems={infocenterLinks}
+                        />
 
-                        <Button
-                            component={Link}
-                            to="/contact"
-                            color="secondary"
-                            className={classes.button}
-                        >
-                            Kontakt
-                        </Button>
+                        <MenuPopupState
+                            buttonText={"Kontakt"}
+                            buttonProps={{
+                                component: Link,
+                                to: "/contact",
+                            }}
+                        />
 
                         {isAuthenticated ? (
-                            <IconButton
-                                id="account"
-                                onClick={handleClick}
-                                className={classes.button}
-                            >
-                                <Avatar
-                                    src="images/profile.jpg"
-                                    sx={{ width: 40, height: 40 }}
-                                />
-                            </IconButton>
+                            <MenuPopupState
+                                buttonText={"Konto"}
+                                menuItems={accountLinks}
+                            />
                         ) : (
-                            <Button
-                                color="secondary"
-                                onClick={handleLoginDialogOpen}
-                                className={classes.button}
-                            >
-                                Logi sisse
-                            </Button>
+                            <MenuPopupState
+                                buttonText={"Logi sisse"}
+                                buttonProps={{
+                                    onClick: handleLoginDialogOpen,
+                                }}
+                            />
                         )}
                     </Box>
-
-                    {anchorEl?.id === "workshop" && (
-                        <Menu
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: "bottom",
-                                horizontal: "center",
-                            }}
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "center",
-                            }}
-                            PaperProps={{
-                                style: { backgroundColor: "#efefef" },
-                            }}
-                            open={Boolean(open)}
-                            onClose={handleClose}
-                        >
-                            <MenuItem
-                                component={Link}
-                                to="/prices"
-                                onClick={handleClose}
-                            >
-                                Hinnakiri
-                            </MenuItem>
-                            <MenuItem
-                                component={Link}
-                                to="/rules"
-                                onClick={handleClose}
-                            >
-                                Kodukord
-                            </MenuItem>
-                            <MenuItem
-                                component={Link}
-                                to="/opportunities"
-                                onClick={handleClose}
-                            >
-                                Võimalused
-                            </MenuItem>
-                        </Menu>
-                    )}
-
-                    {anchorEl?.id === "infocenter" && (
-                        <Menu
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: "bottom",
-                                horizontal: "center",
-                            }}
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "center",
-                            }}
-                            PaperProps={{
-                                style: { backgroundColor: "#efefef" },
-                            }}
-                            open={Boolean(open)}
-                            onClose={handleClose}
-                        >
-                            <MenuItem
-                                component={Link}
-                                to="/timetable"
-                                onClick={handleClose}
-                            >
-                                Tunniplaan
-                            </MenuItem>
-                            <MenuItem
-                                component={Link}
-                                to="/courses"
-                                onClick={handleClose}
-                            >
-                                Koolitused
-                            </MenuItem>
-                            <MenuItem
-                                component={Link}
-                                to="/consulting"
-                                onClick={handleClose}
-                            >
-                                Nõustamised
-                            </MenuItem>
-                        </Menu>
-                    )}
-
-                    {anchorEl?.id === "account" && (
-                        <Menu
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                                vertical: "bottom",
-                                horizontal: "center",
-                            }}
-                            transformOrigin={{
-                                vertical: "top",
-                                horizontal: "center",
-                            }}
-                            PaperProps={{
-                                style: { backgroundColor: "#efefef" },
-                            }}
-                            open={Boolean(open)}
-                            onClose={handleClose}
-                        >
-                            <MenuItem
-                                component={Link}
-                                to="/account"
-                                onClick={handleClose}
-                            >
-                                Minu konto
-                            </MenuItem>
-                            <MenuItem
-                                component={Link}
-                                to="/settings"
-                                onClick={handleClose}
-                            >
-                                Seaded
-                            </MenuItem>
-                            <MenuItem
-                                component={Link}
-                                to="/"
-                                onClick={handleLogOut}
-                            >
-                                Logi Välja
-                            </MenuItem>
-                        </Menu>
-                    )}
                 </Box>
             </AppBar>
             <LoginDialog
