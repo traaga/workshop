@@ -12,6 +12,7 @@ import RegisterDialog from "./RegisterDialog";
 import ForgotPasswordDialog from "./ForgotPasswordDialog";
 import { makeStyles } from "@mui/styles";
 import MenuPopupState from "./MenuPopupState";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 const useStyles = makeStyles((theme: Theme) => ({
     button: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const NavigationBar = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = anchorEl;
+    const { width } = useWindowDimensions();
 
     const handleLogOut = () => {
         setAnchorEl(null);
