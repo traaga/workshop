@@ -1,21 +1,30 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+/*@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
 @font-face 
 {
     font-family: "Granaina";
     src: local("Granaina"), url(../public/granaina-limpia.ttf) format("truetype");
 }
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&family=Mr+Dafoe&display=swap');
+
+html {
+    overflow-x: hidden;
+    overflow-y: visible;
+}
 
 body {
     margin: 0;
-    font-family: "Montserrat", "Helvetica", "Arial", sans-serif;
+    padding-right: 0 !important;
+    font-family: "Barlow", "Helvetica", "Arial", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #d9ccbf;
+    background-color: whitesmoke;
 }
 
 #content {
-    min-height: calc(100vh - 64px - 270px);
+    min-height: calc(100vh - 128px - 270px);
 }
 
 code {

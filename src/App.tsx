@@ -1,19 +1,15 @@
 import "./App.scss";
 
-import Account from "./components/Account/Account";
-import Consulting from "./components/Consulting/Consulting";
-import Contact from "./components/Contact/Contact";
-import Courses from "./components/Courses/Courses";
-import Home from "./components/Home/Home";
-import NoPage from "./components/NoPage/NoPage";
-import Opportunities from "./components/Opportunities/Opportunities";
-import Prices from "./components/Prices/Prices";
-import Rules from "./components/Rules/Rules";
-import Settings from "./components/Settings/Settings";
-import Timetable from "./components/Timetable/Timetable";
+import Account from "./pages/Account";
+import Contact from "./pages/Contact";
+import Home from "./pages/Home";
+import InfoCenter from "./pages/InfoCenter";
+import NoPage from "./pages/NoPage";
+import Settings from "./pages/Settings";
+import Workshop from "./pages/Workshop";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { GlobalStateProvider } from "./components/State/GlobalStateContextProvider";
+import { GlobalStateProvider } from "./state/GlobalStateContextProvider";
 import { StyledEngineProvider } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./theme";
@@ -27,26 +23,11 @@ function App() {
                         <Routes>
                             <Route path="/">
                                 <Route index element={<Home />} />
-
                                 <Route path="account" element={<Account />} />
-                                <Route
-                                    path="consulting"
-                                    element={<Consulting />}
-                                />
                                 <Route path="contact" element={<Contact />} />
-                                <Route path="courses" element={<Courses />} />
-                                <Route
-                                    path="opportunities"
-                                    element={<Opportunities />}
-                                />
-                                <Route path="prices" element={<Prices />} />
-                                <Route path="rules" element={<Rules />} />
+                                <Route path="infocenter" element={<InfoCenter />} />
                                 <Route path="settings" element={<Settings />} />
-                                <Route
-                                    path="timetable"
-                                    element={<Timetable />}
-                                />
-
+                                <Route path="workshop" element={<Workshop />} />
                                 <Route path="*" element={<NoPage />} />
                             </Route>
                         </Routes>
