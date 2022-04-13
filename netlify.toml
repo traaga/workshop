@@ -1,6 +1,5 @@
-
 [build]
-  #base = "/"
+  base = "/"
   publish = "/build"
   command = "CI=false npm run build"
 
