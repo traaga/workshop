@@ -4,10 +4,7 @@ import { GlobalStateContext} from "./GlobalStateContext";
 export const GlobalStateProvider: React.FC = ({ children }) => {
     const [ isAuthenticated, setAuthenticated ] = useState(false);
 
-    //const titleShort = "K&P";
-    //const titleFull = "Kirve & Puudega";
-
-    const titleShort = "Fellin";
+    const titleShort = "FT";
     const titleFull = "Fellini Töökoda";
 
     return (

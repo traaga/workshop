@@ -6,8 +6,9 @@ import { Typography, Avatar } from "@mui/material";
 import { GlobalStateContext } from "../state/GlobalStateContext";
 
 const Account = () => {
-    const { titleShort } = useContext(GlobalStateContext);
-    document.title = titleShort + " | Minu konto";
+    const { titleFull } = useContext(GlobalStateContext);
+    document.title = "Konto | " + titleFull;
+
     return (
         <>
             <NavigationBar />

@@ -6,8 +6,9 @@ import { Typography } from "@mui/material";
 import { GlobalStateContext } from "../state/GlobalStateContext";
 
 const InfoCenter = () => {
-    const { titleShort } = useContext(GlobalStateContext);
-    document.title = titleShort + " | Infokeskus";
+    const { titleFull } = useContext(GlobalStateContext);
+    document.title = "Infokeskus | " + titleFull;
+
     return (
         <>
             <NavigationBar />

@@ -1,12 +1,12 @@
-import {useContext} from "react";
+import { useContext } from "react";
 import NavigationBar from "../components/NavigationBar";
 import ContentContainer from "../components/ContentContainer";
 import Footer from "../components/Footer";
 import TeamMemberCard from "../components/TeamMemberCard";
 import ContactUsForm from "../components/ContactUsForm";
-import {Typography} from "@mui/material";
-import {GlobalStateContext} from "../state/GlobalStateContext";
-import {Box} from "@mui/system";
+import { Typography } from "@mui/material";
+import { GlobalStateContext } from "../state/GlobalStateContext";
+import { Box } from "@mui/system";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 
 const members = [
@@ -47,9 +47,10 @@ const members = [
 members.sort(() => Math.random() - 0.5);
 
 const Contact = () => {
-    const {titleShort} = useContext(GlobalStateContext);
-    document.title = titleShort + " | Kontakt";
-    const {width} = useWindowDimensions();
+    const { titleFull } = useContext(GlobalStateContext);
+    document.title = "Kontakt | " + titleFull;
+    const { width } = useWindowDimensions();
+
     return (
         <>
             <NavigationBar/>

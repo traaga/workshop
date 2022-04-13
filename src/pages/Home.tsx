@@ -5,11 +5,13 @@ import Footer from "../components/Footer";
 import { Box, Typography } from "@mui/material";
 import { GlobalStateContext } from "../state/GlobalStateContext";
 import { useNavigate } from "react-router-dom";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 
 const Home = () => {
-    const { titleShort } = useContext(GlobalStateContext);
+    const { titleFull } = useContext(GlobalStateContext);
+    const { width } = useWindowDimensions();
 
-    document.title = titleShort + " | Avaleht";
+    document.title = "Avaleht | " + titleFull;
 
     // TODO: Fix this bs with react-router
     const navigate = useNavigate();
@@ -25,7 +27,7 @@ const Home = () => {
 
     return (
         <>
-            <NavigationBar />
+            <NavigationBar/>
             <ContentContainer>
                 {/*<Box
                     width={"100%"}
@@ -46,7 +48,29 @@ const Home = () => {
                         src="images/logo1.png"
                     />
                 </Box>*/}
+
+                <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    {width < 1261 ? (
+                        <Box
+                            component="img"
+                            sx={{
+                                height: width >= 900 ? "calc(100vh - 128px)" : "calc(100vh - 96px)",
+                            }}
+                            src="images/taust3.jpg"
+                        />
+                    ) : (
+                        <Box
+                            component="img"
+                            sx={{
+                                width: "100%",
+                            }}
+                            src="images/taust3.jpg"
+                        />
+                    )}
+                </Box>
+
                 <Typography>Kirjeldus, Video+pildid, missioon</Typography>
+
                 <Box sx={{ display: "flex", flexDirection: "column" }}>
                     {render &&
                         temps.map((temp) => (
@@ -63,7 +87,7 @@ const Home = () => {
                         ))}
                 </Box>
             </ContentContainer>
-            <Footer />
+            <Footer/>
         </>
     );
 };

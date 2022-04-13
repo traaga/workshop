@@ -6,8 +6,9 @@ import { Typography } from "@mui/material";
 import { GlobalStateContext } from "../state/GlobalStateContext";
 
 const NoPage = () => {
-    const { titleShort } = useContext(GlobalStateContext);
-    document.title = titleShort + " | No Page Found";
+    const { titleFull } = useContext(GlobalStateContext);
+    document.title = "No Page Found | " + titleFull;
+
     return (
         <>
             <NavigationBar />

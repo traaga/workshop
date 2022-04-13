@@ -1,7 +1,7 @@
-import {Box, Theme, Typography} from "@mui/material";
+import { Box, Theme, Typography } from "@mui/material";
 import NewsletterInput from "./NewsletterInput";
 import SocialMediaList from "./SocialMediaList";
-import {makeStyles} from "@mui/styles";
+import { makeStyles } from "@mui/styles";
 import useWindowDimensions from "../hooks/useWindowDimensions";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -29,23 +29,23 @@ const Footer = () => {
         <>
             <Box>
                 <Box
-                    sx={{
+                    sx={ {
                         backgroundColor: "white",
                         color: "#272727",
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center"
-                    }}
+                    } }
                 >
                     <Box
                         className={ width > 700 ? classes.wide : classes.narrow }
                     >
                         <Box
                             component="img"
-                            sx={{
+                            sx={ {
                                 height: 240,
                                 width: 240,
-                            }}
+                            } }
                             src="images/logo1.png"
                         />
                         <SocialMediaList/>
@@ -53,15 +53,15 @@ const Footer = () => {
                     <NewsletterInput/>
                 </Box>
                 <Box
-                    sx={{
+                    sx={ {
                         backgroundColor: "#272727",
                         display: "flex",
                         justifyContent: "center",
                         color: "#D9D9D9",
                         padding: "6px 0",
-                    }}
+                    } }
                 >
-                    <Typography fontSize={"12px"}>
+                    <Typography fontSize={ "12px" }>
                         © 2022 MTÜ Fellini Töökoda. All Rights Reserved.
                     </Typography>
                 </Box>

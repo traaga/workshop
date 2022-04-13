@@ -19,7 +19,7 @@ function App() {
         <GlobalStateProvider>
             <StyledEngineProvider injectFirst>
                 <ThemeProvider theme={theme}>
-                    <BrowserRouter /*basename={process.env.PUBLIC_URL}*/>
+                    <BrowserRouter>
                         <Routes>
                             <Route path="/">
                                 <Route index element={<Home />} />

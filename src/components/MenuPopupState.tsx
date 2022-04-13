@@ -19,6 +19,7 @@ interface MenuPopupStateProps {
     buttonText: string;
     menuItems?: CustomMenuItem[];
     buttonProps?: any;
+    image?: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -39,6 +40,7 @@ const MenuPopupState = ({
     buttonText,
     menuItems,
     buttonProps,
+    image,
 }: MenuPopupStateProps) => {
     const classes = useStyles();
     const popupState = usePopupState({
@@ -57,7 +59,7 @@ const MenuPopupState = ({
                     {...buttonProps}
                 >
                     <Avatar
-                        src="images/profile.jpg"
+                        src={ image ? image : "images/plank-profile.jpg"}
                         sx={{ width: 40, height: 40 }}
                     />
                 </IconButton>

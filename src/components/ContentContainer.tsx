@@ -1,4 +1,4 @@
-import { Box, Theme, SxProps } from "@mui/material";
+import { Box, SxProps, Theme } from "@mui/material";
 
 interface ContentContainerProps {
     sx?: SxProps<Theme> | undefined;
@@ -10,8 +10,8 @@ interface ContentContainerProps {
 
 const ContentContainer: React.FC<ContentContainerProps> = (props) => (
     <>
-        <Box id="content" sx={props.sx}>
-            {props.children}
+        <Box id="content" sx={ props.sx }>
+            { props.children }
         </Box>
     </>
 );

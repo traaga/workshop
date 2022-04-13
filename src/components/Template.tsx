@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import {Box} from "@mui/material";
 
 const Template = () => {
     return (
@@ -9,8 +9,8 @@ const Template = () => {
                     height: 240,
                     width: 240,
                 }}
-                src="images/icon320-square.png"
-            ></Box>
+                src="images/profile.jpg"
+            />
         </>
     );
 };

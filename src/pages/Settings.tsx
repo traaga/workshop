@@ -6,8 +6,9 @@ import { Typography } from "@mui/material";
 import { GlobalStateContext } from "../state/GlobalStateContext";
 
 const Settings = () => {
-    const { titleShort } = useContext(GlobalStateContext);
-    document.title = titleShort + " | Seaded";
+    const { titleFull } = useContext(GlobalStateContext);
+    document.title = "Seaded + | " + titleFull;
+
     return (
         <>
             <NavigationBar />
