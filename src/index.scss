@@ -25,6 +25,7 @@ body {
 
 #content {
     min-height: calc(100vh - 128px - 270px);
+    overflow-x: hidden;
 }
 
 code {
