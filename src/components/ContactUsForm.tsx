@@ -2,7 +2,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from '@mui/icons-material/Phone';
-import useWindowDimensions from "../hooks/useWindowDimensions";
+import useWindowDimensions from "../other/useWindowDimensions";
 
 const ContactUsForm = () => {
     const { width } = useWindowDimensions()

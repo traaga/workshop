@@ -1,33 +1,16 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import NavigationBar from "../components/NavigationBar";
 import ContentContainer from "../components/ContentContainer";
 import Footer from "../components/Footer";
+import WeekPicker from "../components/WeekPicker";
+import Calendar from "../components/Calendar";
 import { Typography } from "@mui/material";
-import { GlobalStateContext } from "../state/GlobalStateContext";
-
-//import { Calendar, momentLocalizer  } from "react-big-calendar";
-//import "react-big-calendar/lib/css/react-big-calendar.css";
-//import moment from "moment";
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-
+import { GlobalStateContext } from "../other/GlobalStateContext";
+import PriceList from "../components/PriceList";
 
 const Workshop = () => {
     const { titleFull } = useContext(GlobalStateContext);
     document.title = "Avatud Töökoda | " + titleFull;
-
-    const [value, onChange] = useState(new Date());
-
-    /*const localizer = momentLocalizer(moment);
-    const events = [
-        {
-            start: moment().toDate(),
-            end: moment()
-                .add(1, "days")
-                .toDate(),
-            title: "Some title"
-        }
-    ];*/
 
     return (
         <>
@@ -36,17 +19,44 @@ const Workshop = () => {
                 <Typography>Kalender</Typography>
                 <Typography>Töölaua ja tööriistarendi hinnakiri</Typography>
                 <Typography>Kodukord ning ohutusest</Typography>
-                <Typography>Lisaks pakume: Hoiu võimalus, Materjali hankimine, Käsitööriistade rent</Typography>
+                <Typography sx={{ marginBottom: "100px" }}>Lisaks pakume: Hoiu võimalus, Materjali hankimine,
+                    Käsitööriistade rent</Typography>
 
-                <Calendar onChange={onChange} value={value}/>
+                <Typography
+                    gutterBottom
+                    variant="h4"
+                    //width={width > 696 ? "8em" : "auto"}
+                    width="8em"
+                    sx={{
+                        marginTop: "2em",
+                        marginBottom: "2em",
+                        borderBottom: "2px solid #D9D9D9",
+                        height: "1.5em",
+                        textAlign: "center",
+                    }}
+                >
+                    Kalender
+                </Typography>
 
-                {/*<Calendar
-                    localizer={localizer}
-                    defaultDate={new Date()}
-                    defaultView="month"
-                    events={events}
-                    style={{ height: "75vh", width: "75vw", margin: "100px 0" }}
-                />*/}
+                <Calendar/>
+
+                <Typography
+                    gutterBottom
+                    variant="h4"
+                    //width={width > 696 ? "8em" : "auto"}
+                    width="8em"
+                    sx={{
+                        marginTop: "2em",
+                        marginBottom: "2em",
+                        borderBottom: "2px solid #D9D9D9",
+                        height: "1.5em",
+                        textAlign: "center",
+                    }}
+                >
+                    Hinnakiri
+                </Typography>
+
+                <PriceList/>
 
             </ContentContainer>
             <Footer/>

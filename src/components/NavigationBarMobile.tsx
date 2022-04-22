@@ -1,7 +1,7 @@
 import { Box, Button, Drawer, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
 import { KeyboardEvent, useContext, useState } from "react";
-import { GlobalStateContext } from "../state/GlobalStateContext";
+import { GlobalStateContext } from "../other/GlobalStateContext";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuPopupState from "./MenuPopupState";
 

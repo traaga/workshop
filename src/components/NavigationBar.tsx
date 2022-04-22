@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
 import { AppBar, Box, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-import { GlobalStateContext } from "../state/GlobalStateContext";
+import { GlobalStateContext } from "../other/GlobalStateContext";
 import LoginDialog from "./LoginDialog";
 import MenuPopupState from "./MenuPopupState";
-import useWindowDimensions from "../hooks/useWindowDimensions";
+import useWindowDimensions from "../other/useWindowDimensions";
 import NavigationBarMobile from "./NavigationBarMobile";
 
 const NavigationBar = () => {

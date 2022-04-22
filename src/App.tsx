@@ -9,7 +9,7 @@ import Settings from "./pages/Settings";
 import Workshop from "./pages/Workshop";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { GlobalStateProvider } from "./state/GlobalStateContextProvider";
+import { GlobalStateProvider } from "./other/GlobalStateContextProvider";
 import { StyledEngineProvider } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./theme";

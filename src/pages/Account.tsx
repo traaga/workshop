@@ -3,7 +3,7 @@ import NavigationBar from "../components/NavigationBar";
 import ContentContainer from "../components/ContentContainer";
 import Footer from "../components/Footer";
 import { Typography, Avatar } from "@mui/material";
-import { GlobalStateContext } from "../state/GlobalStateContext";
+import { GlobalStateContext } from "../other/GlobalStateContext";
 
 const Account = () => {
     const { titleFull } = useContext(GlobalStateContext);

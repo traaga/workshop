@@ -2,7 +2,7 @@ import { Box, Theme, Typography } from "@mui/material";
 import NewsletterInput from "./NewsletterInput";
 import SocialMediaList from "./SocialMediaList";
 import { makeStyles } from "@mui/styles";
-import useWindowDimensions from "../hooks/useWindowDimensions";
+import useWindowDimensions from "../other/useWindowDimensions";
 
 const useStyles = makeStyles((theme: Theme) => ({
     wide: {

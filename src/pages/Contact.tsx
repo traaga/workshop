@@ -5,9 +5,9 @@ import Footer from "../components/Footer";
 import TeamMemberCard from "../components/TeamMemberCard";
 import ContactUsForm from "../components/ContactUsForm";
 import { Typography } from "@mui/material";
-import { GlobalStateContext } from "../state/GlobalStateContext";
+import { GlobalStateContext } from "../other/GlobalStateContext";
 import { Box } from "@mui/system";
-import useWindowDimensions from "../hooks/useWindowDimensions";
+import useWindowDimensions from "../other/useWindowDimensions";
 
 const members = [
     {

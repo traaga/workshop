@@ -3,9 +3,9 @@ import NavigationBar from "../components/NavigationBar";
 import ContentContainer from "../components/ContentContainer";
 import Footer from "../components/Footer";
 import { Box, Typography } from "@mui/material";
-import { GlobalStateContext } from "../state/GlobalStateContext";
+import { GlobalStateContext } from "../other/GlobalStateContext";
 import { useNavigate } from "react-router-dom";
-import useWindowDimensions from "../hooks/useWindowDimensions";
+import useWindowDimensions from "../other/useWindowDimensions";
 
 const Home = () => {
     const { titleFull } = useContext(GlobalStateContext);
@@ -13,7 +13,7 @@ const Home = () => {
 
     document.title = "Avaleht | " + titleFull;
 
-    // TODO: Fix this bs with react-router
+    // TODO: Fix this bs with react-router - or is it bs?
     const navigate = useNavigate();
     useEffect(() => {
         if (document.location.pathname === "/workshop") {
@@ -22,32 +22,10 @@ const Home = () => {
         }
     });
 
-    const temps = [1, 2, 3];
-    const render = false;
-
     return (
         <>
             <NavigationBar/>
             <ContentContainer>
-                {/*<Box
-                    width={"100%"}
-                    sx={{
-                        backgroundColor: "#272727",
-                        display: "flex",
-                        justifyContent: "center",
-                    }}
-                >
-                    <Box
-                        component="img"
-                        sx={{
-                            height: 320,
-                            width: 320,
-                            paddingBottom: "40px",
-                        }}
-                        //src="images/icon320-square.png"
-                        src="images/logo1.png"
-                    />
-                </Box>*/}
 
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
                     {width < 1261 ? (
@@ -59,33 +37,20 @@ const Home = () => {
                             src="images/taust3.jpg"
                         />
                     ) : (
-                        <Box
-                            component="img"
-                            sx={{
-                                width: "100%",
-                            }}
-                            src="images/taust3.jpg"
-                        />
+                        <>
+                            <Box
+                                component="img"
+                                sx={{
+                                    width: "100%",
+                                }}
+                                src="images/taust3.jpg"
+                            />
+                        </>
                     )}
                 </Box>
 
                 <Typography>Kirjeldus, Video+pildid, missioon</Typography>
 
-                <Box sx={{ display: "flex", flexDirection: "column" }}>
-                    {render &&
-                        temps.map((temp) => (
-                            <Box
-                                key={temp}
-                                component="img"
-                                sx={{
-                                    height: 320,
-                                    width: 320,
-                                    marginBottom: "10px",
-                                }}
-                                src="images/logo1.png"
-                            />
-                        ))}
-                </Box>
             </ContentContainer>
             <Footer/>
         </>

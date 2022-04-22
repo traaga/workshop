@@ -8,7 +8,7 @@ import {
     Avatar,
     Box,
 } from "@mui/material";
-import { GlobalStateContext } from "../state/GlobalStateContext";
+import { GlobalStateContext } from "../other/GlobalStateContext";
 import RegisterDialog from "./RegisterDialog";
 import ForgotPasswordDialog from "./ForgotPasswordDialog";
 
