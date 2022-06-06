@@ -58,7 +58,8 @@ const NavigationBar = () => {
                             justifyContent: "space-between",
                             height: "128px",
                             padding: "0px 100px",
-                            backgroundColor: "#FFFFFF"
+                            backgroundColor: "#FFFFFF",
+                            zIndex: "1"
                         }}
                     >
                         <Button

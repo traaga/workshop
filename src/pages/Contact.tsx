@@ -63,7 +63,7 @@ const Contact = () => {
             >
                 <Typography
                     gutterBottom
-                    variant="h4"
+                    variant="h5"
                     width={width > 696 ? "8em" : "auto"}
                     sx={{
                         marginTop: "2em",
@@ -94,7 +94,7 @@ const Contact = () => {
                 {width > 500 ?
                     <Typography
                         gutterBottom
-                        variant="h4"
+                        variant="h5"
                         width={width > 696 ? "14.5em" : "auto"}
                         sx={{
                             marginTop: "3em",

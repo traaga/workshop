@@ -1,14 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 // Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth } from "firebase/auth";
-import { useContext } from "react";
-import { GlobalStateContext } from "./GlobalStateContext";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export const config = {
     apiKey: "AIzaSyAYkgC3RfnQFmlZIiBYzBLcdr_hgOiY3O0",
     authDomain: "fellini-tookoda.firebaseapp.com",
@@ -21,7 +17,7 @@ export const config = {
 
 // Initialize Firebase
 const app = initializeApp(config);
-//const auth = getAuth(app);
+const auth = getAuth(app);
 
 export const db = getFirestore(app);
 
@@ -30,7 +26,51 @@ export interface Test {
     data: any
 }
 
-export const useGetMessages = async (collectionName: string) => {
+export const checkLogin = () => {
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            console.log("User is signed in");
+            // https://firebase.google.com/docs/reference/js/firebase.User
+        } else {
+            console.log("User is signed out");
+        }
+    });
+}
+
+export const registerWithEmail = (email: string, password: string) => {
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+        });
+}
+
+export const loginWithEmail = (email: string, password: string) => {
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+        });
+}
+
+export const logout = () => {
+    // Get user: User from globalstate
+    console.log("Logging out");
+    //signOut(user);
+}
+
+/*export const useGetMessages = async (collectionName: string) => {
 
     //const { bookings, setBookings } = useContext(GlobalStateContext);
     // return getDocs(collection(db, collectionName));
@@ -47,4 +87,4 @@ export const useGetMessages = async (collectionName: string) => {
 
     //console.log("end", [...bookings, messages])
     return messages;
-}
+}*/

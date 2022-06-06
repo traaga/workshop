@@ -1,10 +1,4 @@
-import {
-    Button,
-    TextField,
-    Dialog,
-    DialogContent,
-    Avatar,
-} from "@mui/material";
+import { Button, Dialog, DialogContent, TextField, } from "@mui/material";
 import { Box } from "@mui/system";
 
 interface RegisterDialogProps {
@@ -24,74 +18,87 @@ const RegisterDialog = ({ isOpen, closeDialog }: RegisterDialogProps) => {
 
     return (
         <Dialog open={isOpen} onClose={handleClose}>
-            <DialogContent sx={{ backgroundColor: "#efefef" }}>
-                <Box
+            <DialogContent sx={{
+                padding: "20px 50px",
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center"
+            }}>
+                {/*<Box
                     sx={{
                         display: "flex",
                         justifyContent: "center",
                         padding: "24px 0px",
                     }}
                 >
-                    <Avatar
-                        src="images/icon320-square.png"
+                    <Box
+                        component="img"
+                        src="images/logo1.png"
                         sx={{
                             height: 200,
                             width: 200,
                         }}
                     />
+                </Box>*/}
+                <Box sx={{ display: "flex", gap: "10px"}}>
+                    <TextField
+                        margin="dense"
+                        id="firstname"
+                        label="Eesnimi"
+                        type="text"
+                        sx={{ width: "225px" }}
+                        variant="filled"
+                    />
+                    <TextField
+                        margin="dense"
+                        id="lastname"
+                        label="Perenimi"
+                        type="text"
+                        sx={{ width: "225px" }}
+                        variant="filled"
+                    />
                 </Box>
-                <TextField
-                    margin="dense"
-                    id="firstname"
-                    label="Eesnimi"
-                    type="text"
-                    fullWidth
-                    variant="filled"
-                />
-                <TextField
-                    margin="dense"
-                    id="lastname"
-                    label="Perenimi"
-                    type="text"
-                    fullWidth
-                    variant="filled"
-                />
-                <TextField
-                    margin="dense"
-                    id="username"
-                    label="Kasutajanimi"
-                    type="text"
-                    fullWidth
-                    variant="filled"
-                />
-                <TextField
-                    margin="dense"
-                    id="email"
-                    label="Email Aaddress"
-                    type="email"
-                    fullWidth
-                    variant="filled"
-                />
-                <TextField
-                    margin="dense"
-                    id="password"
-                    label="Parool"
-                    type="password"
-                    fullWidth
-                    variant="filled"
-                />
-                <TextField
-                    margin="dense"
-                    id="passwordagain"
-                    label="Parool Uuesti"
-                    type="password"
-                    fullWidth
-                    variant="filled"
-                />
+                <Box sx={{ display: "flex", gap: "10px"}}>
+                    <TextField
+                        margin="dense"
+                        id="email"
+                        label="Email"
+                        type="email"
+                        sx={{ width: "225px" }}
+                        variant="filled"
+                    />
+                    <TextField
+                        margin="dense"
+                        id="phone"
+                        label="Telefon"
+                        type="phone"
+                        sx={{ width: "225px" }}
+                        variant="filled"
+                    />
+                </Box>
+                <Box sx={{ display: "flex", gap: "10px"}}>
+                    <TextField
+                        margin="dense"
+                        id="password"
+                        label="Parool"
+                        type="password"
+                        sx={{ width: "225px" }}
+                        variant="filled"
+                    />
+                    <TextField
+                        margin="dense"
+                        id="passwordagain"
+                        label="Parool Uuesti"
+                        type="password"
+                        sx={{ width: "225px" }}
+                        variant="filled"
+                    />
+                </Box>
                 <Button
                     variant="contained"
                     size="medium"
-                    sx={{ width: "100%", marginTop: "24px" }}
+                    sx={{ width: "460px", marginTop: "24px" }}
                     onClick={handleRegister}
                 >
                     Registreeru

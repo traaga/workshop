@@ -24,10 +24,11 @@ const Workshop = () => {
 
                 <Typography
                     gutterBottom
-                    variant="h4"
+                    variant="h5"
                     //width={width > 696 ? "8em" : "auto"}
                     width="8em"
                     sx={{
+                        fontSize: "1.5em",
                         marginTop: "2em",
                         marginBottom: "2em",
                         borderBottom: "2px solid #D9D9D9",
@@ -42,7 +43,7 @@ const Workshop = () => {
 
                 <Typography
                     gutterBottom
-                    variant="h4"
+                    variant="h5"
                     //width={width > 696 ? "8em" : "auto"}
                     width="8em"
                     sx={{
