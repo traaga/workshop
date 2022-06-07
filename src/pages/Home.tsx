@@ -7,6 +7,7 @@ import { GlobalStateContext } from "../other/GlobalStateContext";
 import { useNavigate } from "react-router-dom";
 import useWindowDimensions from "../other/useWindowDimensions";
 import Goal from "../components/Goal";
+import ParagraphTree from "../components/ParagraphTree";
 
 const Home = () => {
     const { titleFull } = useContext(GlobalStateContext);
@@ -27,7 +28,7 @@ const Home = () => {
         <>
             <NavigationBar/>
 
-            <ContentContainer>
+            <ContentContainer sx={{marginBottom: "100px"}}>
 
                 {width < 1279 ? (
                     <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -100,7 +101,7 @@ const Home = () => {
 
                 <Goal/>
 
-                <Typography>Kirjeldus, Video+pildid, missioon</Typography>
+                <ParagraphTree/>
 
             </ContentContainer>
             <Footer/>
