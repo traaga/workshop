@@ -65,29 +65,19 @@ const Calendar = () => {
             setCalendarEvents(data.docs.map((doc) => {
                 const params = doc.data();
 
-                /*const event: CalendarEventProps = {
-                    id: doc.id,
-                    description: params.description,
-                    start: params.start,
-                    end: params.end,
-                    user: params.user,
-                    tools: params.tools
-                }*/
-
                 const event: CalendarEventProps = {
                     id: doc.id,
                     start: params.start.seconds,
                     end: params.end.seconds,
                     projects: params.projects,
-                    temp: 0,
-                    temp2: 0
+                    description: params.description
                 }
 
                 return event;
             }));
         };
 
-        //fetchEvents();
+        fetchEvents();
     }, []);
 
     const handleOpen = () => {
@@ -102,11 +92,33 @@ const Calendar = () => {
         setChosenDate(new Date());
     }
 
+    const startTimes = calendarEvents.map((event) => {
+        return parseInt(format(new Date(event.start * 1000), "H"));
+    });
+
+    const endTimes = calendarEvents.map((event) => {
+        return parseInt(format(new Date(event.end * 1000), "H"));
+    });
+
+    const startTime = Math.min(...startTimes);
+    let endTime = Math.max(...endTimes);
+
+    if(endTime - startTime < 5) {
+        endTime += 5 - endTime + startTime;
+    }
+
     const timeMatrix = (times: number, slotWidth: number) => {
 
         const timesList: number[] = [];
-        for (let i = 0; i < times; i++) {
-            timesList.push(i);
+
+        if(startTime && endTime) {
+            for (let i = startTime; i <= endTime; i++) {
+                timesList.push(i);
+            }
+        } else {
+            for (let i = 10; i <= 15; i++) {
+                timesList.push(i);
+            }
         }
 
         return (
@@ -114,7 +126,7 @@ const Calendar = () => {
                 {timesList.map((time) => (
                     <Box key={time} sx={{ position: "relative" }}>
                         <Box sx={{ position: "absolute", top: "-10px", left: "-50px", color: "#707070" }}>
-                            08:00
+                            {time < 10 ? "0" + time + ":00" : time + ":00"}
                         </Box>
                         <Box sx={{
                             height: slotWidth * 2 / 3,
@@ -183,11 +195,23 @@ const Calendar = () => {
         <>
             <Box sx={{ marginBottom: "50px", /*marginLeft: width < 1200 ? 0 : "45px"*/ }}>
                 <Box sx={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
-                    <Button variant="outlined" onClick={handleToday}>Täna</Button>
+                    <Button onClick={handleToday} sx={{
+                        border: "1px solid #272727",
+                        borderTopLeftRadius: "5px",
+                        borderBottomLeftRadius: "5px",
+                        borderTopRightRadius: 0,
+                        borderBottomRightRadius: 0,
+                        borderRight: "none",
+                        backgroundColor: "#272727",
+                        color: "whitesmoke",
+                        '&:hover': {
+                            backgroundColor: "#505050", // #686868 383838
+                        },
+                    }}>Täna</Button>
                     <WeekPicker value={chosenDate} setValue={setChosenDate}/>
-                    <IconButton sx={{ width: "56px" }} onClick={handleOpen}>
+                    {/*<IconButton sx={{ width: "56px" }} onClick={handleOpen}>
                         <FontAwesomeIcon icon={faCirclePlus} color={"lightblue"} fontSize={"1.25em"}/>
-                    </IconButton>
+                    </IconButton>*/}
                 </Box>
                 <Dialog onClose={handleClose} open={newEventOpen}>
                     hi
@@ -213,10 +237,6 @@ const Calendar = () => {
                         </Box>
                     }
 
-                    {calendarEvents.map((event) => (
-                        <CalendarEvent key={event.id} {...event}/>
-                    ))}
-
                     <Box sx={{
                         display: "flex",
                         justifyContent: "center",
@@ -229,11 +249,12 @@ const Calendar = () => {
                             overflow: "auto",
                             width: width < 850 ? "75vw" : "auto",
                         }}>
-                            <CalendarEvent temp={3} temp2={5}/>
-                            <CalendarEvent temp={1} temp2={3}/>
-                            <CalendarEvent temp={2} temp2={3}/>
 
-                            {eventMatrix(8, 7, calendarSlotSize)}
+                            {calendarEvents.map((event) => (
+                                <CalendarEvent key={event.id} {...event} firstTime={startTime} firstDay={parseInt(currentWeekDates[0])}/>
+                            ))}
+
+                            {eventMatrix(endTime && startTime ? endTime - startTime + 1 : 6, 7, calendarSlotSize)}
                         </Box>
                     </Box>
 

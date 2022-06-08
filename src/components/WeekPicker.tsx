@@ -10,7 +10,7 @@ import isWithinInterval from 'date-fns/isWithinInterval';
 import startOfWeek from 'date-fns/startOfWeek';
 import etLocale from 'date-fns/locale/et';
 import { format } from 'date-fns';
-import { Dialog, TextField } from "@mui/material";
+import { Button, Dialog, TextField } from "@mui/material";
 import EventIcon from '@mui/icons-material/Event';
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 
@@ -107,15 +107,22 @@ const WeekPicker = ({ value, setValue, }: WeekPickerProps) => {
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns} locale={etLocale}>
-            <TextField
-                sx={{ width: "250px" }}
-                value={value ? getCurrentWeek(value) : "undefined"}
-                onClick={() => setCalenderOpen(true)}
-                InputProps={{
-                    endAdornment: <EventIcon/>,
-                    readOnly: true
-                }}
-            />
+            <Button onClick={() => setCalenderOpen(true)} sx={{
+                border: "1px solid #272727",
+                borderTopRightRadius: "5px",
+                borderBottomRightRadius: "5px",
+                borderTopLeftRadius: 0,
+                borderBottomLeftRadius: 0,
+                height: "50px",
+                width: "210px",
+                gap: "10px",
+                '&:hover': {
+                    backgroundColor: "white",
+                },
+            }}>
+                {value ? getCurrentWeek(value) : "undefined"}
+                <EventIcon/>
+            </Button>
             <Dialog onClose={handleCalenderClose} open={calenderOpen}>
                 <StaticDatePicker
                     displayStaticWrapperAs="desktop"

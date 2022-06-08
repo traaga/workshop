@@ -21,11 +21,6 @@ const auth = getAuth(app);
 
 export const db = getFirestore(app);
 
-export interface Test {
-    id: string,
-    data: any
-}
-
 export const checkLogin = () => {
     onAuthStateChanged(auth, (user) => {
         if (user) {

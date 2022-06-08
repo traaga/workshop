@@ -54,7 +54,7 @@ const MenuPopupState = ({
                 <IconButton
                     id="account"
                     className={classes.button}
-                    sx={{ padding: "12px 10px" }}
+                    sx={{ padding: "12px 10px", width: "64px" }}
                     {...bindHover(popupState)}
                     {...buttonProps}
                 >

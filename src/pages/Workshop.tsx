@@ -16,16 +16,15 @@ const Workshop = () => {
         <>
             <NavigationBar/>
             <ContentContainer sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <Typography>Kalender</Typography>
+                {/*<Typography>Kalender</Typography>
                 <Typography>Töölaua ja tööriistarendi hinnakiri</Typography>
                 <Typography>Kodukord ning ohutusest</Typography>
                 <Typography sx={{ marginBottom: "100px" }}>Lisaks pakume: Hoiu võimalus, Materjali hankimine,
-                    Käsitööriistade rent</Typography>
+                    Käsitööriistade rent</Typography>*/}
 
                 <Typography
                     gutterBottom
                     variant="h5"
-                    //width={width > 696 ? "8em" : "auto"}
                     width="8em"
                     sx={{
                         fontSize: "1.5em",
@@ -44,7 +43,6 @@ const Workshop = () => {
                 <Typography
                     gutterBottom
                     variant="h5"
-                    //width={width > 696 ? "8em" : "auto"}
                     width="8em"
                     sx={{
                         marginTop: "2em",

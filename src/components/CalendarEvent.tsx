@@ -1,68 +1,37 @@
 import { Box } from "@mui/material";
 import useWindowDimensions from "../other/useWindowDimensions";
-
-/*export interface CalendarEventProps {
-    id: string,
-    description: string,
-    start: number,
-    end: number,
-    user: string,
-    tools: string[]
-}*/
+import { format } from "date-fns";
 
 export interface CalendarEventProps {
-    id?: string,
-    start?: number,
-    end?: number,
-    projects?: string[],
-    temp: number,
-    temp2: number
+    id: string,
+    start: number,
+    end: number,
+    projects: string[],
+    description: string,
+    firstTime?: number,
+    firstDay?: number
 }
 
 const CalendarEvent = (calendarEvent: CalendarEventProps) => {
 
-    /*
-    const slotWidth = width < 1225 ? 90 : 125.5;
-    const slotHeight = width < 1225 ? 90 : 72;
-
-    const timestampToDay = (timestamp: number) => {
-        const date = new Date(timestamp * 1000);
-        const day = date.getDay();
-
-        if (day === 0)
-            return 7;
-
-        return day;
-    }
-
-    const calcLeft = (start: number) => {
-        const day = timestampToDay(start);
-        return 75 + day + slotWidth * (day - 1);
-    }
-
-    const calcHeight = (start: number, end: number) => {
-        return (end - start) / slotHeight + (end - start) / 3600 - 1;
-    }
-
-    const calcTop = (start: number) => {
-        const openTime = new Date(start * 1000);
-
-        openTime.setHours(8);
-        openTime.setMinutes(0);
-        openTime.setMilliseconds(0);
-
-        return calcHeight(Math.round(openTime.getTime() / 1000), start) + 2;
-    }*/
-
     const { width } = useWindowDimensions();
+    const date = new Date(calendarEvent.start * 1000);
+    const date2 = new Date(calendarEvent.end * 1000);
+
+    const dayOfEvent = parseInt(format(date, "d"));
+    const startOfEvent = format(date, "HH");
+    const endOfEvent = format(date2, "HH");
+
+    const slotX = calendarEvent.firstDay ? dayOfEvent - calendarEvent.firstDay : -1;
+    const slotY = calendarEvent.firstTime ? parseInt(startOfEvent) - calendarEvent.firstTime : -1;
 
     return (
         <>
             {width < 1020 ?
                 <Box sx={{
                     position: "absolute",
-                    top: (99 * 2 / 3) * calendarEvent.temp + calendarEvent.temp * 1.8 + 28 + 5,
-                    left: 99 * calendarEvent.temp2 + calendarEvent.temp2 + 5,
+                    top: (99 * 2 / 3) * slotY + slotY * 1.8 + 28 + 5,
+                    left: 99 * slotX + slotX + 5,
                     width: 99 - 5 * 2 - 3,
                     height: 99 * 2 / 3 - 5 * 2,
                     backgroundColor: "white",
@@ -73,16 +42,29 @@ const CalendarEvent = (calendarEvent: CalendarEventProps) => {
                         cursor: "pointer"
                     },
                 }}>
-                    <Box sx={{ margin: "4px", fontSize: "10px" }}>
-                        <Box sx={{ color: "#818181" }}>08:00 - 09:00</Box>
-                        <Box>Mingi väga tähtis tegevus</Box>
-                        <Box>Vabu kohti: 3</Box>
+                    <Box sx={{ margin: "4px", marginLeft: "6px", fontSize: "10px" }}>
+                        <Box sx={{ color: "#818181", width: "78px", height: "12px" }}>
+                            { startOfEvent && endOfEvent ? startOfEvent + ":00 - " + endOfEvent + ":00" : "00:00 - 00:00" }
+                        </Box>
+                        <Box sx={{width: "78px", height: "24px"}}>
+                            { calendarEvent.description ? calendarEvent.description : "no description" }
+                        </Box>
+                        <Box sx={{
+                            width: "78px",
+                            height: "12px",
+                            fontStyle: "italic",
+                            fontSize: "9px",
+                            marginTop: "2px"
+                        }}>
+                            Vabu kohti:
+                            { calendarEvent.projects ? " " + (5 - calendarEvent.projects.length) : " -1" }
+                        </Box>
                     </Box>
                 </Box> :
                 <Box sx={{
                     position: "absolute",
-                    top: (124 * 2 / 3) * calendarEvent.temp + calendarEvent.temp * 1.8 + 28 + 5,
-                    left: 124 * calendarEvent.temp2 + calendarEvent.temp2 + 5,
+                    top: (124 * 2 / 3) * slotY + slotY * 1.8 + 28 + 5,
+                    left: 124 * slotX + slotX + 5,
                     width: (124) - 5 * 2 - 3,
                     height: (124) * 2 / 3 - 5 * 2,
                     backgroundColor: "white",
@@ -100,19 +82,28 @@ const CalendarEvent = (calendarEvent: CalendarEventProps) => {
                             overflow: "hidden",
                             height: "14px",
                             width: "101px"
-                        }}>08:00 - 09:00</Box>
+                        }}>
+                            { startOfEvent && endOfEvent ? startOfEvent + ":00 - " + endOfEvent + ":00" : "00:00 - 00:00" }
+                        </Box>
 
                         <Box sx={{
                             overflow: "hidden",
-                            height: "28px",
+                            height: "32px",
                             width: "101px"
-                        }}>Mingi väga tähtis tegevus</Box>
+                        }}>
+                            { calendarEvent.description ? calendarEvent.description : "no description" }
+                        </Box>
 
                         <Box sx={{
                             overflow: "hidden",
                             height: "14px",
-                            width: "101px"
-                        }}>Vabu kohti: 5</Box>
+                            width: "101px",
+                            marginTop: "3px",
+                            fontStyle: "italic"
+                        }}>
+                            Vabu kohti:
+                            { calendarEvent.projects ? " " + (5 - calendarEvent.projects.length) : " -1" }
+                        </Box>
 
                     </Box>
                 </Box>

@@ -1,17 +1,19 @@
-import { Box, Button, Drawer, IconButton } from "@mui/material";
+import { Avatar, Box, Button, Drawer, IconButton } from "@mui/material";
 import { Link } from "react-router-dom";
+import * as React from "react";
 import { KeyboardEvent, useContext, useState } from "react";
 import { GlobalStateContext } from "../other/GlobalStateContext";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuPopupState from "./MenuPopupState";
 
 interface NavigationBarMobileProps {
+    logIn: () => void,
     logOut: () => void
 }
 
-const NavigationBarMobile = ({ logOut }: NavigationBarMobileProps) => {
+const NavigationBarMobile = ({ logOut, logIn }: NavigationBarMobileProps) => {
 
-    const { isAuthenticated } =
+    const { isAuthenticated, avatarSrc } =
         useContext(GlobalStateContext);
 
     const [open, setOpen] = useState<boolean>(false);
@@ -86,12 +88,18 @@ const NavigationBarMobile = ({ logOut }: NavigationBarMobileProps) => {
                     <MenuPopupState
                         buttonText={"Konto"}
                         menuItems={accountLinks}
+                        image={avatarSrc}
                     />
                 ) : (
-                    <MenuPopupState
-                        buttonText={"Konto"}
-                        menuItems={accountLinks}
-                    />
+                    <IconButton
+                        sx={{ padding: "12px 10px", width: "64px", height: "64px" }}
+                        onClick={logIn}
+                    >
+                        <Avatar
+                            src={"images/plank-profile.jpg"}
+                            sx={{ width: 40, height: 40 }}
+                        />
+                    </IconButton>
                 )}
             </Box>
             <Drawer

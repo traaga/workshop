@@ -11,6 +11,8 @@ const NavigationBar = () => {
     const [, setAnchorEl] = useState<null | HTMLElement>(null);
     const { width } = useWindowDimensions();
 
+    console.log("NavBar")
+
     const handleLogOut = () => {
         setAnchorEl(null);
         setAuthenticated(false);
@@ -24,6 +26,7 @@ const NavigationBar = () => {
         {
             label: "Seaded",
             location: "/settings",
+            props: { disabled: true },
         },
         {
             label: "Logi välja",
@@ -34,7 +37,7 @@ const NavigationBar = () => {
 
     const [isLoginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
 
-    const { isAuthenticated, setAuthenticated } =
+    const { isAuthenticated, setAuthenticated, avatarSrc } =
         useContext(GlobalStateContext);
 
     const handleLoginDialogOpen = () => {
@@ -107,8 +110,7 @@ const NavigationBar = () => {
                                 <MenuPopupState
                                     buttonText={"Konto"}
                                     menuItems={accountLinks}
-                                    //image={"images/avatar1.jpg"}
-                                    image={"images/avatar" + Math.floor(Math.random() * 6 + 1) + ".jpg"}
+                                    image={avatarSrc}
                                 />
                             ) : (
                                 <MenuPopupState
@@ -121,7 +123,7 @@ const NavigationBar = () => {
                         </Box>
                     </Box>
                 ) : (
-                    <NavigationBarMobile logOut={handleLogOut}/>
+                    <NavigationBarMobile logIn={handleLoginDialogOpen} logOut={handleLogOut}/>
                 )}
             </AppBar>
             <LoginDialog
