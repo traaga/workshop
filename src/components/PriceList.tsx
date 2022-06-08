@@ -24,8 +24,8 @@ const PriceList = () => {
 
     let realWidth = "50vw";
 
-    if(width < 770) {
-        if(width < 515) {
+    if (width < 770) {
+        if (width < 515) {
             realWidth = "80vw";
         } else {
             realWidth = "75vw";
@@ -80,7 +80,7 @@ const PriceList = () => {
     ]
 
     return (
-        <Box width={realWidth}  sx={{ marginBottom: "100px" }}>
+        <Box width={realWidth} sx={{ marginBottom: "100px" }}>
             <TableContainer component={Paper} elevation={0}>
                 <Table aria-label="simple table">
                     <TableHead>
@@ -99,9 +99,17 @@ const PriceList = () => {
                                     <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
                                         {row.description}
                                         {row.details &&
-                                            <Tooltip title={row.details} placement="right">
-                                                <InfoIcon sx={{ fontSize: 16, color: "#b5b5b5" }}/>
-                                            </Tooltip>
+                                            <>
+                                                {width < 600 ?
+                                                    <Tooltip title={row.details} placement="top" enterTouchDelay={100}
+                                                             leaveTouchDelay={2000}>
+                                                        <InfoIcon sx={{ fontSize: 16, color: "#b5b5b5" }}/>
+                                                    </Tooltip> :
+                                                    <Tooltip title={row.details} placement="right">
+                                                        <InfoIcon sx={{ fontSize: 16, color: "#b5b5b5" }}/>
+                                                    </Tooltip>
+                                                }
+                                            </>
                                         }
                                     </Box>
                                 </TableCell>

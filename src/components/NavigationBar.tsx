@@ -107,6 +107,8 @@ const NavigationBar = () => {
                                 <MenuPopupState
                                     buttonText={"Konto"}
                                     menuItems={accountLinks}
+                                    //image={"images/avatar1.jpg"}
+                                    image={"images/avatar" + Math.floor(Math.random() * 6 + 1) + ".jpg"}
                                 />
                             ) : (
                                 <MenuPopupState

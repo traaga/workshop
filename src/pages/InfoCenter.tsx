@@ -53,7 +53,6 @@ const InfoCenter = () => {
                     src="images/taust1.jpg"
                 />
                 <Box sx={{
-                    //top: "15%",
                     top: width < 500 ? "5%" : "15%",
                     left: containerLeft,
                     width: containerWidth,

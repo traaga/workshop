@@ -9,6 +9,10 @@ import { db } from "../other/Firebase";
 import { collection, getDocs } from "firebase/firestore";
 import CalendarEvent, { CalendarEventProps } from "./CalendarEvent";
 import useWindowDimensions from "../other/useWindowDimensions";
+import startOfWeek from "date-fns/startOfWeek";
+import etLocale from "date-fns/locale/et";
+import endOfWeek from "date-fns/endOfWeek";
+import { format } from 'date-fns';
 
 const Calendar = () => {
 
@@ -19,22 +23,37 @@ const Calendar = () => {
 
     const eventsCollectionRef = collection(db, "events");
 
-    const days2 = [1, 2, 3, 4, 5, 6, 7];
-    const days = ["E 18.04", "T 19.04", "K 20", "N 21", "R", "L", "P"];
-    const times_str_list = ["08:00", "09:00", "10:00", "11:00", "12:00",
-        "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00"];
+    const weekStart = startOfWeek(chosenDate ? chosenDate : new Date(), {
+        locale: etLocale,
+        weekStartsOn: 1
+    });
+
+    const weekEnd = endOfWeek(chosenDate ? chosenDate : new Date(), {
+        locale: etLocale,
+        weekStartsOn: 1
+    });
+
+    const getDatesInRange = (startDate: Date, endDate: Date) => {
+        const date = new Date(startDate.getTime());
+        const dates = [];
+
+        while (date <= endDate) {
+            dates.push(new Date(date));
+            date.setDate(date.getDate() + 1);
+        }
+
+        return dates;
+    }
+
+    const days = ["E", "T", "K", "N", "R", "L", "P"];
+
+    const currentWeekDates = getDatesInRange(weekStart, weekEnd).map((date) => {
+        return format(date, "dd");
+    });
 
     const loading = calendarEvents.length === 0 && false;
 
-    let calendarSlotSize = 125;
-
-    if (width < 1020) {
-        if (width < 820) {
-            calendarSlotSize = 100; // 75
-        } else {
-            calendarSlotSize = 100;
-        }
-    }
+    let calendarSlotSize = width < 1020 ? 100 : 125;
 
     const lineColor = "#dbdbdb";
 
@@ -59,7 +78,9 @@ const Calendar = () => {
                     id: doc.id,
                     start: params.start.seconds,
                     end: params.end.seconds,
-                    projects: params.projects
+                    projects: params.projects,
+                    temp: 0,
+                    temp2: 0
                 }
 
                 return event;
@@ -89,10 +110,10 @@ const Calendar = () => {
         }
 
         return (
-            <Box>
+            <Box sx={{ marginLeft: "60px", marginTop: "28px" }}>
                 {timesList.map((time) => (
                     <Box key={time} sx={{ position: "relative" }}>
-                        <Box sx={{ position: "absolute", top: "-10px", left: "-50px", color: "#adadad" }}>
+                        <Box sx={{ position: "absolute", top: "-10px", left: "-50px", color: "#707070" }}>
                             08:00
                         </Box>
                         <Box sx={{
@@ -122,18 +143,34 @@ const Calendar = () => {
             <Box
                 sx={{
                     display: "flex",
-                    borderBottom: lineColor + " solid 1px",
-                    borderRight: lineColor + " solid 1px",
                     maxWidth: "877px",
-                    overflowX: "scroll"
                 }}>
-                {columnsList.map((column) => (
-                    <Box key={column} sx={{ width: slotWidth }} width={slotWidth}>
-                        {rowsList.map((row) => (
+                {columnsList.map((column, columnIndex, columnArray) => (
+                    <Box key={column} width={slotWidth} sx={{
+                        minWidth: slotWidth,
+                        backgroundColor: (columnArray.length - 1 === columnIndex || columnArray.length - 2 === columnIndex) ? "#ff000008" : ""
+                    }}>
+                        <Box sx={{
+                            height: "28px",
+                            color: "#464646",
+                            backgroundColor: "#ffffffb3",
+                            fontWeight: "bold",
+                            fontSize: "1rem",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderLeft: lineColor + " solid 1px",
+                            borderRight: columnArray.length - 1 === columnIndex ? lineColor + " solid 1px" : ""
+                        }}>
+                            {days[columnIndex] + " " + currentWeekDates[columnIndex]}
+                        </Box>
+                        {rowsList.map((row, rowIndex, rowArray) => (
                             <Box key={row} sx={{
                                 height: slotWidth * 2 / 3,
                                 borderTop: lineColor + " solid 1px",
-                                borderLeft: lineColor + " solid 1px"
+                                borderLeft: lineColor + " solid 1px",
+                                borderBottom: rowArray.length - 1 === rowIndex ? lineColor + " solid 1px" : "",
+                                borderRight: columnArray.length - 1 === columnIndex ? lineColor + " solid 1px" : "",
                             }}/>
                         ))}
                     </Box>
@@ -144,7 +181,7 @@ const Calendar = () => {
 
     return (
         <>
-            <Box sx={{ marginBottom: "50px", marginLeft: "45px" }}>
+            <Box sx={{ marginBottom: "50px", /*marginLeft: width < 1200 ? 0 : "45px"*/ }}>
                 <Box sx={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
                     <Button variant="outlined" onClick={handleToday}>Täna</Button>
                     <WeekPicker value={chosenDate} setValue={setChosenDate}/>
@@ -162,7 +199,7 @@ const Calendar = () => {
                 }}>
                     {loading &&
                         <Box sx={{
-                            backgroundColor: "whitesmoke",
+                            backgroundColor: "#c9c9c9",
                             position: "absolute",
                             width: "100%",
                             height: "100%",
@@ -180,93 +217,26 @@ const Calendar = () => {
                         <CalendarEvent key={event.id} {...event}/>
                     ))}
 
-                    {/*<Box sx={{display: "flex", backgroundColor: "#efefef"}}>
-                        <Box sx={{ width: "75px", height: width < 1225 ? "40px" : "50px" }}/>
-                        {days.map((day) => (
-                            <Box sx={{
-                                width: width < 1225 ? "90px" : "125.5px",
-                                borderLeft: "whitesmoke solid 1px",
-                                textAlign: "center"
-                            }}>{day}</Box>
-                        ))}
-                    </Box>*/}
-
-
                     <Box sx={{
                         display: "flex",
                         justifyContent: "center",
                         marginTop: "50px",
                     }}>
                         {timeMatrix(8, calendarSlotSize)}
-                        <Box sx={{ position: "relative" }}>
-                            <Box sx={{
-                                position: "absolute",
-                                top: 170 + 5,
-                                left: 376 + 5,
-                                width: (124 - 0) - 5 * 2 - 3,
-                                height: (124 - 0) * 2 / 3 - 5 * 2,
-                                backgroundColor: "white",
-                                borderLeft: "#ff5252 solid 3px",
-                                borderRadius: "5px",
-                                '&:hover': {
-                                    backgroundColor: "#eeeeee",
-                                    cursor: "pointer"
-                                },
-                            }}>
-                                <Box sx={{ margin: "5px", fontSize: "12px" }}>
-                                    <Box sx={{ color: "#818181" }}>08:00 - 09:00</Box>
-                                    <Box>Mingi väga tähtis tegevus</Box>
-                                    <Box>Vabu kohti: 3</Box>
-                                </Box>
-                            </Box>
-                            <Box sx={{
-                                position: "absolute",
-                                top: 136 + 5,
-                                left: 201 + 5,
-                                width: (124 - 25) - 5 * 2 - 3,
-                                height: (124 - 25) * 2 / 3 - 5 * 2,
-                                backgroundColor: "white",
-                                borderLeft: "#ff5252 solid 3px",
-                                borderRadius: "5px",
-                                '&:hover': {
-                                    backgroundColor: "#eeeeee",
-                                    cursor: "pointer"
-                                },
-                            }}>
-                                <Box sx={{ margin: "4px", fontSize: "10px" }}>
-                                    <Box sx={{ color: "#818181" }}>08:00 - 09:00</Box>
-                                    <Box>Mingi väga tähtis tegevus</Box>
-                                    <Box>Vabu kohti: 3</Box>
-                                </Box>
-                            </Box>
+                        <Box sx={{
+                            position: "relative",
+                            maxWidth: "90vw",
+                            overflow: "auto",
+                            width: width < 850 ? "75vw" : "auto",
+                        }}>
+                            <CalendarEvent temp={3} temp2={5}/>
+                            <CalendarEvent temp={1} temp2={3}/>
+                            <CalendarEvent temp={2} temp2={3}/>
+
                             {eventMatrix(8, 7, calendarSlotSize)}
                         </Box>
                     </Box>
 
-                    {/*{times.map((time) => (
-                        <Box key={time} sx={{ height: width < 1225 ? "40px" : "50px", display: "flex", borderTop: "whitesmoke solid 1px", }}>
-                            <Box sx={{
-                                backgroundColor: "#efefef",
-                                width: "75px",
-                                color: "#7c7c7c",
-                                textAlign: "center"
-                            }}>
-                                {time}
-                            </Box>
-                            <Box sx={{ display: "flex" }}>
-                                {
-                                    days.map((day) => (
-                                        <Box
-                                            key={day}
-                                            sx={{
-                                                width: width < 1225 ? "90px" : "125.5px",
-                                                borderLeft: "whitesmoke solid 1px",
-                                            }}
-                                        />
-                                    ))}
-                            </Box>
-                        </Box>
-                    ))}*/}
                 </Box>
             </Box>
         </>

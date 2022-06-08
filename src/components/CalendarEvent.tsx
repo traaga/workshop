@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { format } from "date-fns";
 import useWindowDimensions from "../other/useWindowDimensions";
 
 /*export interface CalendarEventProps {
@@ -12,15 +11,17 @@ import useWindowDimensions from "../other/useWindowDimensions";
 }*/
 
 export interface CalendarEventProps {
-    id: string,
-    start: number,
-    end: number,
-    projects: string[]
+    id?: string,
+    start?: number,
+    end?: number,
+    projects?: string[],
+    temp: number,
+    temp2: number
 }
 
 const CalendarEvent = (calendarEvent: CalendarEventProps) => {
 
-    const { width } = useWindowDimensions();
+    /*
     const slotWidth = width < 1225 ? 90 : 125.5;
     const slotHeight = width < 1225 ? 90 : 72;
 
@@ -51,34 +52,72 @@ const CalendarEvent = (calendarEvent: CalendarEventProps) => {
         openTime.setMilliseconds(0);
 
         return calcHeight(Math.round(openTime.getTime() / 1000), start) + 2;
-    }
+    }*/
+
+    const { width } = useWindowDimensions();
 
     return (
-        <Box key={calendarEvent.id} sx={{
-            color: "#202020",
-            backgroundColor: "lightblue",
-            position: "absolute",
-            width: slotWidth + "px",
-            height: calcHeight(calendarEvent.start, calendarEvent.end) + "px",
-            top: calcTop(calendarEvent.start) + "px",
-            left: calcLeft(calendarEvent.start) + "px",
-            overflowY: "hidden",
-            display: "flex",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-            borderRadius: "5px",
-            '&:hover': {
-                background: "#bdefff",
-                cursor: "pointer"
-            },
-        }}>
-            <Box>
-                {format(new Date(calendarEvent.start * 1000), "HH:mm")}
-            </Box>
-            <Box>
-                {calendarEvent.projects.length + "/5"}
-            </Box>
-        </Box>
+        <>
+            {width < 1020 ?
+                <Box sx={{
+                    position: "absolute",
+                    top: (99 * 2 / 3) * calendarEvent.temp + calendarEvent.temp * 1.8 + 28 + 5,
+                    left: 99 * calendarEvent.temp2 + calendarEvent.temp2 + 5,
+                    width: 99 - 5 * 2 - 3,
+                    height: 99 * 2 / 3 - 5 * 2,
+                    backgroundColor: "white",
+                    borderLeft: "#ff5252 solid 3px",
+                    borderRadius: "5px",
+                    '&:hover': {
+                        backgroundColor: "#eeeeee",
+                        cursor: "pointer"
+                    },
+                }}>
+                    <Box sx={{ margin: "4px", fontSize: "10px" }}>
+                        <Box sx={{ color: "#818181" }}>08:00 - 09:00</Box>
+                        <Box>Mingi väga tähtis tegevus</Box>
+                        <Box>Vabu kohti: 3</Box>
+                    </Box>
+                </Box> :
+                <Box sx={{
+                    position: "absolute",
+                    top: (124 * 2 / 3) * calendarEvent.temp + calendarEvent.temp * 1.8 + 28 + 5,
+                    left: 124 * calendarEvent.temp2 + calendarEvent.temp2 + 5,
+                    width: (124) - 5 * 2 - 3,
+                    height: (124) * 2 / 3 - 5 * 2,
+                    backgroundColor: "white",
+                    borderLeft: "#ff5252 solid 3px",
+                    borderRadius: "5px",
+                    '&:hover': {
+                        backgroundColor: "#eeeeee",
+                        cursor: "pointer"
+                    },
+                }}>
+                    <Box sx={{ margin: "5px", fontSize: "12px" }}>
+
+                        <Box sx={{
+                            color: "#818181",
+                            overflow: "hidden",
+                            height: "14px",
+                            width: "101px"
+                        }}>08:00 - 09:00</Box>
+
+                        <Box sx={{
+                            overflow: "hidden",
+                            height: "28px",
+                            width: "101px"
+                        }}>Mingi väga tähtis tegevus</Box>
+
+                        <Box sx={{
+                            overflow: "hidden",
+                            height: "14px",
+                            width: "101px"
+                        }}>Vabu kohti: 5</Box>
+
+                    </Box>
+                </Box>
+            }
+        </>
     );
 };
 
