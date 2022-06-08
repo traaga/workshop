@@ -51,7 +51,7 @@ const Calendar = () => {
         return format(date, "dd");
     });
 
-    const loading = calendarEvents.length === 0 && false;
+    const loading = calendarEvents.length === 0;
 
     let calendarSlotSize = width < 1020 ? 100 : 125;
 
