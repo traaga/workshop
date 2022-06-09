@@ -28,6 +28,10 @@ body {
     overflow-x: hidden;
 }
 
+.no-scroll {
+    overflow-y: hidden;
+}
+
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;

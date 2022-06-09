@@ -3,7 +3,13 @@ import { getFirestore } from "firebase/firestore";
 
 // Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import {
+    createUserWithEmailAndPassword,
+    getAuth,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    sendPasswordResetEmail,
+} from "firebase/auth";
 import { useContext } from "react";
 import { GlobalStateContext } from "./GlobalStateContext";
 
@@ -41,7 +47,7 @@ export const CheckLogin = () => {
     });
 }
 
-export const RegisterWithEmail = (email: string, password: string) => {
+export const CreateUserWithEmail = (email: string, password: string) => {
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
@@ -65,6 +71,19 @@ export const LoginWithEmail = (email: string, password: string) => {
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
+        });
+}
+
+export const SendPasswordResetEmail = (email: string) => {
+    sendPasswordResetEmail(auth, email)
+        .then(() => {
+            // Password reset email sent!
+            // ..
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
         });
 }
 
