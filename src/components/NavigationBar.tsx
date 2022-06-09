@@ -11,8 +11,6 @@ const NavigationBar = () => {
     const [, setAnchorEl] = useState<null | HTMLElement>(null);
     const { width } = useWindowDimensions();
 
-    console.log("NavBar")
-
     const handleLogOut = () => {
         setAnchorEl(null);
         setAuthenticated(false);

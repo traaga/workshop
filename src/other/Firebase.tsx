@@ -4,6 +4,8 @@ import { getFirestore } from "firebase/firestore";
 // Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { useContext } from "react";
+import { GlobalStateContext } from "./GlobalStateContext";
 
 export const config = {
     apiKey: "AIzaSyAYkgC3RfnQFmlZIiBYzBLcdr_hgOiY3O0",
@@ -21,18 +23,25 @@ const auth = getAuth(app);
 
 export const db = getFirestore(app);
 
-export const checkLogin = () => {
+export const CheckLogin = () => {
+    const { setAuthenticated } = useContext(GlobalStateContext);
+
     onAuthStateChanged(auth, (user) => {
         if (user) {
             console.log("User is signed in");
+
+            // Additional user info
             // https://firebase.google.com/docs/reference/js/firebase.User
+
+            setAuthenticated(true);
         } else {
             console.log("User is signed out");
+            setAuthenticated(false);
         }
     });
 }
 
-export const registerWithEmail = (email: string, password: string) => {
+export const RegisterWithEmail = (email: string, password: string) => {
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
@@ -46,7 +55,7 @@ export const registerWithEmail = (email: string, password: string) => {
         });
 }
 
-export const loginWithEmail = (email: string, password: string) => {
+export const LoginWithEmail = (email: string, password: string) => {
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
@@ -59,27 +68,8 @@ export const loginWithEmail = (email: string, password: string) => {
         });
 }
 
-export const logout = () => {
+export const LogOut = () => {
     // Get user: User from globalstate
     console.log("Logging out");
     //signOut(user);
 }
-
-/*export const useGetMessages = async (collectionName: string) => {
-
-    //const { bookings, setBookings } = useContext(GlobalStateContext);
-    // return getDocs(collection(db, collectionName));
-
-    //return collection(db, collectionName);
-    let messages: Test[] = [];
-
-    await getDocs(collection(db, collectionName)).then(querySnapshot => {
-        querySnapshot.forEach((doc) => {
-            const el = { id: doc.id, data: doc.data() };
-            messages.push(el);
-        })
-    })
-
-    //console.log("end", [...bookings, messages])
-    return messages;
-}*/

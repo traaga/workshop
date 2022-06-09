@@ -7,8 +7,6 @@ export const GlobalStateProvider: React.FC = ({ children }) => {
     const titleShort = "FT";
     const titleFull = "Fellini Töökoda";
 
-    console.log("Generating random animal avatar for user in Global State ...")
-
     const avatarSrc = "images/avatar" + Math.floor(Math.random() * 6 + 1) + ".jpg";
 
     return (

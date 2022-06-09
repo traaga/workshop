@@ -1,12 +1,4 @@
-import {
-    Button,
-    TextField,
-    Dialog,
-    DialogContent,
-    DialogContentText,
-    Avatar,
-    Box
-} from "@mui/material";
+import { Box, Button, Dialog, DialogContent, TextField, Typography } from "@mui/material";
 
 interface ForgotPasswordDialogProps {
     isOpen: boolean;
@@ -14,9 +6,9 @@ interface ForgotPasswordDialogProps {
 }
 
 const ForgotPasswordDialog = ({
-    isOpen,
-    closeDialog,
-}: ForgotPasswordDialogProps) => {
+                                  isOpen,
+                                  closeDialog,
+                              }: ForgotPasswordDialogProps) => {
 
     const handleClose = () => {
         closeDialog();
@@ -24,38 +16,56 @@ const ForgotPasswordDialog = ({
 
     return (
         <Dialog open={isOpen} onClose={handleClose}>
-            <DialogContent sx={{ backgroundColor: "#efefef" }}>
+            {/*<DialogContent sx={{ backgroundColor: "#efefef" }}>*/}
+            <DialogContent sx={{ width: "300px"}}>
+
                 <Box
                     sx={{
                         display: "flex",
                         justifyContent: "center",
-                        padding: "24px 0px",
+                        paddingTop: "24px",
+                        paddingBottom: "32px",
                     }}
                 >
-                    <Avatar
-                        src="images/icon320-square.png"
+                    <Box
+                        component="img"
                         sx={{
-                            height: 200,
-                            width: 200,
+                            height: 64,
+                            width: 136,
                         }}
+                        src="images/logo2-3.png"
                     />
                 </Box>
-                <TextField
-                    margin="dense"
-                    id="email"
-                    label="Email Aaddress"
-                    type="email"
-                    fullWidth
-                    variant="filled"
-                />
-                <Button
-                    variant="contained"
-                    size="medium"
-                    sx={{ width: "100%", marginTop: "24px" }}
-                    onClick={handleClose}
-                >
-                    Saada
-                </Button>
+
+                <Typography fontSize={"13px"}>
+                    Siia sisestage oma email, et saaksime teile parooli taastamiseks vajaliku emaili saata
+                </Typography>
+
+                <form>
+
+                    <TextField
+                        margin="dense"
+                        size="small"
+                        id="email"
+                        label="Email"
+                        type="text"
+                        variant="outlined"
+                        autoComplete="email"
+                        sx={{ width: "100%" }}
+                    />
+
+
+                    <Button
+                        variant="contained"
+                        size="medium"
+                        sx={{ width: "100%", marginTop: "24px" }}
+                        onClick={handleClose}
+                    >
+                        Saada email
+                    </Button>
+
+                </form>
+
             </DialogContent>
         </Dialog>
     );

@@ -205,7 +205,7 @@ const Calendar = () => {
                         backgroundColor: "#272727",
                         color: "whitesmoke",
                         '&:hover': {
-                            backgroundColor: "#505050", // #686868 383838
+                            backgroundColor: "#505050",
                         },
                     }}>Täna</Button>
                     <WeekPicker value={chosenDate} setValue={setChosenDate}/>
