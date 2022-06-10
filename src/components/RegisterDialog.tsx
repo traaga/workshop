@@ -1,116 +1,222 @@
-import { Button, Dialog, DialogContent, TextField, } from "@mui/material";
+import { Button, Dialog, DialogContent, IconButton, TextField, Typography, } from "@mui/material";
 import { Box } from "@mui/system";
+import useWindowDimensions from "../other/useWindowDimensions";
+import CloseIcon from "@mui/icons-material/Close";
+import * as React from "react";
+import { useState } from "react";
+import {
+    validateEmail,
+    validateName,
+    validatePassword,
+    validatePasswordConfirm,
+    validatePhone
+} from "../other/Validation";
 
 interface RegisterDialogProps {
     isOpen: boolean;
     closeDialog: () => void;
 }
 
-export const validateEmail = (email: number) => {
-    return String(email)
-        .toLowerCase()
-        .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        );
-};
-
 const RegisterDialog = ({ isOpen, closeDialog }: RegisterDialogProps) => {
+
+    const [firstNameError, setFirstNameError] = useState<string>("");
+    const [lastNameError, setLastNameError] = useState<string>("");
+    const [emailError, setEmailError] = useState<string>("");
+    const [phoneError, setPhoneError] = useState<string>("");
+    const [passwordError, setPasswordError] = useState<string>("");
+    const [passwordConfirmError, setPasswordConfirmError] = useState<string>("");
+
+    const { width } = useWindowDimensions();
+
     const handleRegister = () => {
-        console.log("Registered!");
-        closeDialog();
+
+        const firstname = document.getElementById("firstname") as HTMLInputElement;
+        const lastname = document.getElementById("lastname") as HTMLInputElement;
+        const email = document.getElementById("email") as HTMLInputElement;
+        const phone = document.getElementById("phone") as HTMLInputElement;
+        const password = document.getElementById("password") as HTMLInputElement;
+        const password2 = document.getElementById("password2") as HTMLInputElement;
+
+        const firstNameErr = validateName("Eesnimi", firstname.value);
+        const lastNameErr = validateName("Perenimi", lastname.value);
+        const emailErr = validateEmail(email.value);
+        const phoneErr = phone.value ? validatePhone(phone.value) : "";
+        const passwordErr = validatePassword(password.value);
+        const passwordConfirmErr = validatePasswordConfirm(password.value, password2.value);
+
+        if (!firstNameErr && !lastNameErr && !emailErr && !phoneErr && !passwordErr && !passwordConfirmErr) {
+
+            console.log("Registered!");
+            closeDialog();
+
+        } else {
+            setFirstNameError(firstNameErr);
+            setLastNameError(lastNameErr);
+            setEmailError(emailErr);
+            setPhoneError(phoneErr);
+            setPasswordError(passwordErr);
+            setPasswordConfirmError(passwordConfirmErr);
+        }
     };
 
     const handleClose = () => {
         closeDialog();
     };
 
+    const element = document.querySelector("html");
+
+    if (isOpen) {
+        element?.classList.add("no-scroll");
+    } else {
+        element?.classList.remove("no-scroll");
+    }
+
     return (
-        <Dialog open={isOpen} onClose={handleClose}>
+        <Dialog open={isOpen} onClose={handleClose} fullScreen={width < 500}>
             <DialogContent sx={{
-                padding: "20px 50px",
+                padding: width < 500 ? "50px calc(20% / 2)" : "20px 50px",
+                width: width < 500 ? "80%" : "300px",
+                height: width < 500 ? "100vh" : "inherit",
                 display: "flex",
-                justifyContent: "center",
                 flexDirection: "column",
-                alignItems: "center"
+                alignItems: "stretch",
+                position: "relative"
             }}>
-                {/*<Box
+                <Box
                     sx={{
                         display: "flex",
                         justifyContent: "center",
-                        padding: "24px 0px",
+                        paddingTop: "24px",
+                        paddingBottom: "32px",
                     }}
                 >
                     <Box
                         component="img"
-                        src="images/logo1.png"
                         sx={{
-                            height: 200,
-                            width: 200,
+                            height: 64,
+                            width: 136,
                         }}
+                        src="images/logo2-3.png"
                     />
-                </Box>*/}
-                <Box sx={{ display: "flex", gap: "10px"}}>
+                </Box>
+
+                <form>
+
+                    <Typography fontSize={"13px"}>
+                        Uue konto loomiseks täitke järgnev küsimustik
+                    </Typography>
+
                     <TextField
+                        error={!!firstNameError}
+                        helperText={firstNameError ? firstNameError : ""}
+                        required
                         margin="dense"
+                        size="small"
                         id="firstname"
                         label="Eesnimi"
                         type="text"
-                        sx={{ width: "225px" }}
-                        variant="filled"
+                        variant="outlined"
+                        autoComplete="given-name"
+                        sx={{ width: "100%" }}
                     />
+
                     <TextField
+                        error={!!lastNameError}
+                        helperText={lastNameError ? lastNameError : ""}
+                        required
                         margin="dense"
+                        size="small"
                         id="lastname"
                         label="Perenimi"
                         type="text"
-                        sx={{ width: "225px" }}
-                        variant="filled"
+                        variant="outlined"
+                        autoComplete="family-name"
+                        sx={{ width: "100%" }}
                     />
-                </Box>
-                <Box sx={{ display: "flex", gap: "10px"}}>
+
                     <TextField
+                        error={!!emailError}
+                        helperText={emailError ? emailError : ""}
+                        required
                         margin="dense"
+                        size="small"
                         id="email"
                         label="Email"
                         type="email"
-                        sx={{ width: "225px" }}
-                        variant="filled"
+                        variant="outlined"
+                        autoComplete="email"
+                        sx={{ width: "100%" }}
                     />
+
                     <TextField
+                        error={!!phoneError}
+                        helperText={phoneError ? phoneError : ""}
                         margin="dense"
+                        size="small"
                         id="phone"
                         label="Telefon"
-                        type="phone"
-                        sx={{ width: "225px" }}
-                        variant="filled"
+                        type="tel"
+                        variant="outlined"
+                        autoComplete="tel"
+                        sx={{ width: "100%" }}
                     />
-                </Box>
-                <Box sx={{ display: "flex", gap: "10px"}}>
+
                     <TextField
+                        required
+                        error={!!passwordError}
+                        helperText={passwordError ? passwordError : ""}
                         margin="dense"
+                        size="small"
                         id="password"
                         label="Parool"
                         type="password"
-                        sx={{ width: "225px" }}
-                        variant="filled"
+                        variant="outlined"
+                        autoComplete="new-password"
+                        sx={{ width: "100%" }}
                     />
+
                     <TextField
+                        required
+                        error={!!passwordConfirmError}
+                        helperText={passwordConfirmError ? passwordConfirmError : ""}
                         margin="dense"
-                        id="passwordagain"
-                        label="Parool Uuesti"
+                        size="small"
+                        id="password2"
+                        label="Parool uuesti"
                         type="password"
-                        sx={{ width: "225px" }}
-                        variant="filled"
+                        variant="outlined"
+                        autoComplete="new-password"
+                        sx={{ width: "100%" }}
                     />
-                </Box>
-                <Button
-                    variant="contained"
-                    size="medium"
-                    sx={{ width: "460px", marginTop: "24px" }}
-                    onClick={handleRegister}
-                >
-                    Registreeru
-                </Button>
+
+                    <Button
+                        variant="contained"
+                        size="medium"
+                        sx={{
+                            width: "100%",
+                            margin: "24px 0px"
+                        }}
+                        onClick={handleRegister}
+                    >
+                        Registreeru
+                    </Button>
+
+                </form>
+
+                {width < 500 &&
+                    <IconButton
+                        onClick={handleClose}
+                        sx={{
+                            width: "64px",
+                            height: "64px",
+                            position: "absolute",
+                            right: "5vw",
+                            top: "5vw"
+                        }}>
+                        <CloseIcon sx={{ width: "40px", height: "40px", color: "#272727" }}/>
+                    </IconButton>
+                }
+
             </DialogContent>
         </Dialog>
     );

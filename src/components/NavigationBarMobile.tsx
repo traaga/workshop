@@ -26,6 +26,7 @@ const NavigationBarMobile = ({ logOut, logIn }: NavigationBarMobileProps) => {
         {
             label: "Seaded",
             location: "/settings",
+            props: { disabled: true },
         },
         {
             label: "Logi välja",

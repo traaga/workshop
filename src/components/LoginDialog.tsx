@@ -1,12 +1,12 @@
+import * as React from "react";
 import { useContext, useState } from "react";
-import { Avatar, Box, Button, Dialog, DialogContent, IconButton, TextField, Typography, } from "@mui/material";
+import { Box, Button, Dialog, DialogContent, IconButton, TextField, Typography, } from "@mui/material";
 import { GlobalStateContext } from "../other/GlobalStateContext";
-import RegisterDialog, { validateEmail } from "./RegisterDialog";
+import RegisterDialog from "./RegisterDialog";
 import ForgotPasswordDialog from "./ForgotPasswordDialog";
 import GoogleIcon from '@mui/icons-material/Google';
 import useWindowDimensions from "../other/useWindowDimensions";
 import CloseIcon from '@mui/icons-material/Close';
-import * as React from "react";
 
 interface LoginDialogProps {
     isOpen: boolean;
@@ -58,7 +58,7 @@ const LoginDialog = ({
 
     const element = document.querySelector("html");
 
-    if(isOpen) {
+    if (isOpen) {
         element?.classList.add("no-scroll");
     } else {
         element?.classList.remove("no-scroll");
@@ -99,30 +99,34 @@ const LoginDialog = ({
                     </Typography>
 
                     <form>
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
-                            <TextField
-                                error={ !!emailError }
-                                helperText={ emailError ? emailError : ""}
-                                margin="dense"
-                                size="small"
-                                id="email"
-                                label="Email"
-                                type="text"
-                                variant="outlined"
-                                autoComplete="email"
-                            />
-                            <TextField
-                                error={ !!passwordError }
-                                helperText={ passwordError ? passwordError : ""}
-                                margin="dense"
-                                size="small"
-                                id="password"
-                                label="Parool"
-                                type="password"
-                                variant="outlined"
-                                autoComplete="current-password"
-                            />
-                        </Box>
+
+                        <TextField
+                            required
+                            error={!!emailError}
+                            helperText={emailError ? emailError : ""}
+                            margin="dense"
+                            size="small"
+                            id="email"
+                            label="Email"
+                            type="text"
+                            variant="outlined"
+                            autoComplete="email"
+                            sx={{ width: "100%" }}
+                        />
+                        <TextField
+                            required
+                            error={!!passwordError}
+                            helperText={passwordError ? passwordError : ""}
+                            margin="dense"
+                            size="small"
+                            id="password"
+                            label="Parool"
+                            type="password"
+                            variant="outlined"
+                            autoComplete="current-password"
+                            sx={{ width: "100%" }}
+                        />
+
                         <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                             <Button
                                 variant="text"
@@ -135,16 +139,19 @@ const LoginDialog = ({
                                 Unustasid Parooli?
                             </Button>
                         </Box>
+
                         <Button
                             variant="contained"
                             size="medium"
                             sx={{
                                 width: "100%",
-                                margin: "24px 0px" }}
+                                margin: "24px 0px"
+                            }}
                             onClick={handleLogin}
                         >
                             Logi Sisse
                         </Button>
+
                     </form>
 
                     <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>

@@ -47,7 +47,7 @@ export const CheckLogin = () => {
     });
 }
 
-export const CreateUserWithEmail = (email: string, password: string) => {
+export const CreateUserWithEmail = (email: string, password: string,) => {
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in

@@ -18,7 +18,7 @@ const InfoCenter = () => {
     const text2 = "Olgu nendeks väsinud aknad või ära jooksnud vundament. Tuleme kohale, vaatame olukorra üle ja teeme tegevuskava. Kui oskame ja soovite võime tööd ise ära teha.";
     const text3 = "Kui meie oskustest peaks puudu jääma siis meil on väga lai meistrite võrgustik, igal alal mitu spetsialisti, kelle pädevuses oleme kindlad ja julgeme edasi soovitada.";
     const text4 = "Nõustamiseks tuleb eraldi aeg kokku leppida, mille käigus soovime veidi eelinfot, et teaksime, kes meist oleks kõige pädevam antud objekti hindama.";
-    const text5 = "Nõustamise ühe korra hind on 40 eurot, millele lisandub 0.33euro senti kilomeetri kohta.";
+    const text5 = "Nõustamise ühe korra hind on 40 eurot, millele lisandub 0.33 euro senti kilomeetri kohta.";
 
     let containerLeft = "calc((100% - 50%) / 2)";
     if (width < 1200) {

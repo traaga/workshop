@@ -61,9 +61,11 @@ const Footer = () => {
                         display: "flex",
                         justifyContent: "space-between",
                         padding: "6px 0",
+                        alignItems: "center",
+                        flexDirection: width < 450 ? "column" : "row",
                     }}
                 >
-                    <Typography fontSize={"12px"} color={"#D9D9D9"} marginLeft={"20px"}>
+                    <Typography fontSize={ "12px" } color={ "#D9D9D9" } marginLeft={ width < 450 ? "0px" : "20px" }>
                         © 2022 MTÜ Fellini Töökoda. All Rights Reserved.
                     </Typography>
 
@@ -72,7 +74,9 @@ const Footer = () => {
                         color: "#D9D9D9",
                         display: "flex",
                         alignItems: "center",
-                        marginRight: "20px",
+                        marginTop: width < 450 ? "5px" : "0px",
+                        marginBottom: width < 450 ? "5px" : "0px",
+                        marginRight: width < 450 ? "0px" : "20px",
                     }}>
                         Animal Avatars by Vecteezy.
                     </Link>
