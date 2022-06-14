@@ -1,11 +1,8 @@
 import { Box, Button, Dialog } from "@mui/material";
 import { useEffect, useState } from "react";
 import WeekPicker from "./WeekPicker";
-import IconButton from '@mui/material/IconButton';
 import CircularProgress from '@mui/material/CircularProgress';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import { db } from "../other/Firebase";
+import useFirebase from "../other/useFirebase";
 import { collection, getDocs } from "firebase/firestore";
 import CalendarEvent, { CalendarEventProps } from "./CalendarEvent";
 import useWindowDimensions from "../other/useWindowDimensions";
@@ -19,7 +16,9 @@ const Calendar = () => {
     const [calendarEvents, setCalendarEvents] = useState<CalendarEventProps[]>([]);
     const [chosenDate, setChosenDate] = useState<Date | null>(new Date());
     const [newEventOpen, setNewEventOpen] = useState<boolean>(false);
+
     const { width } = useWindowDimensions();
+    const { db } = useFirebase();
 
     const eventsCollectionRef = collection(db, "events");
 

@@ -13,13 +13,13 @@ import { GlobalStateProvider } from "./other/GlobalStateContextProvider";
 import { StyledEngineProvider } from "@mui/material/styles";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme } from "./theme";
-import { useContext } from "react";
-import { GlobalStateContext } from "./other/GlobalStateContext";
-import { CheckLogin } from "./other/Firebase";
+import useFirebase from "./other/useFirebase";
 
 function App() {
 
-    CheckLogin();
+    const { checkLogin } = useFirebase();
+
+    checkLogin();
 
     return (
         <GlobalStateProvider>

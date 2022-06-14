@@ -4,20 +4,19 @@ import CloseIcon from "@mui/icons-material/Close";
 import * as React from "react";
 import { validateEmail } from "../other/Validation";
 import { useState } from "react";
+import useFirebase from "../other/useFirebase";
 
 interface ForgotPasswordDialogProps {
     isOpen: boolean;
     closeDialog: () => void;
 }
 
-const ForgotPasswordDialog = ({
-                                  isOpen,
-                                  closeDialog,
-                              }: ForgotPasswordDialogProps) => {
+const ForgotPasswordDialog = ({ isOpen, closeDialog, }: ForgotPasswordDialogProps) => {
 
     const [emailError, setEmailError] = useState<string>("");
 
     const { width } = useWindowDimensions();
+    const { sendForgotPasswordResetEmail } = useFirebase();
 
     const handleClose = () => {
         closeDialog();
@@ -29,8 +28,9 @@ const ForgotPasswordDialog = ({
 
         if (!emailErr) {
 
-            console.log("Sent!");
-            closeDialog();
+            sendForgotPasswordResetEmail(email.value).then(() => {
+                closeDialog();
+            });
 
         } else {
             setEmailError(emailErr);

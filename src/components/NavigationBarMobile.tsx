@@ -13,8 +13,7 @@ interface NavigationBarMobileProps {
 
 const NavigationBarMobile = ({ logOut, logIn }: NavigationBarMobileProps) => {
 
-    const { isAuthenticated, avatarSrc } =
-        useContext(GlobalStateContext);
+    const { user } = useContext(GlobalStateContext);
 
     const [open, setOpen] = useState<boolean>(false);
 
@@ -85,11 +84,11 @@ const NavigationBarMobile = ({ logOut, logIn }: NavigationBarMobileProps) => {
                         src="images/logo2-3.png"
                     />
                 </Button>
-                {isAuthenticated ? (
+                {user ? (
                     <MenuPopupState
                         buttonText={"Konto"}
                         menuItems={accountLinks}
-                        image={avatarSrc}
+                        image={user.photoURL ? user.photoURL : "images/plank-profile.jpg"}
                     />
                 ) : (
                     <IconButton

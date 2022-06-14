@@ -11,6 +11,7 @@ import {
     validatePasswordConfirm,
     validatePhone
 } from "../other/Validation";
+import useFirebase from "../other/useFirebase";
 
 interface RegisterDialogProps {
     isOpen: boolean;
@@ -27,6 +28,7 @@ const RegisterDialog = ({ isOpen, closeDialog }: RegisterDialogProps) => {
     const [passwordConfirmError, setPasswordConfirmError] = useState<string>("");
 
     const { width } = useWindowDimensions();
+    const { createUserWithEmail } = useFirebase();
 
     const handleRegister = () => {
 
@@ -46,8 +48,9 @@ const RegisterDialog = ({ isOpen, closeDialog }: RegisterDialogProps) => {
 
         if (!firstNameErr && !lastNameErr && !emailErr && !phoneErr && !passwordErr && !passwordConfirmErr) {
 
-            console.log("Registered!");
-            closeDialog();
+            createUserWithEmail(firstname.value, lastname.value, email.value, phone.value, password.value).then(() => {
+                closeDialog();
+            });
 
         } else {
             setFirstNameError(firstNameErr);

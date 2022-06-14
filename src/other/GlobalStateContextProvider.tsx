@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { GlobalStateContext } from "./GlobalStateContext";
+import { User } from "firebase/auth";
 
 export const GlobalStateProvider: React.FC = ({ children }) => {
-    const [isAuthenticated, setAuthenticated] = useState(false);
+    const [user, setUser] = useState<User | null>(null);
 
     const titleShort = "FT";
     const titleFull = "Fellini Töökoda";
 
-    const avatarSrc = "images/avatar" + Math.floor(Math.random() * 6 + 1) + ".jpg";
-
     return (
         <GlobalStateContext.Provider
-            value={{ titleShort, titleFull, isAuthenticated, setAuthenticated, avatarSrc }}>
+            value={{ titleShort, titleFull, user, setUser }}>
             {children}
         </GlobalStateContext.Provider>
     );

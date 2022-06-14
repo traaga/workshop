@@ -1,11 +1,11 @@
 import * as React from "react";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Box, Button, Dialog, DialogContent, IconButton, TextField, Typography, } from "@mui/material";
-import { GlobalStateContext } from "../other/GlobalStateContext";
 import RegisterDialog from "./RegisterDialog";
 import ForgotPasswordDialog from "./ForgotPasswordDialog";
 import GoogleIcon from '@mui/icons-material/Google';
 import useWindowDimensions from "../other/useWindowDimensions";
+import useFirebase from "../other/useFirebase";
 import CloseIcon from '@mui/icons-material/Close';
 
 interface LoginDialogProps {
@@ -13,12 +13,9 @@ interface LoginDialogProps {
     closeDialog: () => void;
 }
 
-const LoginDialog = ({
-                         isOpen,
-                         closeDialog,
-                     }: LoginDialogProps) => {
-    const { setAuthenticated } = useContext(GlobalStateContext);
+const LoginDialog = ({ isOpen, closeDialog, }: LoginDialogProps) => {
     const { width } = useWindowDimensions();
+    const { loginWithEmail } = useFirebase();
 
     const [isRegisterDialogOpen, setRegisterDialogOpen] =
         useState<boolean>(false);
@@ -26,12 +23,14 @@ const LoginDialog = ({
     const [isForgotPasswordDialogOpen, setForgotPasswordDialogOpen] =
         useState<boolean>(false);
 
-    const [emailError, setEmailError] = useState<string>("");
-    const [passwordError, setPasswordError] = useState<string>("");
-
     const handleLogin = () => {
-        setAuthenticated(true);
-        closeDialog();
+
+        const email = document.getElementById("email") as HTMLInputElement;
+        const password = document.getElementById("password") as HTMLInputElement;
+
+        loginWithEmail(email.value, password.value).then(() => {
+            closeDialog();
+        });
     };
 
     const handleClose = () => {
@@ -102,8 +101,6 @@ const LoginDialog = ({
 
                         <TextField
                             required
-                            error={!!emailError}
-                            helperText={emailError ? emailError : ""}
                             margin="dense"
                             size="small"
                             id="email"
@@ -115,8 +112,6 @@ const LoginDialog = ({
                         />
                         <TextField
                             required
-                            error={!!passwordError}
-                            helperText={passwordError ? passwordError : ""}
                             margin="dense"
                             size="small"
                             id="password"

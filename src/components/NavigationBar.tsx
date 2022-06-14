@@ -6,14 +6,21 @@ import LoginDialog from "./LoginDialog";
 import MenuPopupState from "./MenuPopupState";
 import useWindowDimensions from "../other/useWindowDimensions";
 import NavigationBarMobile from "./NavigationBarMobile";
+import useFirebase from "../other/useFirebase";
 
 const NavigationBar = () => {
     const [, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [isLoginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
+
     const { width } = useWindowDimensions();
+    const { logOut } = useFirebase();
+
+    const { user } = useContext(GlobalStateContext);
 
     const handleLogOut = () => {
-        setAnchorEl(null);
-        setAuthenticated(false);
+        logOut().then(() => {
+            setAnchorEl(null);
+        });
     };
 
     const accountLinks = [
@@ -32,11 +39,6 @@ const NavigationBar = () => {
             props: { onClick: handleLogOut },
         },
     ];
-
-    const [isLoginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
-
-    const { isAuthenticated, setAuthenticated, avatarSrc } =
-        useContext(GlobalStateContext);
 
     const handleLoginDialogOpen = () => {
         setAnchorEl(null);
@@ -104,11 +106,11 @@ const NavigationBar = () => {
                                 }}
                             />
 
-                            {isAuthenticated ? (
+                            {user ? (
                                 <MenuPopupState
                                     buttonText={"Konto"}
                                     menuItems={accountLinks}
-                                    image={avatarSrc}
+                                    image={user.photoURL ? user.photoURL : "images/plank-profile.jpg"}
                                 />
                             ) : (
                                 <MenuPopupState
