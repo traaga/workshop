@@ -1,5 +1,5 @@
-import { Button, Dialog, DialogContent, IconButton, TextField, Typography, } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, Button, Dialog, DialogContent, IconButton, TextField, Typography, } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
 import useWindowDimensions from "../other/useWindowDimensions";
 import CloseIcon from "@mui/icons-material/Close";
 import * as React from "react";
@@ -30,6 +30,8 @@ const RegisterDialog = ({ isOpen, closeDialog }: RegisterDialogProps) => {
     const { width } = useWindowDimensions();
     const { createUserWithEmail } = useFirebase();
 
+    const [loading, setLoading] = useState(false);
+
     const handleRegister = () => {
 
         const firstname = document.getElementById("firstname") as HTMLInputElement;
@@ -48,8 +50,10 @@ const RegisterDialog = ({ isOpen, closeDialog }: RegisterDialogProps) => {
 
         if (!firstNameErr && !lastNameErr && !emailErr && !phoneErr && !passwordErr && !passwordConfirmErr) {
 
+            setLoading(true);
+
             createUserWithEmail(firstname.value, lastname.value, email.value, phone.value, password.value).then(() => {
-                closeDialog();
+                handleClose();
             });
 
         } else {
@@ -63,6 +67,7 @@ const RegisterDialog = ({ isOpen, closeDialog }: RegisterDialogProps) => {
     };
 
     const handleClose = () => {
+        setLoading(false);
         closeDialog();
     };
 
@@ -192,7 +197,8 @@ const RegisterDialog = ({ isOpen, closeDialog }: RegisterDialogProps) => {
                         sx={{ width: "100%" }}
                     />
 
-                    <Button
+                    <LoadingButton
+                        loading={loading}
                         variant="contained"
                         size="medium"
                         sx={{
@@ -202,7 +208,7 @@ const RegisterDialog = ({ isOpen, closeDialog }: RegisterDialogProps) => {
                         onClick={handleRegister}
                     >
                         Registreeru
-                    </Button>
+                    </LoadingButton>
 
                 </form>
 

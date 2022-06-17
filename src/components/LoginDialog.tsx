@@ -7,6 +7,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import useWindowDimensions from "../other/useWindowDimensions";
 import useFirebase from "../other/useFirebase";
 import CloseIcon from '@mui/icons-material/Close';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 interface LoginDialogProps {
     isOpen: boolean;
@@ -23,17 +24,22 @@ const LoginDialog = ({ isOpen, closeDialog, }: LoginDialogProps) => {
     const [isForgotPasswordDialogOpen, setForgotPasswordDialogOpen] =
         useState<boolean>(false);
 
+    const [loading, setLoading] = useState(false);
+
     const handleLogin = () => {
 
         const email = document.getElementById("email") as HTMLInputElement;
         const password = document.getElementById("password") as HTMLInputElement;
 
+        setLoading(true);
+
         loginWithEmail(email.value, password.value).then(() => {
-            closeDialog();
+            handleClose();
         });
     };
 
     const handleClose = () => {
+        setLoading(false);
         closeDialog();
     };
 
@@ -135,7 +141,8 @@ const LoginDialog = ({ isOpen, closeDialog, }: LoginDialogProps) => {
                             </Button>
                         </Box>
 
-                        <Button
+                        <LoadingButton
+                            loading={loading}
                             variant="contained"
                             size="medium"
                             sx={{
@@ -145,16 +152,16 @@ const LoginDialog = ({ isOpen, closeDialog, }: LoginDialogProps) => {
                             onClick={handleLogin}
                         >
                             Logi Sisse
-                        </Button>
+                        </LoadingButton>
 
                     </form>
 
-                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    {/*<Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                         <Typography fontSize={"13px"}>
                             Või mõne muu kontoga:
                         </Typography>
 
-                        <Button disabled sx={{
+                        <Button sx={{
                             textTransform: "capitalize",
                             padding: 0,
                             fontSize: "1rem",
@@ -171,7 +178,7 @@ const LoginDialog = ({ isOpen, closeDialog, }: LoginDialogProps) => {
                             <GoogleIcon sx={{ borderRight: "1px solid whitesmoke", padding: "4px" }}/>
                             Google
                         </Button>
-                    </Box>
+                    </Box>*/}
 
                     <Box
                         sx={{

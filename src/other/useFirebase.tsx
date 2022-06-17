@@ -11,6 +11,7 @@ import {
     sendPasswordResetEmail,
     signInWithEmailAndPassword,
     updateProfile,
+    updatePhoneNumber,
     signOut,
 } from "firebase/auth";
 import { useContext } from "react";
@@ -68,6 +69,11 @@ export default function useFirebase () {
 
                     await updateProfile(auth.currentUser, { displayName: name, photoURL: photo })
                         .catch((error) => console.log(error));
+
+                    /*if(phone) {
+                        await updatePhoneNumber(auth.currentUser, { displayName: name, photoURL: photo })
+                            .catch((error) => console.log(error));
+                    }*/
                 }
             }).catch((error) => console.log(error)).finally(() => setUser(auth.currentUser));
         } catch (error) {

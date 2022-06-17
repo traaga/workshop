@@ -1,34 +1,65 @@
 import { Box } from "@mui/material";
 import useWindowDimensions from "../other/useWindowDimensions";
 import { format } from "date-fns";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
-export interface CalendarEventProps {
+export interface CalendarEvent {
     id: string,
     start: number,
     end: number,
     projects: string[],
     description: string,
-    firstTime?: number,
-    firstDay?: number
 }
 
-const CalendarEvent = (calendarEvent: CalendarEventProps) => {
+export interface CalendarEventProps {
+    event: CalendarEvent,
+    firstTime: number,
+    firstDay: number,
+    selectedEventsIDs: string[],
+    setSelectedEventsIDs: Dispatch<SetStateAction<string[]>>,
+}
+
+const CalendarEventComponent = (props: CalendarEventProps) => {
+
+    const [selected, setSelected] = useState<boolean>(false);
 
     const { width } = useWindowDimensions();
-    const date = new Date(calendarEvent.start * 1000);
-    const date2 = new Date(calendarEvent.end * 1000);
+    const date = new Date(props.event.start * 1000);
+    const date2 = new Date(props.event.end * 1000);
 
     const dayOfEvent = parseInt(format(date, "d"));
     const startOfEvent = format(date, "HH");
     const endOfEvent = format(date2, "HH");
 
-    const slotX = calendarEvent.firstDay ? dayOfEvent - calendarEvent.firstDay : -1;
-    const slotY = calendarEvent.firstTime ? parseInt(startOfEvent) - calendarEvent.firstTime : -1;
+    const slotX = props.firstDay ? dayOfEvent - props.firstDay : -1;
+    const slotY = props.firstTime ? parseInt(startOfEvent) - props.firstTime : -1;
+
+    const handleSelect = () => {
+
+        if(selected) {
+
+            const filtered = props.selectedEventsIDs.filter((value) => {
+                return value !== props.event.id;
+            });
+
+            props.setSelectedEventsIDs(filtered);
+
+        } else {
+            props.setSelectedEventsIDs([...props.selectedEventsIDs, props.event.id]);
+        }
+
+    }
+
+    useEffect(() => {
+
+        setSelected(props.selectedEventsIDs.includes(props.event.id));
+
+    }, [props.selectedEventsIDs]);
 
     return (
         <>
             {width < 1020 ?
-                <Box sx={{
+                <Box onClick={handleSelect} sx={{
                     position: "absolute",
                     top: (99 * 2 / 3) * slotY + slotY * 1.8 + 28 + 5,
                     left: 99 * slotX + slotX + 5,
@@ -41,13 +72,14 @@ const CalendarEvent = (calendarEvent: CalendarEventProps) => {
                         backgroundColor: "#eeeeee",
                         cursor: "pointer"
                     },
+                    boxShadow: selected ? "0 0 2px 2px #272727" : "none",
                 }}>
                     <Box sx={{ margin: "4px", marginLeft: "6px", fontSize: "10px" }}>
                         <Box sx={{ color: "#818181", width: "78px", height: "12px" }}>
                             { startOfEvent && endOfEvent ? startOfEvent + ":00 - " + endOfEvent + ":00" : "00:00 - 00:00" }
                         </Box>
                         <Box sx={{width: "78px", height: "24px"}}>
-                            { calendarEvent.description ? calendarEvent.description : "no description" }
+                            { props.event.description ? props.event.description : "no description" }
                         </Box>
                         <Box sx={{
                             width: "78px",
@@ -57,11 +89,11 @@ const CalendarEvent = (calendarEvent: CalendarEventProps) => {
                             marginTop: "2px"
                         }}>
                             Vabu kohti:
-                            { calendarEvent.projects ? " " + (5 - calendarEvent.projects.length) : " -1" }
+                            { props.event.projects ? " " + (5 - props.event.projects.length) : " -1" }
                         </Box>
                     </Box>
                 </Box> :
-                <Box sx={{
+                <Box onClick={handleSelect} sx={{
                     position: "absolute",
                     top: (124 * 2 / 3) * slotY + slotY * 1.8 + 28 + 5,
                     left: 124 * slotX + slotX + 5,
@@ -74,6 +106,7 @@ const CalendarEvent = (calendarEvent: CalendarEventProps) => {
                         backgroundColor: "#eeeeee",
                         cursor: "pointer"
                     },
+                    boxShadow: selected ? "0 0 3px 3px #272727" : "none",
                 }}>
                     <Box sx={{ margin: "5px", fontSize: "12px" }}>
 
@@ -91,7 +124,7 @@ const CalendarEvent = (calendarEvent: CalendarEventProps) => {
                             height: "32px",
                             width: "101px"
                         }}>
-                            { calendarEvent.description ? calendarEvent.description : "no description" }
+                            { props.event.description ? props.event.description : "no description" }
                         </Box>
 
                         <Box sx={{
@@ -102,9 +135,8 @@ const CalendarEvent = (calendarEvent: CalendarEventProps) => {
                             fontStyle: "italic"
                         }}>
                             Vabu kohti:
-                            { calendarEvent.projects ? " " + (5 - calendarEvent.projects.length) : " -1" }
+                            { props.event.projects ? " " + (5 - props.event.projects.length) : " -1" }
                         </Box>
-
                     </Box>
                 </Box>
             }
@@ -112,4 +144,4 @@ const CalendarEvent = (calendarEvent: CalendarEventProps) => {
     );
 };
 
-export default CalendarEvent;
+export default CalendarEventComponent;

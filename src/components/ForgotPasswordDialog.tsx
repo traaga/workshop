@@ -1,4 +1,5 @@
 import { Box, Button, Dialog, DialogContent, IconButton, TextField, Typography } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
 import useWindowDimensions from "../other/useWindowDimensions";
 import CloseIcon from "@mui/icons-material/Close";
 import * as React from "react";
@@ -15,21 +16,27 @@ const ForgotPasswordDialog = ({ isOpen, closeDialog, }: ForgotPasswordDialogProp
 
     const [emailError, setEmailError] = useState<string>("");
 
+    const [loading, setLoading] = useState(false);
+
     const { width } = useWindowDimensions();
     const { sendForgotPasswordResetEmail } = useFirebase();
 
     const handleClose = () => {
+        setLoading(false);
         closeDialog();
     };
 
     const handleSendEmail = () => {
+        
         const email = document.getElementById("email") as HTMLInputElement;
         const emailErr = validateEmail(email.value);
 
         if (!emailErr) {
 
+            setLoading(true);
+
             sendForgotPasswordResetEmail(email.value).then(() => {
-                closeDialog();
+                handleClose();
             });
 
         } else {
@@ -95,14 +102,15 @@ const ForgotPasswordDialog = ({ isOpen, closeDialog, }: ForgotPasswordDialogProp
                         sx={{ width: "100%" }}
                     />
 
-                    <Button
+                    <LoadingButton
+                        loading={loading}
                         variant="contained"
                         size="medium"
                         sx={{ width: "100%", marginTop: "24px" }}
                         onClick={handleSendEmail}
                     >
                         Saada email
-                    </Button>
+                    </LoadingButton>
 
                 </form>
 

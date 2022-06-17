@@ -1,10 +1,10 @@
-import { Box, Button, Dialog } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import WeekPicker from "./WeekPicker";
 import CircularProgress from '@mui/material/CircularProgress';
 import useFirebase from "../other/useFirebase";
 import { collection, getDocs } from "firebase/firestore";
-import CalendarEvent, { CalendarEventProps } from "./CalendarEvent";
+import CalendarEventComponent, { CalendarEvent } from "./CalendarEvent";
 import useWindowDimensions from "../other/useWindowDimensions";
 import startOfWeek from "date-fns/startOfWeek";
 import etLocale from "date-fns/locale/et";
@@ -13,9 +13,9 @@ import { format } from 'date-fns';
 
 const Calendar = () => {
 
-    const [calendarEvents, setCalendarEvents] = useState<CalendarEventProps[]>([]);
+    const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
     const [chosenDate, setChosenDate] = useState<Date | null>(new Date());
-    const [newEventOpen, setNewEventOpen] = useState<boolean>(false);
+    const [selectedEventsIDs, setSelectedEventsIDs] = useState<string[]>([]);
 
     const { width } = useWindowDimensions();
     const { db } = useFirebase();
@@ -64,7 +64,7 @@ const Calendar = () => {
             setCalendarEvents(data.docs.map((doc) => {
                 const params = doc.data();
 
-                const event: CalendarEventProps = {
+                const event: CalendarEvent = {
                     id: doc.id,
                     start: params.start.seconds,
                     end: params.end.seconds,
@@ -79,12 +79,8 @@ const Calendar = () => {
         fetchEvents();
     }, []);
 
-    const handleOpen = () => {
-        setNewEventOpen(true);
-    }
-
-    const handleClose = () => {
-        setNewEventOpen(false);
+    const handleUnselectAll = () => {
+        setSelectedEventsIDs([])
     }
 
     const handleToday = () => {
@@ -102,7 +98,7 @@ const Calendar = () => {
     const startTime = Math.min(...startTimes);
     let endTime = Math.max(...endTimes);
 
-    if(endTime - startTime < 5) {
+    if (endTime - startTime < 5) {
         endTime += 5 - endTime + startTime;
     }
 
@@ -110,7 +106,7 @@ const Calendar = () => {
 
         const timesList: number[] = [];
 
-        if(startTime && endTime) {
+        if (startTime && endTime) {
             for (let i = startTime; i <= endTime; i++) {
                 timesList.push(i);
             }
@@ -192,29 +188,64 @@ const Calendar = () => {
 
     return (
         <>
-            <Box sx={{ marginBottom: "50px", /*marginLeft: width < 1200 ? 0 : "45px"*/ }}>
-                <Box sx={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
-                    <Button onClick={handleToday} sx={{
-                        border: "1px solid #272727",
-                        borderTopLeftRadius: "5px",
-                        borderBottomLeftRadius: "5px",
-                        borderTopRightRadius: 0,
-                        borderBottomRightRadius: 0,
-                        borderRight: "none",
-                        backgroundColor: "#272727",
-                        color: "whitesmoke",
-                        '&:hover': {
-                            backgroundColor: "#505050",
-                        },
-                    }}>Täna</Button>
-                    <WeekPicker value={chosenDate} setValue={setChosenDate}/>
-                    {/*<IconButton sx={{ width: "56px" }} onClick={handleOpen}>
-                        <FontAwesomeIcon icon={faCirclePlus} color={"lightblue"} fontSize={"1.25em"}/>
-                    </IconButton>*/}
+            <Box sx={{ marginBottom: "50px" }}>
+                <Box sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: width < 600 ? "column" : "row",
+                    marginBottom: "20px",
+                    alignItems: "center",
+                    gap: "20px"
+                }}>
+                    <Box sx={{ display: "flex" }}>
+                        <Button onClick={handleToday} sx={{
+                            border: "1px solid #272727",
+                            borderTopLeftRadius: "5px",
+                            borderBottomLeftRadius: "5px",
+                            borderTopRightRadius: 0,
+                            borderBottomRightRadius: 0,
+                            borderRight: "none",
+                            backgroundColor: "#272727",
+                            color: "whitesmoke",
+                            '&:hover': {
+                                backgroundColor: "#505050",
+                            },
+                        }}>Täna</Button>
+                        <WeekPicker value={chosenDate} setValue={setChosenDate}/>
+                    </Box>
+
+                    <Box sx={{ display: "flex", height: "50px" }}>
+                        <Button onClick={handleUnselectAll} sx={{
+                            width: "125px",
+                            border: "1px solid #272727",
+                            borderTopLeftRadius: "5px",
+                            borderBottomLeftRadius: "5px",
+                            borderTopRightRadius: 0,
+                            borderBottomRightRadius: 0,
+                            borderRight: "none",
+                            backgroundColor: "#272727",
+                            color: "whitesmoke",
+                            padding: "0px 14px",
+                            '&:hover': {
+                                backgroundColor: "#505050",
+                            },
+                        }}>Tühista valik</Button>
+                        <Typography variant="subtitle2" sx={{
+                            border: "1px solid #272727",
+                            borderTopRightRadius: "5px",
+                            borderBottomRightRadius: "5px",
+                            borderTopLeftRadius: 0,
+                            borderBottomLeftRadius: 0,
+                            //height: "48px",
+                            width: "147px",
+                            gap: "10px",
+                            textAlign: "center",
+                            textTransform: "uppercase",
+                            paddingTop: "13px",
+                        }}>Valitud: {selectedEventsIDs.length}</Typography>
+                    </Box>
                 </Box>
-                <Dialog onClose={handleClose} open={newEventOpen}>
-                    hi
-                </Dialog>
+
                 <Box sx={{
                     backgroundColor: "whitesmoke",
                     position: "relative",
@@ -250,7 +281,10 @@ const Calendar = () => {
                         }}>
 
                             {calendarEvents.map((event) => (
-                                <CalendarEvent key={event.id} {...event} firstTime={startTime} firstDay={parseInt(currentWeekDates[0])}/>
+                                <CalendarEventComponent key={event.id} event={event} firstTime={startTime}
+                                                        firstDay={parseInt(currentWeekDates[0])}
+                                                        selectedEventsIDs={selectedEventsIDs}
+                                                        setSelectedEventsIDs={setSelectedEventsIDs}/>
                             ))}
 
                             {eventMatrix(endTime && startTime ? endTime - startTime + 1 : 6, 7, calendarSlotSize)}
