@@ -1,21 +1,31 @@
 import { Box, Button, Typography } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
 import { useEffect, useState } from "react";
 import WeekPicker from "./WeekPicker";
 import CircularProgress from '@mui/material/CircularProgress';
 import useFirebase from "../other/useFirebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, where, query, startAt, orderBy } from "firebase/firestore";
 import CalendarEventComponent, { CalendarEvent } from "./CalendarEvent";
 import useWindowDimensions from "../other/useWindowDimensions";
 import startOfWeek from "date-fns/startOfWeek";
 import etLocale from "date-fns/locale/et";
 import endOfWeek from "date-fns/endOfWeek";
 import { format } from 'date-fns';
+import ViewEvents from "./ViewEvents";
 
 const Calendar = () => {
 
     const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
     const [chosenDate, setChosenDate] = useState<Date | null>(new Date());
     const [selectedEventsIDs, setSelectedEventsIDs] = useState<string[]>([]);
+    const [isViewDialogOpen, setViewDialogOpen] = useState(false);
+    const [loadingEvents, setLoadingEvents] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    // TODO: Remove it!
+    function timeout(delay: number) {
+        return new Promise( res => setTimeout(res, delay) );
+    }
 
     const { width } = useWindowDimensions();
     const { db } = useFirebase();
@@ -50,8 +60,6 @@ const Calendar = () => {
         return format(date, "dd");
     });
 
-    const loading = calendarEvents.length === 0;
-
     let calendarSlotSize = width < 1020 ? 100 : 125;
 
     const lineColor = "#dbdbdb";
@@ -59,25 +67,39 @@ const Calendar = () => {
     useEffect(() => {
 
         const fetchEvents = async () => {
-            const data = await getDocs(eventsCollectionRef);
+
+            setLoadingEvents(true);
+
+            // TODO: Need a better solution but firestore doesn't allow multiple inequality signs in multiple fields
+            const weekEventsQuery = query(eventsCollectionRef,
+                orderBy("start"),
+                startAt(weekStart.getTime() / 1000),
+                where("start", "<", weekEnd.getTime() / 1000 - 3600));
+
+            const data = await getDocs(weekEventsQuery);
 
             setCalendarEvents(data.docs.map((doc) => {
                 const params = doc.data();
 
                 const event: CalendarEvent = {
                     id: doc.id,
-                    start: params.start.seconds,
-                    end: params.end.seconds,
+                    title: params.title,
+                    start: params.start,
+                    end: params.end,
+                    space: params.space,
+                    color: params.color,
                     projects: params.projects,
                     description: params.description
                 }
 
                 return event;
             }));
+
+            setLoadingEvents(false);
         };
 
         fetchEvents();
-    }, []);
+    }, [chosenDate]);
 
     const handleUnselectAll = () => {
         setSelectedEventsIDs([])
@@ -86,6 +108,23 @@ const Calendar = () => {
     const handleToday = () => {
         setChosenDate(new Date());
     }
+
+    const handleClick = async () => {
+        setLoading(true);
+
+        await timeout(2000).then(() => {
+            setLoading(false);
+            handleUnselectAll();
+        });
+    }
+
+    const handleViewEventsOpen = () => {
+        setViewDialogOpen(true);
+    };
+
+    const handleViewEventsClose = () => {
+        setViewDialogOpen(false);
+    };
 
     const startTimes = calendarEvents.map((event) => {
         return parseInt(format(new Date(event.start * 1000), "H"));
@@ -192,13 +231,15 @@ const Calendar = () => {
                 <Box sx={{
                     display: "flex",
                     justifyContent: "center",
-                    flexDirection: width < 600 ? "column" : "row",
+                    flexWrap: "wrap",
                     marginBottom: "20px",
                     alignItems: "center",
                     gap: "20px"
                 }}>
                     <Box sx={{ display: "flex" }}>
                         <Button onClick={handleToday} sx={{
+                            width: "75px",
+                            padding: "0px 20px",
                             border: "1px solid #272727",
                             borderTopLeftRadius: "5px",
                             borderBottomLeftRadius: "5px",
@@ -216,7 +257,7 @@ const Calendar = () => {
 
                     <Box sx={{ display: "flex", height: "50px" }}>
                         <Button onClick={handleUnselectAll} sx={{
-                            width: "125px",
+                            minWidth: "155px",
                             border: "1px solid #272727",
                             borderTopLeftRadius: "5px",
                             borderBottomLeftRadius: "5px",
@@ -225,25 +266,48 @@ const Calendar = () => {
                             borderRight: "none",
                             backgroundColor: "#272727",
                             color: "whitesmoke",
-                            padding: "0px 14px",
+                            padding: "0px 20px",
+                            gap: "7px",
                             '&:hover': {
                                 backgroundColor: "#505050",
                             },
-                        }}>Tühista valik</Button>
-                        <Typography variant="subtitle2" sx={{
+                        }}>
+                            <Typography variant="subtitle2">Tühista valik</Typography>
+                            <Typography variant="subtitle2">({selectedEventsIDs.length})</Typography>
+                        </Button>
+
+                        <Button onClick={handleViewEventsOpen} sx={{
                             border: "1px solid #272727",
                             borderTopRightRadius: "5px",
                             borderBottomRightRadius: "5px",
                             borderTopLeftRadius: 0,
                             borderBottomLeftRadius: 0,
-                            //height: "48px",
-                            width: "147px",
-                            gap: "10px",
-                            textAlign: "center",
-                            textTransform: "uppercase",
-                            paddingTop: "13px",
-                        }}>Valitud: {selectedEventsIDs.length}</Typography>
+                            width: "145px",
+                            lineHeight: "1.25",
+                            '&:hover': {
+                                backgroundColor: "white",
+                            },
+                        }}>
+                            Vaata
+                        </Button>
+
+
                     </Box>
+
+                    <Box sx={{ display: "flex", height: "50px" }}>
+                        <LoadingButton onClick={handleClick} loading={loading} sx={{
+                            border: "1px solid #272727",
+                            borderRadius: "5px",
+                            width: "300px",
+                            lineHeight: "1.25",
+                            '&:hover': {
+                                backgroundColor: "white",
+                            },
+                        }}>
+                            Registreerimiseks vali üks või mitu sündmust
+                        </LoadingButton>
+                    </Box>
+
                 </Box>
 
                 <Box sx={{
@@ -251,7 +315,7 @@ const Calendar = () => {
                     position: "relative",
                     userSelect: "none",
                 }}>
-                    {loading &&
+                    {loadingEvents &&
                         <Box sx={{
                             backgroundColor: "#c9c9c9",
                             position: "absolute",
@@ -293,6 +357,13 @@ const Calendar = () => {
 
                 </Box>
             </Box>
+            {isViewDialogOpen &&
+                <ViewEvents
+                    isOpen={isViewDialogOpen}
+                    closeDialog={handleViewEventsClose}
+                    eventsIDsToView={selectedEventsIDs}
+                />
+            }
         </>
     );
 };

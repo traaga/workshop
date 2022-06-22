@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppBar, Box, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { GlobalStateContext } from "../other/GlobalStateContext";
@@ -13,7 +13,7 @@ const NavigationBar = () => {
     const [isLoginDialogOpen, setLoginDialogOpen] = useState<boolean>(false);
 
     const { width } = useWindowDimensions();
-    const { logOut } = useFirebase();
+    const { logOut, checkLogin } = useFirebase();
 
     const { user } = useContext(GlobalStateContext);
 
@@ -22,6 +22,10 @@ const NavigationBar = () => {
             setAnchorEl(null);
         });
     };
+
+    useEffect(() => {
+        checkLogin();
+    }, [user])
 
     const accountLinks = [
         {

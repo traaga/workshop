@@ -5,8 +5,11 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 export interface CalendarEvent {
     id: string,
+    title: string,
     start: number,
     end: number,
+    space: number,
+    color: string,
     projects: string[],
     description: string,
 }
@@ -79,7 +82,7 @@ const CalendarEventComponent = (props: CalendarEventProps) => {
                             { startOfEvent && endOfEvent ? startOfEvent + ":00 - " + endOfEvent + ":00" : "00:00 - 00:00" }
                         </Box>
                         <Box sx={{width: "78px", height: "24px"}}>
-                            { props.event.description ? props.event.description : "no description" }
+                            { props.event.title ? props.event.title : "no title" }
                         </Box>
                         <Box sx={{
                             width: "78px",
@@ -124,7 +127,7 @@ const CalendarEventComponent = (props: CalendarEventProps) => {
                             height: "32px",
                             width: "101px"
                         }}>
-                            { props.event.description ? props.event.description : "no description" }
+                            { props.event.title ? props.event.title : "no title" }
                         </Box>
 
                         <Box sx={{

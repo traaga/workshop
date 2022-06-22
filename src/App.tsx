@@ -17,9 +17,9 @@ import useFirebase from "./other/useFirebase";
 
 function App() {
 
-    const { checkLogin } = useFirebase();
+    //const { checkLogin } = useFirebase();
 
-    checkLogin();
+    //checkLogin();
 
     return (
         <GlobalStateProvider>

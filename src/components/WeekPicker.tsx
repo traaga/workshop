@@ -49,7 +49,6 @@ interface WeekPickerProps {
 }
 
 const WeekPicker = ({ value, setValue, }: WeekPickerProps) => {
-    //const [value, setValue] = useState<Date | null>(new Date());
     const [calenderOpen, setCalenderOpen] = useState<boolean>(false);
 
     const handleCalenderClose = () => {
@@ -114,8 +113,8 @@ const WeekPicker = ({ value, setValue, }: WeekPickerProps) => {
                 borderTopLeftRadius: 0,
                 borderBottomLeftRadius: 0,
                 height: "50px",
-                width: "210px",
-                gap: "10px",
+                width: "225px",
+                justifyContent: "space-around",
                 '&:hover': {
                     backgroundColor: "white",
                 },

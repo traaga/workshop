@@ -40,16 +40,12 @@ export default function useFirebase () {
     const checkLogin = async () => {
 
         await onAuthStateChanged(auth, (user) => {
+            setUser(user);
+
             if (user) {
-                console.log("User is signed in");
-
-                // Additional user info
-                // https://firebase.google.com/docs/reference/js/firebase.User
-
-                setUser(user);
+                console.log("SIGNED IN")
             } else {
-                console.log("User is signed out");
-                setUser(null);
+                console.log("SIGNED OUT")
             }
         });
     }
