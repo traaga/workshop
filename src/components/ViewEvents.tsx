@@ -8,11 +8,11 @@ import {
     collection,
     getDocs
 } from "firebase/firestore";
-import CalendarEventComponent, { CalendarEvent } from "./CalendarEvent";
+import { CalendarEvent } from "./CalendarEvent";
 import useFirebase from "../other/useFirebase";
 import CircularProgress from "@mui/material/CircularProgress";
 import EventDisplay from "./EventDisplay";
-import { format } from "date-fns";
+import * as React from "react";
 
 interface ViewEventsProps {
     isOpen: boolean;
@@ -30,27 +30,14 @@ const ViewEvents = ({ isOpen, closeDialog, eventsIDsToView }: ViewEventsProps) =
 
     const eventsCollectionRef = collection(db, "events");
 
-    /*
-    const date = new Date(props.event.start * 1000);
-    const date2 = new Date(props.event.end * 1000);
-
-    const dayOfEvent = parseInt(format(date, "d"));
-    const startOfEvent = format(date, "HH");
-    const endOfEvent = format(date2, "HH");
-    */
+    const element = document.querySelector("html");
+    element?.classList.add("no-scroll");
 
     const handleClose = () => {
         setLoading(false);
+        element?.classList.remove("no-scroll");
         closeDialog();
     };
-
-    const element = document.querySelector("html");
-
-    if(isOpen) {
-        element?.classList.add("no-scroll");
-    } else {
-        element?.classList.remove("no-scroll");
-    }
 
     const tempEvent: CalendarEvent = {
         id: "Aif7oYDdY1P8nzvb3lHS",
@@ -87,8 +74,6 @@ const ViewEvents = ({ isOpen, closeDialog, eventsIDsToView }: ViewEventsProps) =
                     description: params.description
                 }
 
-                console.log(event)
-
                 return event;
             }));
 
@@ -99,34 +84,15 @@ const ViewEvents = ({ isOpen, closeDialog, eventsIDsToView }: ViewEventsProps) =
     }, []);
 
     return (
-        <Dialog open={isOpen} onClose={handleClose} fullScreen={width < 500}>
+        <Dialog open={isOpen} onClose={handleClose} fullScreen={width < 900} maxWidth={false}>
             <DialogContent sx={{
-                padding: width < 500 ? "50px calc(20% / 2)" : "20px 50px",
-                width: width < 500 ? "80%" : "350px",
+                padding: width < 500 ? "0" : "20px 50px",
                 height: width < 500 ? "100vh" : "inherit",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "stretch",
                 position: "relative"
             }}>
-
-                {/*<Box
-                    sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        paddingTop: "24px",
-                        paddingBottom: "32px",
-                    }}
-                >
-                    <Box
-                        component="img"
-                        sx={{
-                            height: 64,
-                            width: 136,
-                        }}
-                        src="images/logo2-3.png"
-                    />
-                </Box>*/}
 
                 {loading &&
                     <Box sx={{
@@ -143,26 +109,34 @@ const ViewEvents = ({ isOpen, closeDialog, eventsIDsToView }: ViewEventsProps) =
                     </Box>
                 }
 
+                <Box sx={{
+                    marginTop: "10px",
+                    marginBottom: "20px",
+                    marginLeft: width < 500 ? "20px" : "0",
+                    marginRight: width < 500 ? "30px" : "0",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                }}>
+
+                    <Typography variant="h5">Sündmused</Typography>
+
+                    {width < 900 &&
+                        <IconButton
+                            onClick={handleClose}
+                            sx={{
+                                width: "64px",
+                                height: "64px",
+                                right: "-20px"
+                            }}>
+                            <CloseIcon sx={{ width: "40px", height: "40px", color: "#272727" }}/>
+                        </IconButton>
+                    }
+                </Box>
+
                 {viewEvents.map((event) => (
                     <EventDisplay key={event.id} event={event}/>
                 ))}
-
-                {/*<EventDisplay key={"123"} event={tempEvent}/>
-                <EventDisplay key={"123"} event={tempEvent}/>*/}
-
-                {width < 500 &&
-                    <IconButton
-                        onClick={handleClose}
-                        sx={{
-                            width: "64px",
-                            height: "64px",
-                            position: "absolute",
-                            right: "5vw",
-                            top: "5vw"
-                        }}>
-                        <CloseIcon sx={{ width: "40px", height: "40px", color: "#272727" }}/>
-                    </IconButton>
-                }
 
             </DialogContent>
         </Dialog>
