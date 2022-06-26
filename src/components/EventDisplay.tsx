@@ -1,4 +1,4 @@
-import { Box, Typography, Accordion, AccordionDetails, AccordionSummary } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from "@mui/material";
 import { CalendarEvent } from "./CalendarEvent";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
@@ -37,14 +37,14 @@ const EventDisplay = ({ event, id }: EventDisplayProps) => {
             <Typography variant="h6">{event.title ? event.title : "no title"}</Typography>
 
             {id &&
-                <Typography variant="subtitle2" sx={{color: "#bbbbbb"}}>{"ID: " + event.id}</Typography>
+                <Typography variant="subtitle2" sx={{ color: "#bbbbbb" }}>{"ID: " + event.id}</Typography>
             }
 
             <Box sx={{ color: "#818181", display: "flex", lineHeight: "20px", gap: "5px", margin: "10px 0" }}>
                 <CalendarTodayIcon sx={{ fontSize: "20px" }}/>
                 {dayOfEvent}
                 <AccessTimeIcon sx={{ fontSize: "20px", marginLeft: "20px" }}/>
-                { startOfEvent && endOfEvent ? startOfEvent + ":00 - " + endOfEvent + ":00" : "00:00 - 00:00" }
+                {startOfEvent && endOfEvent ? startOfEvent + ":00 - " + endOfEvent + ":00" : "00:00 - 00:00"}
             </Box>
 
             <Box sx={{ color: "#818181", display: "flex", lineHeight: "24px", gap: "5px", margin: "10px 0" }}>
@@ -55,17 +55,19 @@ const EventDisplay = ({ event, id }: EventDisplayProps) => {
             <Typography variant="subtitle1">{event.description}</Typography>
 
             {event.projects.length > 0 &&
-                <Box sx={{marginTop: "10px"}}>
+                <Box sx={{ marginTop: "10px" }}>
                     {event.projects.map((projectId, index) =>
                         <Accordion key={projectId} elevation={1}>
                             <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                                sx={{ display: "flex", alignItems: "center"}}
+                                expandIcon={<ExpandMoreIcon/>}
+                                sx={{ display: "flex", alignItems: "center" }}
                             >
-                                <Typography sx={{width: "33%"}}>{"Projekt " + (index + 1)}</Typography>
-                                <Typography variant="subtitle2" sx={{color: "#bbbbbb", lineHeight: "1.5"}}>{"ID: " + projectId}</Typography>
+                                <Typography sx={{ width: "33%" }}>{"Projekt " + (index + 1)}</Typography>
+                                <Typography variant="subtitle2" sx={{
+                                    color: "#bbbbbb",
+                                    lineHeight: "1.5",
+                                    userSelect: "text"
+                                }}>{"ID: " + projectId}</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Typography variant="subtitle1">Vastutav: Madis Abel</Typography>

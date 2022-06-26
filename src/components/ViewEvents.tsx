@@ -12,7 +12,6 @@ import { CalendarEvent } from "./CalendarEvent";
 import useFirebase from "../other/useFirebase";
 import CircularProgress from "@mui/material/CircularProgress";
 import EventDisplay from "./EventDisplay";
-import * as React from "react";
 
 interface ViewEventsProps {
     isOpen: boolean;
@@ -38,17 +37,6 @@ const ViewEvents = ({ isOpen, closeDialog, eventsIDsToView }: ViewEventsProps) =
         element?.classList.remove("no-scroll");
         closeDialog();
     };
-
-    const tempEvent: CalendarEvent = {
-        id: "Aif7oYDdY1P8nzvb3lHS",
-        start: 1655910000,
-        end: 1655913600,
-        projects: ["1", "2", "3"],
-        description: "See on üks mega lahe kirjeldus, mis vastab antud sündmusele.",
-        color: "red",
-        space: 10,
-        title: "Tähtis sündmus"
-    }
 
     useEffect(() => {
 
@@ -91,23 +79,7 @@ const ViewEvents = ({ isOpen, closeDialog, eventsIDsToView }: ViewEventsProps) =
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "stretch",
-                position: "relative"
             }}>
-
-                {loading &&
-                    <Box sx={{
-                        position: "absolute",
-                        width: "calc(100% - 100px)",
-                        height: "calc(100% - 40px)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        opacity: "0.33",
-                        zIndex: "3"
-                    }}>
-                        <CircularProgress/>
-                    </Box>
-                }
 
                 <Box sx={{
                     marginTop: "10px",
@@ -133,6 +105,21 @@ const ViewEvents = ({ isOpen, closeDialog, eventsIDsToView }: ViewEventsProps) =
                         </IconButton>
                     }
                 </Box>
+
+                {loading &&
+                    <Box sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        opacity: "0.33",
+                        zIndex: "3",
+                        width: width < 900 ? "calc(100% - 35px)" : "550px",
+                        marginTop: "20px",
+                        marginBottom: "50px"
+                    }}>
+                        <CircularProgress/>
+                    </Box>
+                }
 
                 {viewEvents.map((event) => (
                     <EventDisplay key={event.id} event={event}/>
