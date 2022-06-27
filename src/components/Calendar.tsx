@@ -1,6 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import LoadingButton from '@mui/lab/LoadingButton';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import WeekPicker from "./WeekPicker";
 import CircularProgress from '@mui/material/CircularProgress';
 import useFirebase from "../other/useFirebase";
@@ -12,6 +11,7 @@ import etLocale from "date-fns/locale/et";
 import endOfWeek from "date-fns/endOfWeek";
 import { format } from 'date-fns';
 import ViewEvents from "./ViewEvents";
+import { GlobalStateContext } from "../other/GlobalStateContext";
 
 const Calendar = () => {
 
@@ -28,6 +28,7 @@ const Calendar = () => {
     }
 
     const { width } = useWindowDimensions();
+    const { user } = useContext(GlobalStateContext);
     const { db } = useFirebase();
 
     const eventsCollectionRef = collection(db, "events");
@@ -63,6 +64,47 @@ const Calendar = () => {
     let calendarSlotSize = width < 1020 ? 100 : 125;
 
     const lineColor = "#dbdbdb";
+
+    const registationButton = () => {
+
+        let count = 0;
+        let buttonText = "";
+
+        selectedEventsIDs.map(id => {
+            if(user?.events.includes(id))
+                count++;
+        })
+
+        if(count === selectedEventsIDs.length && selectedEventsIDs.length > 0) {
+            buttonText = "Eemalda registreering";
+
+            if(selectedEventsIDs.length > 1)
+                buttonText += "ud";
+
+        } else if (count === 0 && selectedEventsIDs.length > 0) {
+            buttonText = "Registreeri";
+        }
+
+        return (
+            <Box sx={{ display: "flex", height: "50px" }}>
+                <Button variant="contained" disabled={buttonText === ""} onClick={handleClick} sx={{
+                    color: buttonText === "" ? "#272727 !important" : "whitesmoke",
+                    backgroundColor: buttonText === "" ? "whitesmoke !important" : "#272727",
+                    border: "1px solid #272727",
+                    borderRadius: "5px",
+                    width: "300px",
+                    lineHeight: "1.25",
+                    '&:hover': {
+                        backgroundColor: "#505050",
+                    },
+                }}>
+                    {!loading ?
+                    (buttonText === "" ? "Registreerimiseks vali üks või mitu sündmust" : buttonText)
+                        : <CircularProgress sx={{ color: "whitesmoke", height: "20px !important", width: "20px !important" }}/>}
+                </Button>
+            </Box>
+        )
+    }
 
     useEffect(() => {
 
@@ -112,7 +154,7 @@ const Calendar = () => {
     const handleClick = async () => {
         setLoading(true);
 
-        await timeout(2000).then(() => {
+        await timeout(1000).then(() => {
             setLoading(false);
             handleUnselectAll();
         });
@@ -290,23 +332,9 @@ const Calendar = () => {
                         }}>
                             Vaata
                         </Button>
-
-
                     </Box>
 
-                    <Box sx={{ display: "flex", height: "50px" }}>
-                        <LoadingButton onClick={handleClick} loading={loading} sx={{
-                            border: "1px solid #272727",
-                            borderRadius: "5px",
-                            width: "300px",
-                            lineHeight: "1.25",
-                            '&:hover': {
-                                backgroundColor: "white",
-                            },
-                        }}>
-                            Registreerimiseks vali üks või mitu sündmust
-                        </LoadingButton>
-                    </Box>
+                    {user && registationButton()}
 
                 </Box>
 

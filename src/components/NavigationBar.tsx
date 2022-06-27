@@ -20,23 +20,24 @@ const NavigationBar = () => {
     const handleLogOut = () => {
         logOut().then(() => {
             setAnchorEl(null);
+            window.location.reload();
         });
     };
 
     useEffect(() => {
         checkLogin();
-    }, [user])
+    }, [])
 
     const accountLinks = [
         {
             label: "Minu konto",
             location: "/account",
         },
-        {
+        /*{
             label: "Seaded",
             location: "/settings",
             props: { disabled: true },
-        },
+        },*/
         {
             label: "Logi välja",
             location: "/",
@@ -114,7 +115,7 @@ const NavigationBar = () => {
                                 <MenuPopupState
                                     buttonText={"Konto"}
                                     menuItems={accountLinks}
-                                    image={user.photoURL ? user.photoURL : "images/plank-profile.jpg"}
+                                    image={user.photo ? user.photo : "images/plank-profile.jpg"}
                                 />
                             ) : (
                                 <MenuPopupState

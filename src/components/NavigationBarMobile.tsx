@@ -22,11 +22,11 @@ const NavigationBarMobile = ({ logOut, logIn }: NavigationBarMobileProps) => {
             label: "Minu konto",
             location: "/account",
         },
-        {
+        /*{
             label: "Seaded",
             location: "/settings",
             props: { disabled: true },
-        },
+        },*/
         {
             label: "Logi välja",
             location: "/",
@@ -88,7 +88,7 @@ const NavigationBarMobile = ({ logOut, logIn }: NavigationBarMobileProps) => {
                     <MenuPopupState
                         buttonText={"Konto"}
                         menuItems={accountLinks}
-                        image={user.photoURL ? user.photoURL : "images/plank-profile.jpg"}
+                        image={user.photo ? user.photo : "images/plank-profile.jpg"}
                     />
                 ) : (
                     <IconButton

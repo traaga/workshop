@@ -1,5 +1,14 @@
 import React, { createContext } from "react";
-import { User } from "firebase/auth";
+
+export interface User {
+    id: string,
+    email: string,
+    events: string[],
+    name: string,
+    phone: string,
+    photo: string,
+    role: string
+}
 
 export interface GlobalStateContextProps {
     titleShort: string;

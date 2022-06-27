@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { GlobalStateContext } from "./GlobalStateContext";
-import { User } from "firebase/auth";
+import { GlobalStateContext, User } from "./GlobalStateContext";
 
 export const GlobalStateProvider: React.FC = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
