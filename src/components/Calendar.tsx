@@ -29,7 +29,7 @@ const Calendar = () => {
 
     const { width } = useWindowDimensions();
     const { user } = useContext(GlobalStateContext);
-    const { db } = useFirebase();
+    const { db, unRegisterFromEvent } = useFirebase();
 
     const eventsCollectionRef = collection(db, "events");
 
@@ -65,15 +65,15 @@ const Calendar = () => {
 
     const lineColor = "#dbdbdb";
 
-    const registationButton = () => {
+    const actionButton = () => {
 
         let count = 0;
         let buttonText = "";
 
-        selectedEventsIDs.map(id => {
+        selectedEventsIDs.forEach(id => {
             if(user?.events.includes(id))
                 count++;
-        })
+        });
 
         if(count === selectedEventsIDs.length && selectedEventsIDs.length > 0) {
             buttonText = "Eemalda registreering";
@@ -81,15 +81,55 @@ const Calendar = () => {
             if(selectedEventsIDs.length > 1)
                 buttonText += "ud";
 
+            return (
+                <Box sx={{ display: "flex", height: "50px" }}>
+                    <Button variant="contained" onClick={handleUnRegister} sx={{
+                        color: "whitesmoke",
+                        backgroundColor: "#272727",
+                        border: "1px solid #272727",
+                        borderRadius: "5px",
+                        width: "300px",
+                        lineHeight: "1.25",
+                        '&:hover': {
+                            backgroundColor: "#505050",
+                        },
+                    }}>
+                        {!loading ?
+                            (buttonText)
+                            : <CircularProgress sx={{ color: "whitesmoke", height: "20px !important", width: "20px !important" }}/>}
+                    </Button>
+                </Box>
+            )
+
         } else if (count === 0 && selectedEventsIDs.length > 0) {
             buttonText = "Registreeri";
+
+            return (
+                <Box sx={{ display: "flex", height: "50px" }}>
+                    <Button variant="contained" onClick={handleRegister} sx={{
+                        color: "whitesmoke",
+                        backgroundColor: "#272727",
+                        border: "1px solid #272727",
+                        borderRadius: "5px",
+                        width: "300px",
+                        lineHeight: "1.25",
+                        '&:hover': {
+                            backgroundColor: "#505050",
+                        },
+                    }}>
+                        {!loading ?
+                            (buttonText)
+                            : <CircularProgress sx={{ color: "whitesmoke", height: "20px !important", width: "20px !important" }}/>}
+                    </Button>
+                </Box>
+            )
         }
 
         return (
             <Box sx={{ display: "flex", height: "50px" }}>
-                <Button variant="contained" disabled={buttonText === ""} onClick={handleClick} sx={{
-                    color: buttonText === "" ? "#272727 !important" : "whitesmoke",
-                    backgroundColor: buttonText === "" ? "whitesmoke !important" : "#272727",
+                <Button disabled sx={{
+                    color: "#272727 !important",
+                    backgroundColor: "whitesmoke !important",
                     border: "1px solid #272727",
                     borderRadius: "5px",
                     width: "300px",
@@ -98,9 +138,7 @@ const Calendar = () => {
                         backgroundColor: "#505050",
                     },
                 }}>
-                    {!loading ?
-                    (buttonText === "" ? "Registreerimiseks vali üks või mitu sündmust" : buttonText)
-                        : <CircularProgress sx={{ color: "whitesmoke", height: "20px !important", width: "20px !important" }}/>}
+                    Registreerimiseks vali üks või mitu sündmust
                 </Button>
             </Box>
         )
@@ -151,13 +189,22 @@ const Calendar = () => {
         setChosenDate(new Date());
     }
 
-    const handleClick = async () => {
+    const handleUnRegister = async () => {
         setLoading(true);
 
-        await timeout(1000).then(() => {
-            setLoading(false);
-            handleUnselectAll();
-        });
+        selectedEventsIDs.forEach(eventId => unRegisterFromEvent(eventId));
+
+        setLoading(false);
+        handleUnselectAll();
+    }
+
+    const handleRegister = async () => {
+        setLoading(true);
+
+        //selectedEventsIDs.forEach(eventId => unRegisterFromEvent(eventId));
+
+        setLoading(false);
+        handleUnselectAll();
     }
 
     const handleViewEventsOpen = () => {
@@ -334,7 +381,7 @@ const Calendar = () => {
                         </Button>
                     </Box>
 
-                    {user && registationButton()}
+                    {user && actionButton()}
 
                 </Box>
 

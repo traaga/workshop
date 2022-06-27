@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc, getFirestore, updateDoc, arrayRemove, arrayUnion } from "firebase/firestore";
 
 // Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -7,15 +7,13 @@ import {
     createUserWithEmailAndPassword,
     getAuth,
     onAuthStateChanged,
-    sendEmailVerification,
     sendPasswordResetEmail,
     signInWithEmailAndPassword,
-    updateProfile,
-    updatePhoneNumber,
     signOut,
 } from "firebase/auth";
 import { useContext } from "react";
 import { GlobalStateContext, User } from "./GlobalStateContext";
+import { Project } from "../components/ProjectDisplay";
 
 export const config = {
     apiKey: "AIzaSyAYkgC3RfnQFmlZIiBYzBLcdr_hgOiY3O0",
@@ -35,7 +33,7 @@ export default function useFirebase () {
 
     const db = getFirestore(app);
 
-    const { setUser } = useContext(GlobalStateContext);
+    const { setUser, user } = useContext(GlobalStateContext);
 
     const checkLogin = async () => {
 
@@ -81,6 +79,7 @@ export default function useFirebase () {
                         name: name,
                         phone: phone,
                         photo: photo,
+                        projects: [],
                         role: "user"
                     }
 
@@ -143,6 +142,7 @@ export default function useFirebase () {
                 name: userParams.name,
                 phone: userParams.phone,
                 photo: userParams.photo,
+                projects: userParams.projects,
                 role: userParams.role
             }
 
@@ -150,5 +150,24 @@ export default function useFirebase () {
         }
     }
 
-    return { checkLogin, createUserWithEmail, loginWithEmail, sendForgotPasswordResetEmail, logOut, db }
+    const unRegisterFromEvent = async (eventId: string) => {
+
+        if(auth.currentUser && user) {
+            const usersRef = doc(db, "users", auth.currentUser.uid);
+
+            await updateDoc(usersRef, {
+                events: arrayRemove(eventId)
+            }).then(async () => {
+
+                const eventsRef = doc(db, "events", eventId);
+
+                await updateDoc(eventsRef, {
+                    projects: arrayRemove(...user.projects)
+                }).then(() => fetchUserData(user.id));
+
+            });
+        }
+    }
+
+    return { checkLogin, createUserWithEmail, loginWithEmail, sendForgotPasswordResetEmail, logOut, db, unRegisterFromEvent }
 }

@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { collection, getDoc, doc } from "firebase/firestore";
+import { collection, getDoc, doc, query, where, getDocs } from "firebase/firestore";
 import useWindowDimensions from "../other/useWindowDimensions";
 import useFirebase from "../other/useFirebase";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -9,8 +9,7 @@ import { User } from "../other/GlobalStateContext";
 export interface Project {
     id: string,
     description: string,
-    photos: string[],
-    user: string
+    photos: string[]
 }
 
 interface ProjectDisplayProps {
@@ -43,17 +42,41 @@ const ProjectDisplay = ({ id }: ProjectDisplayProps) => {
                 const project: Project = {
                     id: projectData.id,
                     description: projectParams.description,
-                    photos: projectParams.photos,
-                    user: projectParams.user
+                    photos: projectParams.photos
                 }
 
                 setProject(project);
 
-                const usersRef = doc(db, "users", project.user);
-                const userData = await getDoc(usersRef);
-                const userParams = userData.data();
+                const usersRef = collection(db, "users");
+                const userQuery = query(usersRef, where("projects", "array-contains", project.id));
 
-                if(userData.id && userParams) {
+                const userData = await getDocs(userQuery);
+
+                if(userData.docs.length) {
+                    const userParams = userData.docs[0].data();
+
+                    if(userData.docs[0].id && userParams) {
+
+                        const user: User = {
+                            id: userData.docs[0].id,
+                            email: userParams.email,
+                            events: userParams.events,
+                            name: userParams.name,
+                            phone: userParams.phone,
+                            photo: userParams.photo,
+                            projects: userParams.projects,
+                            role: userParams.role
+                        }
+
+                        setUser(user);
+                    }
+                }
+
+                //const usersRef = doc(db, "users", project.user);
+                //const userData = await getDoc(usersRef);
+                //const userParams = userData.data();
+
+                /*if(userData.id && userParams) {
 
                     const user: User = {
                         id: userData.id,
@@ -62,11 +85,12 @@ const ProjectDisplay = ({ id }: ProjectDisplayProps) => {
                         name: userParams.name,
                         phone: userParams.phone,
                         photo: userParams.photo,
+                        projects: userParams.projects,
                         role: userParams.role
                     }
 
                     setUser(user);
-                }
+                }*/
             }
             setLoading(false);
         };
