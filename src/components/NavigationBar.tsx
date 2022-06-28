@@ -88,6 +88,14 @@ const NavigationBar = () => {
                         </Button>
                         <Box>
                             <MenuPopupState
+                                buttonText={"Avaleht"}
+                                buttonProps={{
+                                    component: Link,
+                                    to: "/",
+                                }}
+                            />
+
+                            <MenuPopupState
                                 buttonText={"Avatud Töökoda"}
                                 buttonProps={{
                                     component: Link,
