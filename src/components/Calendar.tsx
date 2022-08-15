@@ -5,6 +5,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import useFirebase from "../other/useFirebase";
 import { collection, getDocs, where, query, startAt, orderBy } from "firebase/firestore";
 import CalendarEventComponent, { CalendarEvent } from "./CalendarEvent";
+import SelectProjectDialog from "./SelectProjectDialog";
 import useWindowDimensions from "../other/useWindowDimensions";
 import startOfWeek from "date-fns/startOfWeek";
 import etLocale from "date-fns/locale/et";
@@ -16,9 +17,10 @@ import { GlobalStateContext } from "../other/GlobalStateContext";
 const Calendar = () => {
 
     const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
-    const [chosenDate, setChosenDate] = useState<Date | null>(new Date());
+    const [chosenDate, setChosenDate] = useState<Date | null>(new Date("July 20, 2022 15:30:00")); // TODO: Remove date string from Date()
     const [selectedEventsIDs, setSelectedEventsIDs] = useState<string[]>([]);
     const [isViewDialogOpen, setViewDialogOpen] = useState(false);
+    const [isSelectProjectDialogOpen, setSelectProjectDialogOpen] = useState(false);
     const [loadingEvents, setLoadingEvents] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -208,12 +210,24 @@ const Calendar = () => {
     }
 
     const handleViewEventsOpen = () => {
-        setViewDialogOpen(true);
+        if(selectedEventsIDs.length) {
+            setViewDialogOpen(true);
+        }
     };
 
     const handleViewEventsClose = () => {
         setViewDialogOpen(false);
     };
+
+    const handleSelectProjectDialogOpen = () => {
+        if(selectedEventsIDs.length) {
+            setSelectProjectDialogOpen(true);
+        }
+    }
+
+    const handleSelectProjectDialogClose = () => {
+        setSelectProjectDialogOpen(false);
+    }
 
     const startTimes = calendarEvents.map((event) => {
         return parseInt(format(new Date(event.start * 1000), "H"));
@@ -365,7 +379,10 @@ const Calendar = () => {
                             <Typography variant="subtitle2">({selectedEventsIDs.length})</Typography>
                         </Button>
 
-                        <Button onClick={handleViewEventsOpen} sx={{
+                        <Button
+                            //onClick={handleViewEventsOpen}
+                            onClick={handleSelectProjectDialogOpen}
+                            sx={{
                             border: "1px solid #272727",
                             borderTopRightRadius: "5px",
                             borderBottomRightRadius: "5px",
@@ -437,6 +454,13 @@ const Calendar = () => {
                     isOpen={isViewDialogOpen}
                     closeDialog={handleViewEventsClose}
                     eventsIDsToView={selectedEventsIDs}
+                />
+            }
+            {isSelectProjectDialogOpen &&
+                <SelectProjectDialog
+                    isOpen={isSelectProjectDialogOpen}
+                    closeDialog={handleSelectProjectDialogClose}
+                    eventsIDs={selectedEventsIDs}
                 />
             }
         </>

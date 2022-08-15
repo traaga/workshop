@@ -2,11 +2,9 @@ import { useContext } from "react";
 import NavigationBar from "../components/NavigationBar";
 import ContentContainer from "../components/ContentContainer";
 import Footer from "../components/Footer";
-import TeamMemberCard from "../components/TeamMemberCard";
 import ContactUsForm from "../components/ContactUsForm";
 import { Typography } from "@mui/material";
 import { GlobalStateContext } from "../other/GlobalStateContext";
-import { Box } from "@mui/system";
 import useWindowDimensions from "../other/useWindowDimensions";
 
 const members = [
@@ -50,6 +48,7 @@ const Contact = () => {
     const { titleFull } = useContext(GlobalStateContext);
     document.title = "Kontakt | " + titleFull;
     const { width } = useWindowDimensions();
+    window.scrollTo(0, 0);
 
     return (
         <>
@@ -61,7 +60,7 @@ const Contact = () => {
                     alignItems: "center",
                 }}
             >
-                <Typography
+                {/*<Typography
                     gutterBottom
                     variant="h5"
                     width={width > 696 ? "8em" : "auto"}
@@ -90,12 +89,13 @@ const Contact = () => {
                             avatar={member.avatar}
                         />
                     ))}
-                </Box>
-                {width > 500 ?
+                </Box>*/}
+                {width > 100 ? // 500
                     <Typography
                         gutterBottom
                         variant="h5"
-                        width={width > 696 ? "14.5em" : "auto"}
+                        //width={width > 696 ? "11em" : "auto"}
+                        width="11em"
                         sx={{
                             marginTop: "3em",
                             marginBottom: "2em",
@@ -110,7 +110,7 @@ const Contact = () => {
                     <>
                         <Typography
                             gutterBottom
-                            variant="h4"
+                            variant="h5"
                             sx={{
                                 textAlign: "center",
                                 margin: "0",
@@ -121,7 +121,7 @@ const Contact = () => {
                         </Typography>
                         <Typography
                             gutterBottom
-                            variant="h4"
+                            variant="h5"
                             sx={{
                                 textAlign: "center",
                                 borderBottom: "2px solid #D9D9D9",

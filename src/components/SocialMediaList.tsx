@@ -20,7 +20,8 @@ const SocialMediaList = () => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                alignItems: "flex-start"
+                alignItems: "flex-start",
+                margin: "0px 47px"
             }}>
                 <Box>
                     <Button

@@ -58,7 +58,7 @@ const NavigationBar = () => {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="relative" sx={{ paddingRight: "0 !important", boxShadow: 0 }}>
-                {width >= 900 ? (
+                {width >= 960 ? (
                     <Box
                         sx={{
                             display: "flex",
@@ -70,7 +70,7 @@ const NavigationBar = () => {
                             zIndex: "1"
                         }}
                     >
-                        <Button
+                        {/*<Button
                             component={Link}
                             to="/"
                             sx={{
@@ -85,7 +85,33 @@ const NavigationBar = () => {
                                 }}
                                 src="images/logo2-3.png"
                             />
+                        </Button>*/}
+
+                        <Button
+                            component={Link}
+                            to="/"
+                            sx={{
+                                padding: "0",
+                                height: "96px",
+                                width: "196px",
+                                objectFit: "cover",
+                                overflow: "hidden",
+                                paddingRight: "8px",
+                                paddingBottom: "10px"
+                            }}
+                        >
+                            <Box
+                                component="img"
+                                sx={{
+                                    //height: 64, // 48   64   80   96
+                                    //width: 136, // 102  136  170  204
+                                    filter: "invert(15%) sepia(0%) saturate(0%) hue-rotate(63deg) brightness(95%) contrast(98%)", // color #272727
+                                    transform: "scale(0.45)",
+                                }}
+                                src="images/logo.svg"
+                            />
                         </Button>
+
                         <Box>
                             <MenuPopupState
                                 buttonText={"Avaleht"}

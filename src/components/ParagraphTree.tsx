@@ -1,22 +1,14 @@
 import { Box } from "@mui/material";
 import RandomParagraph from "./RandomParagraph";
 import useWindowDimensions from "../other/useWindowDimensions";
+import texts from "../texts.json";
 
 const ParagraphTree = () => {
     const { width } = useWindowDimensions();
 
-    // Paragrah 1
     const title1 = "Koolitused";
-    const text1 = "Korraldame ka pikemaid koolitusi spetsiifilistematel ja suurematel teemadel. Nende toimumistest anname pikalt ette teada oma sotsiaalmeedia kontodel ja uudiskirjas.";
-
-    // Paragrah 2
     const title2 = "Nõustamine";
-    const text2 = "Pakume ka maja või korteri elanikele eraldiseisvat nõustamis teenust. Kui on hoonel probleemi, mis nõuab suuremat tähelepanu ja tõenäoliselt remonti, siis saame tulla nõustama ning võimalusel töö ka ise ära teha. Täpsemat infot selle kohta leiab infokeskuse alammenüüst.";
-
-    // Paragraph 3
     const title3 = "Töökoda";
-    const text3 = "Nii töökoja kasutamise, kui ka koolitusel osalemiseks on vaja eelnevalt aeg broneerida, siis teame end ka valmis seada. Broneerida saab avatud töökoja alammenüü alt, seal on kõik vabad ajad kirjas koos hinnakirjaga.";
-
 
     const point = () => {
         return (
@@ -59,7 +51,7 @@ const ParagraphTree = () => {
                 marginLeft: width < 900 ? "15vw" : 0,
             }}>
                 {point()}
-                <RandomParagraph title={title1} text={text1} boxWidth={bWidth}/>
+                <RandomParagraph title={title1} text={texts.tree1} boxWidth={bWidth}/>
             </Box>
 
             <Box sx={{
@@ -71,7 +63,7 @@ const ParagraphTree = () => {
                 marginLeft: width < 900 ? "15vw" : 0,
             }}>
                 {point()}
-                <RandomParagraph title={title2} text={text2} boxWidth={bWidth}/>
+                <RandomParagraph title={title2} text={texts.tree2} boxWidth={bWidth}/>
             </Box>
 
             <Box sx={{
@@ -81,7 +73,7 @@ const ParagraphTree = () => {
                 marginLeft: width < 900 ? "15vw" : 0,
             }}>
                 {point()}
-                <RandomParagraph title={title3} text={text3} boxWidth={bWidth}/>
+                <RandomParagraph title={title3} text={texts.tree3} boxWidth={bWidth}/>
             </Box>
 
             {/* CENTER LINE */}

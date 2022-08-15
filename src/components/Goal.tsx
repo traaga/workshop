@@ -1,12 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import useWindowDimensions from "../other/useWindowDimensions";
+import texts from "../texts.json";
 
 const Goal = () => {
     const { width } = useWindowDimensions();
-
-    const goal: string = "Fellini töökoja eesmärk on pakkuda Viljandi inimestele lihtsalt võimalust, " +
-        "kus oma projektidega tegeleda, kui omal puuduvad selleks ruum ja/või vahendid. Alati saab " +
-        "ka abi küsida meie kohapeal oleva(te) meistri(te) käest.";
 
     return (
         <>
@@ -15,27 +12,29 @@ const Goal = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 marginTop: "200px",
-                marginBottom: "300px"
+                marginBottom: "300px",
             }}>
                 <Box sx={{
                     border: "6px solid black",
                     borderRight: "hidden",
                     width: "30px",
-                    height: width < 715 ? "250px" : "200px",
+                    height: width < 715 ? "375px" : "300px",
                 }}/>
 
-                {width > 500 ?
+                {width > 550 ?
                     <Typography variant="h6" sx={{
-                        width: width < 715 ? "350px" : "500px",
+                        width: width < 715 ? "400px" : "500px",
                         textAlign: "center",
+                        fontWeight: "400"
                     }}>
-                        {goal}
+                        {texts.goal}
                     </Typography> :
                     <Typography variant="subtitle1" sx={{
                         width: "275px",
                         textAlign: "center",
+                        fontWeight: "400"
                     }}>
-                        {goal}
+                        {texts.goal}
                     </Typography>}
 
 
@@ -43,7 +42,7 @@ const Goal = () => {
                     border: "5px solid black",
                     borderLeft: "hidden",
                     width: "30px",
-                    height: width < 715 ? "250px" : "200px",
+                    height: width < 715 ? "375px" : "300px",
                 }}/>
             </Box>
         </>

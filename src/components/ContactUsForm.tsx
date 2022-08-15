@@ -5,7 +5,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import useWindowDimensions from "../other/useWindowDimensions";
 
 const ContactUsForm = () => {
-    const { width } = useWindowDimensions()
+    const { width } = useWindowDimensions();
     return (
         <>
             <Box sx={ {
@@ -16,7 +16,7 @@ const ContactUsForm = () => {
                 margin: "0 50px 200px 50px"
             } }>
                 <Box
-                    width={ width > 550 ? "auto" : "90vw" }
+                    width={ width > 600 ? "auto" : "80vw" }
                     sx={ {
                         display: "flex",
                         flexDirection: "column",
@@ -31,7 +31,8 @@ const ContactUsForm = () => {
                             alignItems: "center",
                             gap: "16px",
                             marginTop: "10px",
-                            marginLeft: "10px"
+                            marginLeft: "10px",
+                            marginRight: "10px"
                         } }
                     >
                         <PhoneIcon sx={ { color: "#272727" } } fontSize="large"/>
@@ -43,7 +44,8 @@ const ContactUsForm = () => {
                             alignItems: "center",
                             gap: "16px",
                             marginTop: "10px",
-                            marginLeft: "10px"
+                            marginLeft: "10px",
+                            marginRight: "10px"
                         } }
                     >
                         <EmailIcon sx={ { color: "#272727" } } fontSize="large"/>
@@ -55,7 +57,8 @@ const ContactUsForm = () => {
                             alignItems: "center",
                             gap: "16px",
                             marginTop: "10px",
-                            marginLeft: "10px"
+                            marginLeft: "10px",
+                            marginRight: "10px"
                         } }
                     >
                         <LocationOnIcon
@@ -68,7 +71,7 @@ const ContactUsForm = () => {
                     </Box>
                     <Box
                         component="iframe"
-                        width={ width > 550 ? "480px" : "90vw" }
+                        width={ width > 600 ? "480px" : "80vw" }
                         sx={ {
                             height: 360,
                             //width: 480,
@@ -80,7 +83,7 @@ const ContactUsForm = () => {
                     />
                 </Box>
                 <Box
-                    width={ width > 550 ? "480px" : "90vw" }
+                    width={ width > 600 ? "480px" : "80vw" }
                     sx={ {
                         display: "flex",
                         flexDirection: "column",

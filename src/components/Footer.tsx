@@ -10,16 +10,14 @@ const useStyles = makeStyles((theme: Theme) => ({
         display: "flex",
         width: "100%",
         justifyContent: "center",
-        gap: "10%",
-        margin: "50px 0"
+        gap: "7%",
     },
     narrow: {
         display: "flex",
         width: "100%",
         flexDirection: "column",
         alignItems: "center",
-        margin: "50px 0",
-        gap: "50px"
+        marginBottom: "75px"
     }
 }));
 
@@ -41,14 +39,18 @@ const Footer = () => {
                     <Box
                         className={width > 700 ? classes.wide : classes.narrow}
                     >
+
                         <Box
                             component="img"
                             sx={{
-                                height: 240,
-                                width: 240,
+                                height: "250px",
+                                width: "250px",
+                                paddingBottom: "10px",
+                                filter: "invert(15%) sepia(0%) saturate(0%) hue-rotate(63deg) brightness(95%) contrast(98%)", // color #272727
                             }}
-                            src="images/logo1.png"
+                            src="images/logo.svg"
                         />
+
                         <SocialMediaList/>
                     </Box>
 

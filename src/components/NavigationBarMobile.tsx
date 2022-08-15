@@ -67,23 +67,29 @@ const NavigationBarMobile = ({ logOut, logIn }: NavigationBarMobileProps) => {
                 <IconButton onClick={handleOpen}>
                     <MenuIcon sx={{ width: 48, height: 48, color: "#bababa" }}/>
                 </IconButton>
+
                 <Button
                     component={Link}
                     to="/"
                     sx={{
-                        height: "100%"
+                        height: "100%",
+                        width: "180px",
+                        overflow: "hidden"
                     }}
                 >
                     <Box
                         component="img"
 
                         sx={{
-                            height: 64, // 64   96
-                            width: 136, // 136  204
+                            transform: "scale(0.4)",
+                            paddingRight: "17px",
+                            paddingBottom: "17px",
+                            filter: "invert(15%) sepia(0%) saturate(0%) hue-rotate(63deg) brightness(95%) contrast(98%)", // color #272727
                         }}
-                        src="images/logo2-3.png"
+                        src="images/logo.svg"
                     />
                 </Button>
+
                 {user ? (
                     <MenuPopupState
                         buttonText={"Konto"}

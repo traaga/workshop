@@ -18,7 +18,7 @@ const RandomParagraph = ({ title, text, boxWidth }: RandomParagraphProps) => {
                     fontWeight: "bold",
                     marginBottom: "15px"
                 }}>{title}</Typography>
-                <Typography variant="h6" sx={{ textAlign: width < 1200 ? "left" : "justify" }}>{text}</Typography>
+                <Typography variant="h6" sx={{ textAlign: width < 1200 ? "left" : "justify", fontWeight: "400" }}>{text}</Typography>
             </Box>
         </>
     );
