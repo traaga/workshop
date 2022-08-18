@@ -128,6 +128,7 @@ const InfoCenter = () => {
                                     component={Link}
                                     to="/contact"
                                     sx={{ textAlign: "center", marginTop: "20px" }}
+                                    onClick={() => window.scrollTo(0, 0)}
                                 >
                                     Võta meiega ühendust
                                 </Button>}

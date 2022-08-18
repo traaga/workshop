@@ -36,7 +36,7 @@ const RegisterDialog = ({ isOpen, closeDialog }: RegisterDialogProps) => {
 
         const firstname = document.getElementById("firstname") as HTMLInputElement;
         const lastname = document.getElementById("lastname") as HTMLInputElement;
-        const email = document.getElementById("email") as HTMLInputElement;
+        const email = document.getElementById("register-email") as HTMLInputElement;
         const phone = document.getElementById("phone") as HTMLInputElement;
         const password = document.getElementById("password") as HTMLInputElement;
         const password2 = document.getElementById("password2") as HTMLInputElement;
@@ -96,15 +96,17 @@ const RegisterDialog = ({ isOpen, closeDialog }: RegisterDialogProps) => {
                         justifyContent: "center",
                         paddingTop: "24px",
                         paddingBottom: "32px",
+                        overflow: "hidden"
                     }}
                 >
                     <Box
                         component="img"
                         sx={{
-                            height: 64,
+                            height: 72,
                             width: 136,
+                            transform: "scale(3.5)"
                         }}
-                        src="images/logo2-3.png"
+                        src="images/logo.svg"
                     />
                 </Box>
 
@@ -148,7 +150,7 @@ const RegisterDialog = ({ isOpen, closeDialog }: RegisterDialogProps) => {
                         required
                         margin="dense"
                         size="small"
-                        id="email"
+                        id="register-email"
                         label="Email"
                         type="email"
                         variant="outlined"

@@ -6,6 +6,7 @@ import * as React from "react";
 import { validateEmail } from "../other/Validation";
 import { useState } from "react";
 import useFirebase from "../other/useFirebase";
+import { delay } from "../other/Delay";
 
 interface ForgotPasswordDialogProps {
     isOpen: boolean;
@@ -28,18 +29,30 @@ const ForgotPasswordDialog = ({ isOpen, closeDialog, }: ForgotPasswordDialogProp
 
     const handleSendEmail = () => {
         
-        const email = document.getElementById("email") as HTMLInputElement;
+        const email = document.getElementById("forgot-email") as HTMLInputElement;
         const emailErr = validateEmail(email.value);
 
         if (!emailErr) {
 
+            console.log("Sending forgot-password-email to: " + email.value);
+
             setLoading(true);
 
             sendForgotPasswordResetEmail(email.value).then(() => {
-                handleClose();
+                setLoading(false);
+
+                email.value = "";
+
+                const button = document.getElementById("forgot-submit") as HTMLButtonElement;
+                button.innerHTML = "Saadetud";
+
+                delay(1000).then(() => {
+                    closeDialog();
+                });
             });
 
         } else {
+            console.log("Bad email: " + email.value);
             setEmailError(emailErr);
         }
     }
@@ -70,15 +83,17 @@ const ForgotPasswordDialog = ({ isOpen, closeDialog, }: ForgotPasswordDialogProp
                         justifyContent: "center",
                         paddingTop: "24px",
                         paddingBottom: "32px",
+                        overflow: "hidden"
                     }}
                 >
                     <Box
                         component="img"
                         sx={{
-                            height: 64,
+                            height: 72,
                             width: 136,
+                            transform: "scale(3.5)"
                         }}
-                        src="images/logo2-3.png"
+                        src="images/logo.svg"
                     />
                 </Box>
 
@@ -94,7 +109,7 @@ const ForgotPasswordDialog = ({ isOpen, closeDialog, }: ForgotPasswordDialogProp
                         required
                         margin="dense"
                         size="small"
-                        id="email"
+                        id="forgot-email"
                         label="Email"
                         type="email"
                         variant="outlined"
@@ -103,6 +118,7 @@ const ForgotPasswordDialog = ({ isOpen, closeDialog, }: ForgotPasswordDialogProp
                     />
 
                     <LoadingButton
+                        id="forgot-submit"
                         loading={loading}
                         variant="contained"
                         size="medium"

@@ -48,7 +48,6 @@ const Contact = () => {
     const { titleFull } = useContext(GlobalStateContext);
     document.title = "Kontakt | " + titleFull;
     const { width } = useWindowDimensions();
-    window.scrollTo(0, 0);
 
     return (
         <>

@@ -28,7 +28,7 @@ const LoginDialog = ({ isOpen, closeDialog, }: LoginDialogProps) => {
 
     const handleLogin = () => {
 
-        const email = document.getElementById("email") as HTMLInputElement;
+        const email = document.getElementById("login-email") as HTMLInputElement;
         const password = document.getElementById("password") as HTMLInputElement;
 
         setLoading(true);
@@ -87,15 +87,17 @@ const LoginDialog = ({ isOpen, closeDialog, }: LoginDialogProps) => {
                             justifyContent: "center",
                             paddingTop: "24px",
                             paddingBottom: "32px",
+                            overflow: "hidden"
                         }}
                     >
                         <Box
                             component="img"
                             sx={{
-                                height: 64,
+                                height: 72,
                                 width: 136,
+                                transform: "scale(3.5)"
                             }}
-                            src="images/logo2-3.png"
+                            src="images/logo.svg"
                         />
                     </Box>
 
@@ -109,7 +111,7 @@ const LoginDialog = ({ isOpen, closeDialog, }: LoginDialogProps) => {
                             required
                             margin="dense"
                             size="small"
-                            id="email"
+                            id="login-email"
                             label="Email"
                             type="text"
                             variant="outlined"
