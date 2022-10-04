@@ -1,6 +1,6 @@
 import * as React from "react";
 import HoverMenu from "material-ui-popup-state/HoverMenu";
-import { Button, MenuItem, Theme, IconButton, Avatar } from "@mui/material";
+import { Button, MenuItem, Theme, IconButton, Avatar, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import {
     usePopupState,
@@ -49,6 +49,8 @@ const MenuPopupState = ({
         popupId: "popOverMenuId", // No clue why this is needed
     });
 
+    console.log(document.location.pathname, buttonProps.to);
+
     return (
         <React.Fragment>
             {buttonText === "Konto" ? (
@@ -71,7 +73,13 @@ const MenuPopupState = ({
                     {...bindHover(popupState)}
                     {...buttonProps}
                 >
-                    {buttonText}
+                    <Box
+                        sx={{
+                            borderBottom: document.location.pathname === buttonProps.to ? "2px solid #d9d9d9" : "2px solid transparent"
+                        }}
+                    >
+                        {buttonText}
+                    </Box>
                 </Button>
             )}
 

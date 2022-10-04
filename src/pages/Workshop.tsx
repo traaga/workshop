@@ -2,27 +2,21 @@ import { useContext } from "react";
 import NavigationBar from "../components/NavigationBar";
 import ContentContainer from "../components/ContentContainer";
 import Footer from "../components/Footer";
-import Calendar from "../components/Calendar";
+//import Calendar from "../components/Calendar";
+import CalendarCompact from "../components/CalendarCompact";
 import { Typography } from "@mui/material";
 import { GlobalStateContext } from "../other/GlobalStateContext";
 import PriceList from "../components/PriceList";
 import WorkshopGallery from "../components/WorkshopGallery";
 
 const Workshop = () => {
-    const { titleFull } = useContext(GlobalStateContext);
+    const { titleFull, isDevelopment } = useContext(GlobalStateContext);
     document.title = "Avatud Töökoda | " + titleFull;
-
-    const showCalendar = false;
 
     return (
         <>
             <NavigationBar/>
             <ContentContainer sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                {/*<Typography>Kalender</Typography>
-                <Typography>Töölaua ja tööriistarendi hinnakiri</Typography>
-                <Typography>Kodukord ning ohutusest</Typography>
-                <Typography sx={{ marginBottom: "100px" }}>Lisaks pakume: Hoiu võimalus, Materjali hankimine,
-                    Käsitööriistade rent</Typography>*/}
 
                 <Typography
                     gutterBottom
@@ -40,7 +34,7 @@ const Workshop = () => {
                     Kalender
                 </Typography>
 
-                {showCalendar ? <Calendar/> : <Typography sx={{ marginTop: "-25px", marginBottom: "50px" }}>Kalender on
+                {isDevelopment ? <CalendarCompact/> : <Typography sx={{ marginTop: "-25px", marginBottom: "50px" }}>Kalender on
                     arendamisel..</Typography>}
 
                 <Typography

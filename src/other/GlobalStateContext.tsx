@@ -14,6 +14,7 @@ export interface User {
 export interface GlobalStateContextProps {
     titleShort: string;
     titleFull: string;
+    isDevelopment: boolean;
     user: User | null;
     setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
@@ -21,6 +22,7 @@ export interface GlobalStateContextProps {
 export const initialState: GlobalStateContextProps = {
     titleShort: "",
     titleFull: "",
+    isDevelopment: false,
     user: null,
     setUser: () => null,
 }

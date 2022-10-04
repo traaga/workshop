@@ -6,10 +6,11 @@ export const GlobalStateProvider: React.FC = ({ children }) => {
 
     const titleShort = "FT";
     const titleFull = "Fellini Töökoda";
+    const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV === "development";
 
     return (
         <GlobalStateContext.Provider
-            value={{ titleShort, titleFull, user, setUser }}>
+            value={{ titleShort, titleFull, isDevelopment, user, setUser }}>
             {children}
         </GlobalStateContext.Provider>
     );

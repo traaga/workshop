@@ -10,9 +10,10 @@ import isWithinInterval from 'date-fns/isWithinInterval';
 import startOfWeek from 'date-fns/startOfWeek';
 import etLocale from 'date-fns/locale/et';
 import { format } from 'date-fns';
-import { Button, Dialog, TextField } from "@mui/material";
-import EventIcon from '@mui/icons-material/Event';
+import { Button, Dialog, SxProps, TextField, Theme, IconButton } from "@mui/material";
 import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 type WeekHighlightProps = PickersDayProps<Date> & {
     dayIsBetween: boolean;
@@ -48,7 +49,7 @@ interface WeekPickerProps {
     setValue: (date: Date | null) => void;
 }
 
-const WeekPicker = ({ value, setValue, }: WeekPickerProps) => {
+const WeekPicker = ({ value, setValue }: WeekPickerProps) => {
     const [calenderOpen, setCalenderOpen] = useState<boolean>(false);
 
     const handleCalenderClose = () => {
@@ -106,22 +107,18 @@ const WeekPicker = ({ value, setValue, }: WeekPickerProps) => {
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns} locale={etLocale}>
-            <Button onClick={() => setCalenderOpen(true)} sx={{
-                border: "1px solid #272727",
-                borderTopRightRadius: "5px",
-                borderBottomRightRadius: "5px",
-                borderTopLeftRadius: 0,
-                borderBottomLeftRadius: 0,
-                height: "50px",
-                width: "225px",
-                justifyContent: "space-around",
-                '&:hover': {
-                    backgroundColor: "white",
-                },
-            }}>
-                {value ? getCurrentWeek(value) : "undefined"}
-                <EventIcon/>
+            <Button sx={{ minWidth: "48px" }}>
+                <ArrowBackIosNewIcon/>
             </Button>
+
+            <Button sx={{ height: "100%", width: "165px" }} onClick={() => setCalenderOpen(true)}>
+                {value ? getCurrentWeek(value) : "undefined"}
+            </Button>
+
+            <Button sx={{ minWidth: "48px" }}>
+                <ArrowForwardIosIcon/>
+            </Button>
+
             <Dialog onClose={handleCalenderClose} open={calenderOpen}>
                 <StaticDatePicker
                     displayStaticWrapperAs="desktop"
@@ -132,7 +129,7 @@ const WeekPicker = ({ value, setValue, }: WeekPickerProps) => {
                         handleCalenderClose();
                     }}
                     renderDay={renderWeekHighlight}
-                    renderInput={(params) => <TextField {...params} />}
+                    renderInput={(params) => <TextField {...params}/>}
                 />
             </Dialog>
         </LocalizationProvider>

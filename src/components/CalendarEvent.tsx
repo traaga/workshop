@@ -66,9 +66,9 @@ const CalendarEventComponent = (props: CalendarEventProps) => {
         <>
             {width < 1020 ?
                 <Box onClick={handleSelect} sx={{
-                    position: "absolute",
-                    top: (99 * 2 / 3) * slotY + slotY * 1.8 + 28 + 5,
-                    left: 99 * slotX + slotX + 5,
+                    //position: "absolute",
+                    //top: (99 * 2 / 3) * slotY + slotY * 1.8 + 28 + 5,
+                    //left: 99 * slotX + slotX + 5,
                     width: 99 - 5 * 2 - 3,
                     height: 99 * 2 / 3 - 5 * 2,
                     backgroundColor: user?.events.includes(props.event.id) ? props.event.color + "20" : "white",
@@ -80,7 +80,11 @@ const CalendarEventComponent = (props: CalendarEventProps) => {
                     },
                     boxShadow: selected ? "0 0 2px 2px #272727" : "none",
                 }}>
-                    <Box sx={{ margin: "4px", marginLeft: "6px", fontSize: "10px" }}>
+                    <Box sx={{
+                        padding: "4px",
+                        marginLeft: "6px",
+                        fontSize: "10px"
+                    }}>
                         <Box sx={{ color: "#818181", width: "78px", height: "12px" }}>
                             { startOfEvent && endOfEvent ? startOfEvent + ":00 - " + endOfEvent + ":00" : "00:00 - 00:00" }
                         </Box>
@@ -100,11 +104,13 @@ const CalendarEventComponent = (props: CalendarEventProps) => {
                     </Box>
                 </Box> :
                 <Box onClick={handleSelect} sx={{
-                    position: "absolute",
-                    top: (124 * 2 / 3) * slotY + slotY * 1.8 + 28 + 5,
-                    left: 124 * slotX + slotX + 5,
-                    width: (124) - 5 * 2 - 3,
-                    height: (124) * 2 / 3 - 5 * 2,
+                    //position: "absolute",
+                    //top: (124 * 2 / 3) * slotY + slotY * 1.8 + 28 + 5,
+                    //left: 124 * slotX + slotX + 5,
+                    //width: (124) - 5 * 2 - 3,
+                    //height: (124) * 2 / 3 - 5 * 2,
+                    width: "110px",
+                    height: "75px",
                     backgroundColor: user?.events.includes(props.event.id) ? props.event.color + "20" : "white",
                     borderLeft: props.event.color ? props.event.color + " solid 5px" : "white solid 3px",
                     borderRadius: "5px",
@@ -114,7 +120,10 @@ const CalendarEventComponent = (props: CalendarEventProps) => {
                     },
                     boxShadow: selected ? "0 0 3px 3px #272727" : "none",
                 }}>
-                    <Box sx={{ margin: "5px", fontSize: "12px" }}>
+                    <Box sx={{
+                        padding: "5px",
+                        fontSize: "12px"
+                    }}>
 
                         <Box sx={{
                             color: "#818181",
