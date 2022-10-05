@@ -58,7 +58,7 @@ const NavigationBar = () => {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="relative" sx={{ paddingRight: "0 !important", boxShadow: 0 }}>
-                {width >= 960 ? (
+                {width >= 1000 ? (
                     <Box
                         sx={{
                             display: "flex",
