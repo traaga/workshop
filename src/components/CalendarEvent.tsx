@@ -69,7 +69,7 @@ const CalendarEventComponent = (props: CalendarEventProps) => {
                     //position: "absolute",
                     //top: (99 * 2 / 3) * slotY + slotY * 1.8 + 28 + 5,
                     //left: 99 * slotX + slotX + 5,
-                    width: 99 - 5 * 2 - 3,
+                    width: width <= 800 ? 300 : 99 - 5 * 2 - 3,
                     height: 99 * 2 / 3 - 5 * 2,
                     backgroundColor: user?.events.includes(props.event.id) ? props.event.color + "20" : "white",
                     borderLeft: props.event.color ? props.event.color + " solid 5px" : "white solid 3px",

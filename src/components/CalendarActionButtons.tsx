@@ -14,7 +14,7 @@ const CalendarActionButtons = () => {
     return (
         <Box sx={{
             display: "flex",
-            marginBottom: "100px",
+            marginBottom: width <= 800 ? "50px" : "100px",
             justifyContent: "space-between",
             fontWeight: "500",
             color: "#3e3e3e",
@@ -37,9 +37,9 @@ const CalendarActionButtons = () => {
                 <WeekPicker value={chosenDate} setValue={setChosenDate}/>
             </Box>
 
-            <Button sx={{ minWidth: "40px", color: "#b3b3b3" }}>
+            {/*<Button sx={{ minWidth: "40px", color: "#b3b3b3" }}>
                 <HelpIcon/>
-            </Button>
+            </Button>*/}
 
 
             {/*<Box sx={{ display: "flex", alignItems: "center", border: "2px solid #dddddd", borderRadius: "10px" }}>

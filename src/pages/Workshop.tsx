@@ -2,8 +2,8 @@ import { useContext } from "react";
 import NavigationBar from "../components/NavigationBar";
 import ContentContainer from "../components/ContentContainer";
 import Footer from "../components/Footer";
-//import Calendar from "../components/Calendar";
-import CalendarCompact from "../components/CalendarCompact";
+//import CalendarDeprecated from "../components/CalendarDeprecated";
+import Calendar from "../components/Calendar";
 import { Typography } from "@mui/material";
 import { GlobalStateContext } from "../other/GlobalStateContext";
 import PriceList from "../components/PriceList";
@@ -34,7 +34,7 @@ const Workshop = () => {
                     Kalender
                 </Typography>
 
-                {isDevelopment ? <CalendarCompact/> : <Typography sx={{ marginTop: "-25px", marginBottom: "50px" }}>Kalender on
+                {isDevelopment ? <Calendar/> : <Typography sx={{ marginTop: "-25px", marginBottom: "50px" }}>Kalender on
                     arendamisel..</Typography>}
 
                 <Typography
