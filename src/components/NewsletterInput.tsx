@@ -1,7 +1,7 @@
-import {Box, Button, InputBase, Paper, Theme, Typography,} from "@mui/material";
+import {Box, Button, InputBase, Paper, Typography,} from "@mui/material";
 import {makeStyles} from "@mui/styles";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(() => ({
     join: {
         color: "#efefef",
         backgroundColor: "#272727",
@@ -61,6 +61,7 @@ const NewsletterInput = () => {
                                     name="EMAIL"
                                     id="mce-EMAIL"
                                     required
+                                    defaultValue=""
                                     inputProps={{"aria-label": "search google maps"}}
                                 />
                             </Paper>
@@ -69,7 +70,7 @@ const NewsletterInput = () => {
                                 <input type="text"
                                        name="b_cab32173eee6691cda646699b_48d30139e2"
                                        tabIndex={-1}
-                                       value=""
+                                       readOnly={true}
                                 />
                             </Box>
 

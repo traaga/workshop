@@ -49,7 +49,7 @@ const MenuPopupState = ({
         popupId: "popOverMenuId", // No clue why this is needed
     });
 
-    console.log(document.location.pathname, buttonProps.to);
+    //console.log(document.location.pathname, buttonProps.to);
 
     return (
         <React.Fragment>
