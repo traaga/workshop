@@ -38,17 +38,22 @@ const PriceList = () => {
         {
             description: "5 tundi ehk üks õhtu",
             details: "Seehulgas töölaud ning juhendaja",
-            price: "35€"
+            price: "40€"
         },
         {
-            description: "5 korda ehk 25 tundi",
+            description: "3 õhtut ehk 15 tundi",
             details: "Seehulgas töölaud ning juhendaja",
-            price: "130€"
+            price: "135€"
         },
         {
-            description: "10 korda ehk 50 tundi",
+            description: "5 õhtut ehk 25 tundi",
             details: "Seehulgas töölaud ning juhendaja",
-            price: "250€"
+            price: "200€"
+        },
+        {
+            description: "10 õhtut ehk 50 tundi",
+            details: "Seehulgas töölaud ning juhendaja",
+            price: "400€"
         },
         {
             description: "Tööriista hooldamata jätmine",
@@ -66,17 +71,17 @@ const PriceList = () => {
         },
         {
             description: "Nõustamine",
-            details: "Ühekordne ning lisandub 0.35€ km",
+            details: "Ühekordne ning lisandub 0.33€ km",
             price: "40€"
         },
         {
-            description: "Meistri töötund",
+            description: "Meistri töötund väljaspool piletisüsteemi",
             details: "Juhendamine, töö teostamine, muud tegevused",
             price: "12€"
         },
         {
-            description: "Tööriistade rent kohapeal eraldi hinnakirja alusel!",
-            price: "€€"
+            description: "Töökojas kasutatavad tööriistad on arvestatud hinnakirja sisse!",
+            price: ""
         },
     ]
 
