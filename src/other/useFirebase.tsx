@@ -11,7 +11,7 @@ import {
     signInWithEmailAndPassword,
     signOut,
 } from "firebase/auth";
-import { useContext } from "react";
+import {useContext, useState} from "react";
 import { GlobalStateContext, User } from "./GlobalStateContext";
 import { Project } from "../components/ProjectDisplay";
 
@@ -145,7 +145,6 @@ export default function useFirebase () {
                 projects: userParams.projects,
                 role: userParams.role
             }
-
             setUser(user);
         }
     }
@@ -169,5 +168,5 @@ export default function useFirebase () {
         }
     }
 
-    return { checkLogin, createUserWithEmail, loginWithEmail, sendForgotPasswordResetEmail, logOut, db, unRegisterFromEvent }
+    return { checkLogin, createUserWithEmail, loginWithEmail, sendForgotPasswordResetEmail, logOut, db, unRegisterFromEvent, user }
 }

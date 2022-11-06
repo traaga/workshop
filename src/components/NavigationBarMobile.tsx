@@ -93,7 +93,11 @@ const NavigationBarMobile = ({ logOut, logIn }: NavigationBarMobileProps) => {
                 {user ? (
                     <MenuPopupState
                         buttonText={"Konto"}
-                        menuItems={accountLinks}
+                        //menuItems={accountLinks}
+                        buttonProps={{
+                            component: Link,
+                            to: "/account",
+                        }}
                         image={user.photo ? user.photo : "images/plank-profile.jpg"}
                     />
                 ) : (

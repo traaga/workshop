@@ -17,7 +17,7 @@ import { GlobalStateContext } from "../other/GlobalStateContext";
 const CalendarDeprecated = () => {
 
     const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
-    const [chosenDate, setChosenDate] = useState<Date | null>(new Date("July 20, 2022 15:30:00")); // TODO: Remove date string from Date()
+    const [chosenDate, setChosenDate] = useState<Date>(new Date("July 20, 2022 15:30:00")); // TODO: Remove date string from Date()
     const [selectedEventsIDs, setSelectedEventsIDs] = useState<string[]>([]);
     const [isViewDialogOpen, setViewDialogOpen] = useState(false);
     const [isSelectProjectDialogOpen, setSelectProjectDialogOpen] = useState(false);

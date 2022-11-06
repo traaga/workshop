@@ -4,7 +4,13 @@ import CalendarActionButtons from "./CalendarActionButtons";
 import useWindowDimensions from "../other/useWindowDimensions";
 import {useState, SyntheticEvent} from "react";
 
-const CalendarMobile = () => {
+interface CalendarMobileProps {
+    date: Date,
+    dates: Date[],
+    displayCalendarEvents: (index: number) => void
+}
+
+const CalendarMobile = ({dates, displayCalendarEvents}: CalendarMobileProps) => {
 
     const {width} = useWindowDimensions();
 
@@ -20,7 +26,6 @@ const CalendarMobile = () => {
             description: "description"
         };
 
-    const dates = ["26", "27", "28", "29", "30", "1", "2"];
     const days = ["E", "T", "K", "N", "R", "L", "P"];
 
     return (
@@ -31,23 +36,18 @@ const CalendarMobile = () => {
                 <Box key={index} sx={{
                     display: "flex",
                     flexDirection: "column",
-                    gap: "10px"
+                    gap: "10px",
+                    width: "305px"
                 }}>
                     <Box sx={{
                         fontSize: "16px",
                         fontWeight: "500",
-                        color: "#999999",
+                        //color: "#999999",
                         width: "40px"
-                    }}>{day}, {dates[index]}</Box>
+                    }}>{day}, {dates[index].getDate()}</Box>
 
-                    <CalendarEventComponent event={tempEvent} firstTime={0}
-                                            firstDay={0}
-                                            selectedEventsIDs={[]}
-                                            setSelectedEventsIDs={() => console.log()}/>
-                    <CalendarEventComponent event={tempEvent} firstTime={0}
-                                            firstDay={0}
-                                            selectedEventsIDs={[]}
-                                            setSelectedEventsIDs={() => console.log()}/>
+                    {displayCalendarEvents(index)}
+
                 </Box>
             )}
         </Box>

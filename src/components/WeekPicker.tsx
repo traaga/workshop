@@ -45,8 +45,8 @@ export const WeekHighlight = styled(PickersDay, {
 })) as React.ComponentType<WeekHighlightProps>;
 
 interface WeekPickerProps {
-    value: Date | null,
-    setValue: (date: Date | null) => void;
+    value: Date,
+    setValue: (date: Date) => void;
 }
 
 const WeekPicker = ({ value, setValue }: WeekPickerProps) => {
@@ -54,6 +54,15 @@ const WeekPicker = ({ value, setValue }: WeekPickerProps) => {
 
     const handleCalenderClose = () => {
         setCalenderOpen(false);
+    }
+
+    // 6.048e+8 is 1 week in milliseconds
+    const handleNextWeek = () => {
+        setValue(new Date(value.getTime() + 6.048e+8));
+    }
+
+    const handlePreviousWeek = () => {
+        setValue(new Date(value.getTime() - 6.048e+8));
     }
 
     const getCurrentWeek = (date: Date) => {
@@ -106,16 +115,16 @@ const WeekPicker = ({ value, setValue }: WeekPickerProps) => {
     };
 
     return (
-        <LocalizationProvider dateAdapter={AdapterDateFns} locale={etLocale}>
-            <Button sx={{ minWidth: "48px" }}>
+        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={etLocale}>
+            <Button onClick={handlePreviousWeek} sx={{ minWidth: "48px" }}>
                 <ArrowBackIosNewIcon/>
             </Button>
 
-            <Button sx={{ height: "100%", width: "165px" }} onClick={() => setCalenderOpen(true)}>
+            <Button sx={{ height: "100%", width: "170px" }} onClick={() => setCalenderOpen(true)}>
                 {value ? getCurrentWeek(value) : "undefined"}
             </Button>
 
-            <Button sx={{ minWidth: "48px" }}>
+            <Button onClick={handleNextWeek} sx={{ minWidth: "48px" }}>
                 <ArrowForwardIosIcon/>
             </Button>
 
@@ -125,7 +134,8 @@ const WeekPicker = ({ value, setValue }: WeekPickerProps) => {
                     label="Week picker"
                     value={value}
                     onChange={(newValue) => {
-                        setValue(newValue);
+                        if(newValue)
+                            setValue(newValue);
                         handleCalenderClose();
                     }}
                     renderDay={renderWeekHighlight}
