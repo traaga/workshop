@@ -1,4 +1,4 @@
-<div style="display: flex; flex-direction: column; align-items: center; background-color: white">
+<div align="center">
     <br></br>
     <a href="https://fellinitookoda.ee/">
         <img src="./public/images/logo.svg" alt="Logo" width="320px" height="320px">
