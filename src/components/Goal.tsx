@@ -18,7 +18,8 @@ const Goal = () => {
                     border: "6px solid black",
                     borderRight: "hidden",
                     width: "30px",
-                    height: width < 715 ? "375px" : "300px",
+                    //height: width < 715 ? "375px" : "300px",
+                    height: "200px"
                 }}/>
 
                 {width > 550 ?
@@ -27,14 +28,14 @@ const Goal = () => {
                         textAlign: "center",
                         fontWeight: "400"
                     }}>
-                        {texts.goal}
+                        {texts.headline}
                     </Typography> :
                     <Typography variant="subtitle1" sx={{
                         width: "275px",
                         textAlign: "center",
                         fontWeight: "400"
                     }}>
-                        {texts.goal}
+                        {texts.headline}
                     </Typography>}
 
 
@@ -42,7 +43,8 @@ const Goal = () => {
                     border: "5px solid black",
                     borderLeft: "hidden",
                     width: "30px",
-                    height: width < 715 ? "375px" : "300px",
+                    //height: width < 715 ? "375px" : "300px",
+                    height: "200px"
                 }}/>
             </Box>
         </>

@@ -1,18 +1,19 @@
-import { useContext } from "react";
+import {useContext} from "react";
 import NavigationBar from "../components/NavigationBar";
 import ContentContainer from "../components/ContentContainer";
 import Footer from "../components/Footer";
-import { Box, Button, Typography } from "@mui/material";
-import { GlobalStateContext } from "../other/GlobalStateContext";
+import {Box, Button, Typography} from "@mui/material";
+import {GlobalStateContext} from "../other/GlobalStateContext";
 import useWindowDimensions from "../other/useWindowDimensions";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import texts from "../texts.json";
+import CourseGoal from "../components/CourseGoal";
 
 const InfoCenter = () => {
-    const { titleFull } = useContext(GlobalStateContext);
+    const {titleFull} = useContext(GlobalStateContext);
     document.title = "Infokeskus | " + titleFull;
 
-    const { width } = useWindowDimensions();
+    const {width} = useWindowDimensions();
 
     const title = "Nõustamine";
     const counselingDescription = texts.counseling.split("\n");
@@ -43,30 +44,30 @@ const InfoCenter = () => {
     return (
         <>
             <NavigationBar/>
-            <ContentContainer sx={{ position: "relative" }}>
-
+            <ContentContainer
+                sx={{position: "relative", display: "flex", flexDirection: "column", alignItems: "center"}}>
 
                 <Box>
                     <Box
                         component="img"
                         sx={{
-                            width: "100%",
+                            //width: "100%",
+                            width: "100vw",
                             height: width >= 960 ? "calc(100vh - 128px)" : "calc(100vh - 96px)",
                             objectFit: "cover",
                         }}
                         src="images/taust1.jpg"
                     />
                     <Box sx={{
-                        top: width < 500 ? "5%" : "15%",
+                        top: width < 700 ? "5vh" : "12vh",
                         left: containerLeft,
                         width: containerWidth,
-                        height: width < 700 ? "auto" : "65%",
                         position: "absolute",
                         display: "flex",
                         flexDirection: width < 700 ? "column" : "row",
+                        minHeight: "500px",
                     }}>
                         <Box sx={{
-                            height: "100%",
                             width: width < 700 ? "100%" : "70%",
                             backgroundColor: "white",
                             opacity: "0.9",
@@ -81,7 +82,8 @@ const InfoCenter = () => {
                                     }}>{title}</Typography>
 
                                     {counselingDescription.map((text, index) =>
-                                        <Typography key={index} variant={"subtitle2"} sx={{ marginBottom: "5px", fontWeight: "400" }}>{text}</Typography>
+                                        <Typography key={index} variant={"subtitle2"}
+                                                    sx={{marginBottom: "5px", fontWeight: "400"}}>{text}</Typography>
                                     )}
                                 </> :
                                 <><Typography variant="h5" sx={{
@@ -91,13 +93,13 @@ const InfoCenter = () => {
                                 }}>{title}</Typography>
 
                                     {counselingDescription.map((text, index) =>
-                                        <Typography key={index} sx={{ marginBottom: "10px", fontWeight: "400" }}>{text}</Typography>
+                                        <Typography key={index}
+                                                    sx={{marginBottom: "10px", fontWeight: "400"}}>{text}</Typography>
                                     )}
                                 </>}
 
                         </Box>
                         <Box sx={{
-                            height: "100%",
                             width: width < 700 ? "100%" : "30%",
                             backgroundColor: "whitesmoke",
                             opacity: "0.9",
@@ -118,7 +120,7 @@ const InfoCenter = () => {
                                     size="small"
                                     component={Link}
                                     to="/contact"
-                                    sx={{ textAlign: "center", marginTop: "10px" }}
+                                    sx={{textAlign: "center", marginTop: "10px"}}
                                 >
                                     Võta meiega ühendust
                                 </Button> :
@@ -127,7 +129,7 @@ const InfoCenter = () => {
                                     size="medium"
                                     component={Link}
                                     to="/contact"
-                                    sx={{ textAlign: "center", marginTop: "20px" }}
+                                    sx={{textAlign: "center", marginTop: "20px"}}
                                     onClick={() => window.scrollTo(0, 0)}
                                 >
                                     Võta meiega ühendust
@@ -136,6 +138,8 @@ const InfoCenter = () => {
                         </Box>
                     </Box>
                 </Box>
+
+                <CourseGoal/>
 
             </ContentContainer>
             <Footer/>
