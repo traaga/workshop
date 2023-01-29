@@ -8,6 +8,8 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import * as React from "react";
 import useWindowDimensions from "../other/useWindowDimensions";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import {CalendarEvent} from "./CalendarEvent";
+import useFirebase from "../other/useFirebase";
 
 const EventCreation = () => {
 
@@ -26,17 +28,47 @@ const EventCreation = () => {
 
     // , , , space, color,
 
-    const [value, setValue] = useState(new Date());
+    const [start, setStart] = useState(new Date());
+    const [end, setEnd] = useState(new Date());
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [spots, setSpots] = useState(0);
+    const [color, setColor] = useState("1");
+
     const [loadingNewEvent, setLoadingNewEvent] = useState(false);
+    const [error, setError] = useState("");
 
     const {width} = useWindowDimensions();
+    const {addEvent} = useFirebase();
 
-    const handleChange = (newValue: any) => {
-        console.log(newValue)
-        //setValue(newValue);
+    const handleChangeStart = (newValue: Date | null) => {
+        if (newValue) {
+            setStart(newValue);
+            const endTime = new Date(newValue.getFullYear(), newValue.getMonth(), newValue.getDate(),
+                end.getHours(), end.getMinutes());
+            setEnd(endTime);
+        }
     };
 
-    const [color, setColor] = useState("1");
+    const handleChangeEnd = (newValue: Date | null) => {
+        if (newValue) {
+            const endTime = new Date(start.getFullYear(), start.getMonth(), start.getDate(),
+                newValue.getHours(), newValue.getMinutes());
+            setEnd(endTime);
+        }
+    };
+
+    const handleChangeTitle = (newValue: any) => {
+        setTitle(newValue.target.value);
+    };
+
+    const handleChangeDescription = (newValue: any) => {
+        setDescription(newValue.target.value);
+    };
+
+    const handleChangeSpots = (newValue: any) => {
+        setSpots(newValue.target.value);
+    };
 
     const handleColor = (event: SelectChangeEvent) => {
         setColor(event.target.value as string);
@@ -44,6 +76,50 @@ const EventCreation = () => {
 
     const handleSubmit = () => {
 
+        const startTime = Math.round(start.getTime() / 1000);
+        const endTime = Math.round(end.getTime() / 1000);
+
+        if (endTime - startTime < 900) {
+            setError("Ebasobilik ajavahemik!")
+            return
+        }
+
+        if (title === "") {
+            setError("Pealkiri on puudu!")
+            return
+        }
+
+        if (spots < 1) {
+            setError("Liiga vähe vabu kohti!")
+            return
+        }
+
+        setLoadingNewEvent(true);
+
+        const event: CalendarEvent = {
+            id: "",
+            title: title,
+            start: startTime,
+            end: endTime,
+            space: spots,
+            color: color,
+            projects: [],
+            description: description
+        }
+
+        console.log(start, startTime)
+        console.log(end, endTime)
+
+        addEvent(event).then(() => {
+            setLoadingNewEvent(false);
+            setError("");
+            setTitle("");
+            setStart(new Date());
+            setEnd(new Date());
+            setColor("1");
+            setSpots(0);
+            setDescription("");
+        })
     }
 
     return (
@@ -66,6 +142,8 @@ const EventCreation = () => {
                         label="Pealkiri"
                         type="text"
                         variant="outlined"
+                        value={title}
+                        onChange={handleChangeTitle}
                     />
 
                     <TextField
@@ -79,6 +157,8 @@ const EventCreation = () => {
                         rows={5}
                         //sx={{width: "100%"}}
                         sx={{marginTop: "16px"}}
+                        value={description}
+                        onChange={handleChangeDescription}
                     />
 
                     <Box sx={{display: "flex", gap: "10px", marginTop: "16px"}}>
@@ -87,8 +167,8 @@ const EventCreation = () => {
                             <DesktopDatePicker
                                 label="Kuupäev"
                                 inputFormat="dd/MM/yyyy"
-                                value={value}
-                                onChange={handleChange}
+                                value={start}
+                                onChange={handleChangeStart}
                                 renderInput={(params) => <TextField sx={{width: "145px"}} required margin="dense"
                                                                     size="small" {...params} />}
                             />
@@ -96,8 +176,8 @@ const EventCreation = () => {
                             <MobileDatePicker
                                 label="Kuupäev"
                                 inputFormat="dd/MM/yyyy"
-                                value={value}
-                                onChange={handleChange}
+                                value={start}
+                                onChange={handleChangeStart}
                                 renderInput={(params) => <TextField sx={{width: "145px"}} required margin="dense"
                                                                     size="small" {...params} />}
                             />
@@ -106,16 +186,16 @@ const EventCreation = () => {
 
                         <TimePicker
                             label="Algus"
-                            value={value}
-                            onChange={handleChange}
+                            value={start}
+                            onChange={handleChangeStart}
                             renderInput={(params) => <TextField sx={{width: "105px"}} required margin="dense"
                                                                 size="small" {...params} />}
                         />
 
                         <TimePicker
                             label="Lõpp"
-                            value={value}
-                            onChange={handleChange}
+                            value={end}
+                            onChange={handleChangeEnd}
                             renderInput={(params) => <TextField sx={{width: "105px"}} required margin="dense"
                                                                 size="small" {...params} />}
                         />
@@ -179,9 +259,15 @@ const EventCreation = () => {
                             type="number"
                             variant="outlined"
                             sx={{width: "125px"}}
+                            value={spots}
+                            onChange={handleChangeSpots}
                         />
 
                     </Box>
+
+                    {error &&
+                        <Typography sx={{marginTop: "10px", color: "red"}}>{error}</Typography>
+                    }
 
                     <LoadingButton
                         loading={loadingNewEvent}

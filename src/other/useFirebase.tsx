@@ -1,5 +1,15 @@
-import { initializeApp } from "firebase/app";
-import { doc, getDoc, getFirestore, updateDoc, arrayRemove, arrayUnion } from "firebase/firestore";
+import {initializeApp} from "firebase/app";
+import {
+    doc,
+    getDoc,
+    setDoc,
+    addDoc,
+    collection,
+    getFirestore,
+    updateDoc,
+    arrayRemove,
+    arrayUnion
+} from "firebase/firestore";
 
 // Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -12,8 +22,9 @@ import {
     signOut,
 } from "firebase/auth";
 import {useContext, useState} from "react";
-import { GlobalStateContext, User } from "./GlobalStateContext";
-import { Project } from "../components/ProjectDisplay";
+import {GlobalStateContext, User} from "./GlobalStateContext";
+import {Project} from "../components/ProjectDisplay";
+import {CalendarEvent} from "../components/CalendarEvent";
 
 export const config = {
     apiKey: "AIzaSyAYkgC3RfnQFmlZIiBYzBLcdr_hgOiY3O0",
@@ -25,7 +36,7 @@ export const config = {
     measurementId: "G-2EHBE8WRN6"
 };
 
-export default function useFirebase () {
+export default function useFirebase() {
 
     // Initialize Firebase
     const app = initializeApp(config);
@@ -33,7 +44,7 @@ export default function useFirebase () {
 
     const db = getFirestore(app);
 
-    const { setUser, user } = useContext(GlobalStateContext);
+    const {setUser, user} = useContext(GlobalStateContext);
 
     const checkLogin = async () => {
 
@@ -100,7 +111,7 @@ export default function useFirebase () {
                 console.log(error)
                 setUser(null);
             }).then(() => {
-                if(auth.currentUser)
+                if (auth.currentUser)
                     fetchUserData(auth.currentUser.uid);
             });
     }
@@ -151,7 +162,7 @@ export default function useFirebase () {
 
     const unRegisterFromEvent = async (eventId: string) => {
 
-        if(auth.currentUser && user) {
+        if (auth.currentUser && user) {
             const usersRef = doc(db, "users", auth.currentUser.uid);
 
             await updateDoc(usersRef, {
@@ -168,5 +179,33 @@ export default function useFirebase () {
         }
     }
 
-    return { checkLogin, createUserWithEmail, loginWithEmail, sendForgotPasswordResetEmail, logOut, db, unRegisterFromEvent, user }
+    const addEvent = async (event: CalendarEvent) => {
+        return
+        await addDoc(collection(db, "events"), {
+            title: event.title,
+            start: event.start,
+            end: event.end,
+            space: event.space,
+            color: event.color,
+            projects: event.projects,
+            description: event.description
+        });
+    }
+
+    const setEvent = async (eventID: string, eventData: {}) => {
+        await setDoc(doc(db, "events", eventID), eventData);
+    }
+
+    return {
+        checkLogin,
+        createUserWithEmail,
+        loginWithEmail,
+        sendForgotPasswordResetEmail,
+        logOut,
+        db,
+        unRegisterFromEvent,
+        user,
+        addEvent,
+        setEvent
+    }
 }
