@@ -7,6 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import useWindowDimensions from "../other/useWindowDimensions";
+import useContentful from "../other/useContentful";
+import { useEffect } from "react";
 
 interface Price {
     description: string,
@@ -18,6 +20,7 @@ interface Price {
 const PriceList = () => {
 
     const { width } = useWindowDimensions();
+    const { getEntries } = useContentful();
 
     let realWidth = "40vw";
 
@@ -28,6 +31,10 @@ const PriceList = () => {
             realWidth = "60vw";
         }
     }
+
+    useEffect(() => {
+        getEntries();
+    });
 
     const priceList: Price[] = [
         {
