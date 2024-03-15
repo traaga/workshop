@@ -33,7 +33,7 @@ const PriceList = () => {
     }
 
     useEffect(() => {
-        getEntries();
+        //getEntries();
     });
 
     const priceList: Price[] = [

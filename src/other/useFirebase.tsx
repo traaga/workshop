@@ -26,6 +26,9 @@ import {GlobalStateContext, User} from "./GlobalStateContext";
 import {Project} from "../components/ProjectDisplay";
 import {CalendarEvent} from "../components/CalendarEvent";
 
+const dotenv = require("dotenv")
+dotenv.config()
+
 export const config = {
     apiKey: "AIzaSyAYkgC3RfnQFmlZIiBYzBLcdr_hgOiY3O0",
     authDomain: "fellini-tookoda.firebaseapp.com",
@@ -33,8 +36,18 @@ export const config = {
     storageBucket: "fellini-tookoda.appspot.com",
     messagingSenderId: "28684165989",
     appId: "1:28684165989:web:4bab9a707b3773732e778c",
-    measurementId: "G-2EHBE8WRN6"
+    measurementId: "G-2EHBE8WRN6",
+    /*apiKey: process.env["FIREBASE_API_KEY"],
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID*/
 };
+
+console.log(process.env.FIREBASE_API_KEY);
+
 
 export default function useFirebase() {
 
